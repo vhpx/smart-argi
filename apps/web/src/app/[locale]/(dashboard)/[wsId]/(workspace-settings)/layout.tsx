@@ -39,11 +39,6 @@ export default async function Layout({ children, params }: LayoutProps) {
       disabled: withoutPermission('manage_workspace_roles'),
     },
     {
-      title: t('workspace-settings-layout.reports'),
-      href: `/${wsId}/settings/reports`,
-      disabled: withoutPermission('manage_user_report_templates'),
-    },
-    {
       title: t('workspace-settings-layout.api_keys'),
       href: `/${wsId}/api-keys`,
       disabled: withoutPermission('manage_workspace_security'),
@@ -53,24 +48,6 @@ export default async function Layout({ children, params }: LayoutProps) {
       href: `/${wsId}/secrets`,
       disabled: withoutPermission('manage_workspace_secrets'),
       requireRootMember: true,
-    },
-    {
-      title: t('workspace-settings-layout.infrastructure'),
-      href: `/${wsId}/infrastructure`,
-      disabled: withoutPermission('view_infrastructure'),
-      requireRootWorkspace: true,
-    },
-    {
-      title: t('workspace-settings-layout.migrations'),
-      href: `/${wsId}/migrations`,
-      disabled: withoutPermission('manage_external_migrations'),
-      requireRootWorkspace: true,
-    },
-    {
-      title: t('workspace-settings-layout.activities'),
-      href: `/${wsId}/activities`,
-      disabled: withoutPermission('manage_workspace_audit_logs'),
-      requireRootWorkspace: true,
     },
   ];
 

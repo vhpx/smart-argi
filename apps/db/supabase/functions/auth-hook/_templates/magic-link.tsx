@@ -28,7 +28,7 @@ const translationsEn = {
   copy_and_paste: 'Or, copy and paste this temporary login code:',
   if_you_did_not_request:
     "If you didn't try to login, you can safely ignore this email.",
-  footer: 'Tuturuuu, Empower your workflows, stress-free.',
+  footer: 'RMIT Smart Agri, Empower your workflows, stress-free.',
   tagline:
     'Your intelligent shortcut - take control of workflows, supercharged by AI.',
   blog: 'Our blog',
@@ -43,7 +43,7 @@ const translationsVi = {
   copy_and_paste: 'Hoặc, sao chép và dán mã đăng nhập tạm thời này:',
   if_you_did_not_request:
     'Nếu bạn không yêu cầu đăng nhập, bạn có thể bỏ qua email này.',
-  footer: 'Tuturuuu, Tạo lối tắt thông minh cho công việc của bạn.',
+  footer: 'RMIT Smart Agri, Tạo lối tắt thông minh cho công việc của bạn.',
   tagline:
     'Lối tắt thông minh của bạn - quản lý công việc, siêu tốc độ cùng AI',
   blog: 'Blog của chúng tôi',

@@ -1,24 +1,17 @@
-# Tuturuuu Monorepo
+# RMIT Smart Agri Monorepo
 
 [![Vercel Platform Production Deployment](https://github.com/tutur3u/platform/actions/workflows/vercel-production-platform.yaml/badge.svg)](https://github.com/tutur3u/platform/actions/workflows/vercel-production-platform.yaml)
 [![CodeQL](https://github.com/tutur3u/platform/actions/workflows/codeql.yml/badge.svg)](https://github.com/tutur3u/platform/actions/workflows/codeql.yml)
 [![Test](https://github.com/tutur3u/platform/actions/workflows/turbo-unit-tests.yaml/badge.svg)](https://github.com/tutur3u/platform/actions/workflows/turbo-unit-tests.yaml)
 [![Supabase CI](https://github.com/tutur3u/platform/actions/workflows/supabase-production.yaml/badge.svg)](https://github.com/tutur3u/platform/actions/workflows/supabase-production.yaml)
 
-![Tuturuuu Cover](/public/cover.png)
-
-This monorepo contains multiple applications and services that make up the Tuturuuu ecosystem. It's powered by Turborepo for efficient management of multiple packages. View our documentation at [**docs.tuturuuu.com**](https://docs.tuturuuu.com).
-
 ## Project Structure
 
-- `apps/web`: Web application for Tuturuuu platform
-- `apps/docs`: Documentation website powered by Mintlify
-- `apps/rewise`: AI-powered chatbot for everyday tasks
-- `apps/nova`: Prompt engineering platform that allows everyone to Learn, Practice, Innovate, and Compete. Similar to Leetcode for Algorithms and Kaggle for Machine Learning & AI
+- `apps/web`: Web application for RMIT Smart Agri platform
 
 ## Features
 
-Tuturuuu services include:
+RMIT Smart Agri services include:
 
 - Task management (upcoming)
 - Calendar scheduling and management (upcoming)
