@@ -2,11 +2,11 @@
 
 ## Contact Information
 
-For security-related inquiries, please send an email to <security@tuturuuu.com>.
+For security-related inquiries, please send an email to <security@smartagri.ai>.
 
-## Security At Tuturuuu
+## Security At RMIT University
 
-Security is a top priority at Tuturuuu. While we invest heavily in proactively protecting our systems and customer data, vulnerabilities can still exist. If you discover a security issue with our systems, please report it to us responsibly, so we can address it as quickly as possible.
+Security is a top priority at RMIT University. While we invest heavily in proactively protecting our systems and customer data, vulnerabilities can still exist. If you discover a security issue with our systems, please report it to us responsibly, so we can address it as quickly as possible.
 
 ### Responsible Disclosure Guidelines
 
@@ -27,4 +27,4 @@ Security is a top priority at Tuturuuu. While we invest heavily in proactively p
 
 ## Summary
 
-In summary, we appreciate any responsible assistance in improving the security of our systems and services. Working together, we can build a more robust and trusted experience for all Tuturuuu users. Please email <security@tuturuuu.com> to report any discovered vulnerabilities or with any questions.
+In summary, we appreciate any responsible assistance in improving the security of our systems and services. Working together, we can build a more robust and trusted experience for all RMIT Smart Agri users. Please email <security@smartagri.ai> to report any discovered vulnerabilities or with any questions.

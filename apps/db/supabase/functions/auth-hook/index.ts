@@ -64,8 +64,8 @@ Deno.serve(async (req) => {
         })
       );
       subject = user['user_metadata'].locale?.includes('vi')
-        ? 'Mã xác minh Tuturuuu'
-        : 'Tuturuuu Verification Code';
+        ? 'Mã xác minh RMIT Smart Agri'
+        : 'RMIT Smart Agri Verification Code';
     } else {
       html = await renderAsync(
         React.createElement(MagicLinkEmail, {
@@ -84,8 +84,8 @@ Deno.serve(async (req) => {
             ? 'Xác nhận tài khoản AISEA'
             : 'AISEA Account Confirmation'
           : user['user_metadata'].locale?.includes('vi')
-            ? 'Mã xác minh Tuturuuu'
-            : 'Tuturuuu Verification Code';
+            ? 'Mã xác minh RMIT Smart Agri'
+            : 'RMIT Smart Agri Verification Code';
     }
 
     const params = {

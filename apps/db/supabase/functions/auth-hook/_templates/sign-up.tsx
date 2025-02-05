@@ -1,14 +1,11 @@
 import {
   Body,
-  Column,
   Container,
   Head,
   Heading,
   Html,
-  Img,
   Link,
   Preview,
-  Row,
   Section,
   Text,
 } from 'npm:@react-email/components@0.0.22';
@@ -27,9 +24,10 @@ interface SignUpEmailProps {
 /** Translations of the text for English */
 const translationsEn = {
   confirm_email_address: 'Confirm your email address',
-  h1: (username: string) => `Welcome to Tuturuuu! Confirm your email address`,
+  h1: (username: string) =>
+    `Welcome to RMIT Smart Agri! Confirm your email address`,
   your_confirmation_code:
-    'Thank you for signing up for Tuturuuu. Please complete the email confirmation for full access.',
+    'Thank you for signing up for RMIT Smart Agri. Please complete the email confirmation for full access.',
   click_here: 'Click here to confirm your email address',
   copy_and_paste: 'Or, copy and paste this temporary login code:',
   if_you_did_not_request:
@@ -45,9 +43,9 @@ const translationsEn = {
 const translationsVi = {
   confirm_email_address: 'Xác nhận địa chỉ email của bạn',
   h1: (username: string) =>
-    `Chào mừng đến với Tuturuuu! Vui lòng xác nhận địa chỉ email của bạn`,
+    `Chào mừng đến với RMIT Smart Agri! Vui lòng xác nhận địa chỉ email của bạn`,
   your_confirmation_code:
-    'Cảm ơn bạn đã đăng ký Tuturuuu. Vui lòng hoàn tất xác nhận email để truy cập đầy đủ.',
+    'Cảm ơn bạn đã đăng ký RMIT Smart Agri. Vui lòng hoàn tất xác nhận email để truy cập đầy đủ.',
   click_here: 'Nhấp vào đây để xác nhận địa chỉ email của bạn',
   copy_and_paste: 'Hoặc, sao chép và dán mã đăng nhập tạm thời này:',
   if_you_did_not_request:
