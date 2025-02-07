@@ -1,33 +1,32 @@
-import { MagicLinkEmail } from './_templates/magic-link.js';
-import { SignUpEmail } from './_templates/sign-up.js';
-import { Webhook } from 'https://esm.sh/standardwebhooks@1.0.0';
-import { SESClient, SendEmailCommand } from 'npm:@aws-sdk/client-ses@3.716.0';
-import { renderAsync } from 'npm:@react-email/components@0.0.22';
-import React from 'npm:react@18.3.1';
+import { Webhook } from "https://esm.sh/standardwebhooks@1.0.0";
+import { SendEmailCommand, SESClient } from "npm:@aws-sdk/client-ses@3.716.0";
+import { renderAsync } from "npm:@react-email/components@0.0.22";
+import React from "npm:react@18.3.1";
+import { MagicLinkEmail } from "./_templates/magic-link.tsx";
+import { SignUpEmail } from "./_templates/sign-up.tsx";
 
 const sesClient = new SESClient({
-  region: Deno.env.get('AWS_REGION') as string,
+  region: Deno.env.get("AWS_REGION") as string,
   credentials: {
-    accessKeyId: Deno.env.get('AWS_ACCESS_KEY_ID') as string,
-    secretAccessKey: Deno.env.get('AWS_SECRET_ACCESS_KEY') as string,
+    accessKeyId: Deno.env.get("AWS_ACCESS_KEY_ID") as string,
+    secretAccessKey: Deno.env.get("AWS_SECRET_ACCESS_KEY") as string,
   },
 });
 
-const hookSecret = Deno.env.get('SEND_EMAIL_HOOK_SECRET') as string;
+const hookSecret = Deno.env.get("SEND_EMAIL_HOOK_SECRET") as string;
 
 Deno.serve(async (req) => {
-  if (req.method !== 'POST') {
-    return new Response('not allowed', { status: 400 });
+  if (req.method !== "POST") {
+    return new Response("not allowed", { status: 400 });
   }
 
-  const payload = await req.text();
+  const rawPayload = await req.text();
+  const payload = JSON.parse(rawPayload);
   const headers = Object.fromEntries(req.headers);
   const wh = new Webhook(hookSecret);
+
   try {
-    const {
-      user,
-      email_data: { token, token_hash, redirect_to, email_action_type },
-    } = wh.verify(payload, headers) as {
+    const verified = wh.verify(JSON.stringify(payload), headers) as {
       user: {
         email: string;
         user_metadata: {
@@ -47,49 +46,51 @@ Deno.serve(async (req) => {
       };
     };
 
+    const {
+      user,
+      email_data: { token, token_hash, redirect_to, email_action_type },
+    } = verified;
+
     let html: string;
     let subject: string;
 
-    if (email_action_type === 'signup') {
+    if (email_action_type === "signup") {
       html = await renderAsync(
         React.createElement(SignUpEmail, {
-          origin: user['user_metadata'].origin,
-          username: user['user_metadata'].username,
-          locale: user['user_metadata'].locale,
-          supabase_url: Deno.env.get('SUPABASE_URL') ?? '',
+          origin: user["user_metadata"].origin,
+          username: user["user_metadata"].username,
+          locale: user["user_metadata"].locale,
+          supabase_url: Deno.env.get("SUPABASE_URL") ?? "",
           token,
           token_hash,
           redirect_to,
           email_action_type,
-        })
+        }),
       );
-      subject = user['user_metadata'].locale?.includes('vi')
-        ? 'Mã xác minh RMIT Smart Agri'
-        : 'RMIT Smart Agri Verification Code';
+      subject = user["user_metadata"].locale?.includes("vi")
+        ? "Mã xác minh RMIT Smart Agri"
+        : "RMIT Smart Agri Verification Code";
     } else {
       html = await renderAsync(
         React.createElement(MagicLinkEmail, {
-          origin: user['user_metadata'].origin,
-          locale: user['user_metadata'].locale,
-          supabase_url: Deno.env.get('SUPABASE_URL') ?? '',
+          origin: user["user_metadata"].origin,
+          locale: user["user_metadata"].locale,
+          supabase_url: Deno.env.get("SUPABASE_URL") ?? "",
           token,
           token_hash,
           redirect_to,
           email_action_type,
-        })
+        }),
       );
-      subject =
-        user['user_metadata'].origin === 'AISEA'
-          ? user['user_metadata'].locale?.includes('vi')
-            ? 'Xác nhận tài khoản AISEA'
-            : 'AISEA Account Confirmation'
-          : user['user_metadata'].locale?.includes('vi')
-            ? 'Mã xác minh RMIT Smart Agri'
-            : 'RMIT Smart Agri Verification Code';
+      subject = user["user_metadata"].locale?.includes("vi")
+        ? "Mã xác minh RMIT Smart Agri"
+        : "RMIT Smart Agri Verification Code";
     }
 
     const params = {
-      Source: `${user['user_metadata'].origin === 'AISEA' ? 'AISEA' : Deno.env.get('SOURCE_NAME')} <${user['user_metadata'].origin === 'AISEA' ? 'hello@aisea.vn' : Deno.env.get('SOURCE_EMAIL')}>`,
+      Source: `${Deno.env.get("SOURCE_NAME")} <${
+        Deno.env.get("SOURCE_EMAIL")
+      }>`,
       Destination: {
         ToAddresses: [user.email],
       },
@@ -114,13 +115,13 @@ Deno.serve(async (req) => {
       }),
       {
         status: 401,
-        headers: { 'Content-Type': 'application/json' },
-      }
+        headers: { "Content-Type": "application/json" },
+      },
     );
   }
 
   const responseHeaders = new Headers();
-  responseHeaders.set('Content-Type', 'application/json');
+  responseHeaders.set("Content-Type", "application/json");
   return new Response(JSON.stringify({}), {
     status: 200,
     headers: responseHeaders,

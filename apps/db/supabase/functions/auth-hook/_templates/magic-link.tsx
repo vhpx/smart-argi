@@ -51,36 +51,6 @@ const translationsVi = {
   contact: 'Liên hệ',
 };
 
-const translationsAiseaEn = {
-  preview: 'Log in with this verification code',
-  heading: 'Login',
-  click_here: 'Click here to log in with this verification code',
-  copy_and_paste: 'Or, copy and paste this temporary login code:',
-  if_you_did_not_request:
-    "If you didn't try to login, you can safely ignore this email.",
-  footer: 'AISEA, AI for Schools, Educators, and Administrators',
-  tagline:
-    'Level up your learning journey - empower your school with AI-driven tools.',
-  blog: 'Our blog',
-  about: 'About us',
-  contact: 'Contact us',
-};
-
-const translationsAiseaVi = {
-  preview: 'Đăng nhập với mã đăng nhập này',
-  heading: 'Đăng nhập',
-  click_here: 'Nhấp vào đây để đăng nhập với mã đăng nhập này',
-  copy_and_paste: 'Hoặc, sao chép và dán mã đăng nhập tạm thời này:',
-  if_you_did_not_request:
-    'Nếu bạn không yêu cầu đăng nhập, bạn có thể bỏ qua email này.',
-  footer: 'AISEA, AI cho trường học, giáo viên và quản trị viên',
-  tagline:
-    'Hành trình học tập của bạn - đẩy mạnh trường học của bạn với công cụ AI',
-  blog: 'Blog của chúng tôi',
-  about: 'Về chúng tôi',
-  contact: 'Liên hệ',
-};
-
 export const MagicLinkEmail = ({
   locale,
   token,
@@ -90,14 +60,7 @@ export const MagicLinkEmail = ({
   // token_hash,
   origin = 'TUTURUUU',
 }: MagicLinkEmailProps) => {
-  const translations =
-    origin === 'AISEA'
-      ? locale?.includes('vi')
-        ? translationsAiseaVi
-        : translationsAiseaEn
-      : locale?.includes('vi')
-        ? translationsVi
-        : translationsEn;
+  const translations = locale?.includes('vi') ? translationsVi : translationsEn;
 
   return (
     <Html>

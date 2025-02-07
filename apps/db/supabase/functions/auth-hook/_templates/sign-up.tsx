@@ -57,39 +57,6 @@ const translationsVi = {
     'Lối tắt thông minh của bạn - quản lý công việc, siêu tốc độ cùng AI',
 };
 
-const translationsAiseaEn = {
-  confirm_email_address: 'Confirm your email address',
-  h1: (username: string) => `Welcome to AISEA! Confirm your email address`,
-  your_confirmation_code:
-    'Thank you for signing up for AISEA. Please complete the email confirmation for full access.',
-  click_here: 'Click here to confirm your email address',
-  copy_and_paste: 'Or, copy and paste this temporary login code:',
-  if_you_did_not_request:
-    'If you did not request this email, there is nothing to worry about, you can safely ignore it.',
-  blog: 'Our blog',
-  about: 'About us',
-  contact: 'Contact us',
-  tagline:
-    'Level up your learning journey - empower your school with AI-driven tools.',
-};
-
-const translationsAiseaVi = {
-  confirm_email_address: 'Xác nhận địa chỉ email của bạn',
-  h1: (username: string) =>
-    `Chào mừng đến với AISEA! Vui lòng xác nhận địa chỉ email của bạn`,
-  your_confirmation_code:
-    'Cảm ơn bạn đã đăng ký AISEA. Vui lòng hoàn tất xác nhận email để truy cập đầy đủ.',
-  click_here: 'Nhấp vào đây để xác nhận địa chỉ email của bạn',
-  copy_and_paste: 'Hoặc, sao chép và dán mã đăng nhập tạm thời này:',
-  if_you_did_not_request:
-    'Nếu bạn không yêu cầu email này, bạn có thể bỏ qua nó.',
-  blog: 'Blog của chúng tôi',
-  about: 'Về chúng tôi',
-  contact: 'Liên hệ',
-  tagline:
-    'Hành trình học tập của bạn - đẩy mạnh trường học của bạn với công cụ AI',
-};
-
 export const SignUpEmail = ({
   locale,
   token,
@@ -99,14 +66,7 @@ export const SignUpEmail = ({
   // token_hash,
   origin = 'TUTURUUU',
 }: SignUpEmailProps) => {
-  const translations =
-    origin === 'AISEA'
-      ? locale?.includes('vi')
-        ? translationsAiseaVi
-        : translationsAiseaEn
-      : locale?.includes('vi')
-        ? translationsVi
-        : translationsEn;
+  const translations = locale?.includes('vi') ? translationsVi : translationsEn;
 
   return (
     <Html>
