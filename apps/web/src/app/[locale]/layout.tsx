@@ -29,8 +29,11 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
 
-  const enDescription = 'Take control of your workflow, supercharged by AI.';
-  const viDescription = 'Quản lý công việc của bạn, siêu tốc độ cùng AI.';
+  const enDescription =
+    'Reliable agricultural prices - Better planning, better pricing, powered by AI.';
+
+  const viDescription =
+    'Giá cả nông sản đáng tin cậy - Lên kế hoạch tốt hơn, giá cả tốt hơn, được hỗ trợ bởi trí tuệ nhân tạo.';
 
   const description = locale === 'vi' ? viDescription : enDescription;
 
