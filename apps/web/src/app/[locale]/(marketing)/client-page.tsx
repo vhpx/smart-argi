@@ -5,7 +5,6 @@ import CommodityComparison from '../(dashboard)/[wsId]/(dashboard)/commodity-com
 import Dashboard from '../(dashboard)/[wsId]/(dashboard)/dashboard';
 import PricePredictionChart from '../(dashboard)/[wsId]/(dashboard)/price-prediction-chart';
 import FloatingElements from './floating-elements';
-import GetStartedButton from './get-started-button';
 import GradientHeadline from './gradient-headline';
 import type {
   AuroraForecast,
@@ -112,7 +111,7 @@ export default function MarketingClientPage({
         </div>
 
         {/* Main Content */}
-        <div className="relative mx-auto flex max-w-6xl flex-col items-center justify-center px-4 py-32">
+        <div className="relative mx-auto flex max-w-6xl flex-col items-center justify-center px-4 py-64">
           {/* Enhanced 3D Floating Logo */}
           <motion.div
             ref={logoRef}
@@ -159,10 +158,6 @@ export default function MarketingClientPage({
             <h2 className="mb-12 text-lg font-bold tracking-tight text-balance text-foreground md:text-2xl lg:text-3xl">
               {t('landing.subheadline')}
             </h2>
-
-            <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-center">
-              <GetStartedButton href="/login" />
-            </div>
           </motion.div>
         </div>
 

@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@tutur3u/ui/select';
+import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useState } from 'react';
 import {
@@ -31,7 +32,6 @@ const COLORS = {
     info: '#0891b2', // Cyan 600
     grid: '#e5e7eb', // Gray 200
     axis: '#4b5563', // Gray 600
-    text: '#1f2937', // Gray 800
     confidence: 'rgba(37, 99, 235, 0.15)', // Blue 600 with opacity
     tooltip: {
       bg: '#ffffff',
@@ -46,7 +46,6 @@ const COLORS = {
     info: '#06b6d4', // Cyan 500
     grid: '#374151', // Gray 700
     axis: '#9ca3af', // Gray 400
-    text: '#f3f4f6', // Gray 100
     confidence: 'rgba(59, 130, 246, 0.15)', // Blue 500 with opacity
     tooltip: {
       bg: '#1f2937',
@@ -56,9 +55,9 @@ const COLORS = {
   },
 };
 
-const formatDate = (dateStr: string) => {
+const formatDate = (locale: string, dateStr: string) => {
   const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+  return date.toLocaleDateString(locale, { year: 'numeric', month: 'short' });
 };
 
 const formatCurrency = (value: number) => {
@@ -79,52 +78,18 @@ const formatPercentage = (value: number) => {
 };
 
 const PricePredictionChart = ({ data }: { data: AuroraForecast }) => {
+  const locale = useLocale();
+  const t = useTranslations();
+
   const { resolvedTheme } = useTheme();
   const colors = resolvedTheme === 'dark' ? COLORS.dark : COLORS.light;
   const [selectedModel, setSelectedModel] = useState('elasticnet');
-  const [dateRange, setDateRange] = useState<[Date, Date] | null>(null);
-
-  const translations = {
-    en: {
-      pricePrediction: 'ML Model Price Prediction',
-      selectModel: 'Select Model',
-      elasticnet: 'ElasticNet',
-      lightgbm: 'LightGBM',
-      xgboost: 'XGBoost',
-      catboost: 'CatBoost',
-      actual: 'Actual',
-      predicted: 'Predicted',
-      timeRange: 'Time Range',
-      all: 'All Time',
-      last30Days: 'Last 30 Days',
-      last7Days: 'Last 7 Days',
-      custom: 'Custom',
-      confidenceInterval: '90% Confidence Interval',
-      predictionInsights: 'Prediction Insights',
-      accuracy: 'Prediction Accuracy',
-      trend: 'Price Trend',
-      volatility: 'Price Volatility',
-    },
-    vi: {
-      // ... existing translations
-    },
-  };
-
-  const t = translations['en'];
 
   const chartData =
     data?.ml_forecast?.map((forecast) => ({
       ...forecast,
-      displayDate: formatDate(forecast.date),
+      displayDate: formatDate(locale, forecast.date),
     })) || [];
-
-  // Filter data based on date range
-  const filteredChartData = dateRange
-    ? chartData.filter((d) => {
-        const date = new Date(d.date);
-        return date >= dateRange[0] && date <= dateRange[1];
-      })
-    : chartData;
 
   // Calculate insights
   const getModelInsights = (modelData: any[], model: string) => {
@@ -146,16 +111,12 @@ const PricePredictionChart = ({ data }: { data: AuroraForecast }) => {
     const recentValues = values.slice(-trendWindow);
     const trendSlope = calculateTrendSlope(recentValues);
 
-    // Calculate momentum
-    const momentum = calculateMomentum(values);
-
     return {
       high,
       low,
       average: avg,
       volatility,
       trendSlope,
-      momentum,
     };
   };
 
@@ -181,78 +142,28 @@ const PricePredictionChart = ({ data }: { data: AuroraForecast }) => {
     return denominator === 0 ? 0 : numerator / denominator;
   };
 
-  const calculateMomentum = (values: number[]) => {
-    if (values.length < 2) return 0;
-
-    const current = values[values.length - 1];
-    const previous = values[values.length - 2];
-
-    if (
-      typeof current !== 'number' ||
-      typeof previous !== 'number' ||
-      previous === 0
-    ) {
-      return 0;
-    }
-
-    return ((current - previous) / previous) * 100;
-  };
-
-  const insights = filteredChartData.length
-    ? getModelInsights(filteredChartData, selectedModel)
+  const insights = chartData.length
+    ? getModelInsights(chartData, selectedModel)
     : null;
 
   return (
     <Card>
       <CardHeader>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <CardTitle>{t.pricePrediction}</CardTitle>
-          <div className="flex items-center gap-2">
-            <Select
-              value={dateRange ? 'custom' : 'all'}
-              onValueChange={(value) => {
-                const now = new Date();
-                switch (value) {
-                  case 'last7Days':
-                    setDateRange([
-                      new Date(now.setDate(now.getDate() - 7)),
-                      new Date(),
-                    ]);
-                    break;
-                  case 'last30Days':
-                    setDateRange([
-                      new Date(now.setDate(now.getDate() - 30)),
-                      new Date(),
-                    ]);
-                    break;
-                  default:
-                    setDateRange(null);
-                }
-              }}
-            >
-              <SelectTrigger className="w-[140px]">
-                <SelectValue placeholder={t.timeRange} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t.all}</SelectItem>
-                <SelectItem value="last30Days">{t.last30Days}</SelectItem>
-                <SelectItem value="last7Days">{t.last7Days}</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <CardTitle>{t('aurora.ml_price_prediction')}</CardTitle>
         </div>
       </CardHeader>
       <CardContent>
         <div className="mb-4 flex flex-col items-start justify-between space-y-4 sm:flex-row sm:items-center sm:space-y-0">
           <Select value={selectedModel} onValueChange={setSelectedModel}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder={t.selectModel} />
+              <SelectValue placeholder={t('aurora_select_model')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="elasticnet">{t.elasticnet}</SelectItem>
-              <SelectItem value="lightgbm">{t.lightgbm}</SelectItem>
-              <SelectItem value="xgboost">{t.xgboost}</SelectItem>
-              <SelectItem value="catboost">{t.catboost}</SelectItem>
+              <SelectItem value="elasticnet">elasticnet</SelectItem>
+              <SelectItem value="lightgbm">lightgbm</SelectItem>
+              <SelectItem value="xgboost">xgboost</SelectItem>
+              <SelectItem value="catboost">catboost</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -262,7 +173,7 @@ const PricePredictionChart = ({ data }: { data: AuroraForecast }) => {
             <Card className="transition-all duration-200 hover:shadow-md">
               <CardContent className="pt-6">
                 <h3 className="text-sm font-medium text-muted-foreground">
-                  {t.trend}
+                  {t('aurora.trend')}
                 </h3>
                 <div className="mt-2">
                   <div
@@ -276,24 +187,9 @@ const PricePredictionChart = ({ data }: { data: AuroraForecast }) => {
                     <div className="flex flex-col">
                       <span>{Math.abs(insights.trendSlope).toFixed(2)}</span>
                       <span className="text-sm font-normal text-muted-foreground">
-                        slope
+                        {t('aurora.slope')}
                       </span>
                     </div>
-                  </div>
-                  <div className="mt-2 flex items-center gap-2">
-                    <div
-                      className="h-2 rounded-full"
-                      style={{
-                        width: `${Math.min(Math.abs(insights.momentum), 100)}%`,
-                        backgroundColor:
-                          insights.momentum > 0
-                            ? colors.success
-                            : colors.warning,
-                      }}
-                    />
-                    <span className="text-sm text-muted-foreground">
-                      {formatPercentage(insights.momentum)} momentum
-                    </span>
                   </div>
                 </div>
               </CardContent>
@@ -302,7 +198,7 @@ const PricePredictionChart = ({ data }: { data: AuroraForecast }) => {
             <Card className="transition-all duration-200 hover:shadow-md">
               <CardContent className="pt-6">
                 <h3 className="text-sm font-medium text-muted-foreground">
-                  {t.volatility}
+                  {t('aurora.volatility')}
                 </h3>
                 <div className="mt-2">
                   <div className="text-2xl font-bold">
@@ -321,7 +217,7 @@ const PricePredictionChart = ({ data }: { data: AuroraForecast }) => {
                     />
                     <span className="text-sm text-muted-foreground">
                       {formatPercentage(insights.volatility / insights.average)}{' '}
-                      relative
+                      {t('aurora.relative')}
                     </span>
                   </div>
                 </div>
@@ -331,11 +227,13 @@ const PricePredictionChart = ({ data }: { data: AuroraForecast }) => {
             <Card className="transition-all duration-200 hover:shadow-md">
               <CardContent className="pt-6">
                 <h3 className="text-sm font-medium text-muted-foreground">
-                  {t.predictionInsights}
+                  {t('aurora.prediction_insights')}
                 </h3>
                 <div className="mt-2 space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">High</span>
+                    <span className="text-sm text-muted-foreground">
+                      {t('aurora.high')}
+                    </span>
                     <div className="flex items-center gap-2">
                       <div
                         className="h-1.5 rounded-full"
@@ -350,7 +248,9 @@ const PricePredictionChart = ({ data }: { data: AuroraForecast }) => {
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Low</span>
+                    <span className="text-sm text-muted-foreground">
+                      {t('aurora.low')}
+                    </span>
                     <div className="flex items-center gap-2">
                       <div
                         className="h-1.5 rounded-full"
@@ -366,7 +266,7 @@ const PricePredictionChart = ({ data }: { data: AuroraForecast }) => {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-muted-foreground">
-                      Average
+                      {t('aurora.average')}
                     </span>
                     <div className="flex items-center gap-2">
                       <div
@@ -389,7 +289,7 @@ const PricePredictionChart = ({ data }: { data: AuroraForecast }) => {
 
         <div className="h-[400px]">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={filteredChartData}>
+            <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" stroke={colors.grid} />
               <XAxis
                 dataKey="displayDate"
@@ -418,19 +318,7 @@ const PricePredictionChart = ({ data }: { data: AuroraForecast }) => {
                 wrapperStyle={{
                   paddingTop: '20px',
                 }}
-                formatter={(value) => (
-                  <span style={{ color: colors.text }}>
-                    {t[value as keyof typeof t] || value}
-                  </span>
-                )}
-              />
-              <Area
-                type="monotone"
-                dataKey={`${selectedModel}_lo_90`}
-                stroke="none"
-                fill={colors.confidence}
-                fillOpacity={1}
-                name={t.confidenceInterval}
+                formatter={(value) => <span>{value}</span>}
               />
               <Area
                 type="monotone"
@@ -438,7 +326,7 @@ const PricePredictionChart = ({ data }: { data: AuroraForecast }) => {
                 stroke="none"
                 fill={colors.confidence}
                 fillOpacity={1}
-                name={t.confidenceInterval}
+                name={t('aurora.90_confidence_high')}
               />
               <Line
                 type="monotone"
@@ -451,8 +339,16 @@ const PricePredictionChart = ({ data }: { data: AuroraForecast }) => {
                   fill: colors.primary,
                   strokeWidth: 0,
                 }}
-                name={t[selectedModel as keyof typeof t]}
+                name={selectedModel}
                 animationDuration={300}
+              />
+              <Area
+                type="monotone"
+                dataKey={`${selectedModel}_lo_90`}
+                stroke="none"
+                fill={colors.confidence}
+                fillOpacity={1}
+                name={t('aurora.90_confidence_lo')}
               />
             </LineChart>
           </ResponsiveContainer>

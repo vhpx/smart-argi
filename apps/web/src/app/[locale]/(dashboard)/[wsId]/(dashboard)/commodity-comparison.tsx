@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from '@tutur3u/ui/select';
 import { AlertCircle } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import {
@@ -35,7 +36,6 @@ const COLORS = {
     info: '#06b6d4', // Cyan 500
     grid: '#e5e7eb', // Gray 200
     axis: '#4b5563', // Gray 600
-    text: '#1f2937', // Gray 800
     muted: '#6b7280', // Gray 500
     tooltip: {
       bg: '#ffffff',
@@ -50,7 +50,6 @@ const COLORS = {
     info: '#22d3ee', // Cyan 400
     grid: '#374151', // Gray 700
     axis: '#9ca3af', // Gray 400
-    text: '#f3f4f6', // Gray 100
     muted: '#9ca3af', // Gray 400
     tooltip: {
       bg: '#1f2937',
@@ -60,9 +59,9 @@ const COLORS = {
   },
 };
 
-const formatDate = (dateStr: string) => {
+const formatDate = (locale: string, dateStr: string) => {
   const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+  return date.toLocaleDateString(locale, { year: 'numeric', month: 'short' });
 };
 
 const formatCurrency = (value: number) => {
@@ -74,24 +73,18 @@ const formatCurrency = (value: number) => {
   }).format(value);
 };
 
-const formatPercentage = (value: number) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'percent',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value / 100);
-};
-
 const CommodityComparison = ({
   data: initialData,
 }: {
   data: AuroraForecast;
 }) => {
+  const locale = useLocale();
+  const t = useTranslations();
+
   const { resolvedTheme } = useTheme();
   const colors = resolvedTheme === 'dark' ? COLORS.dark : COLORS.light;
   const [selectedDate, setSelectedDate] = useState('');
   const [data, setData] = useState<any[]>([]);
-  const [dateRange, setDateRange] = useState<[Date, Date] | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -100,7 +93,7 @@ const CommodityComparison = ({
         const transformedData = initialData.statistical_forecast.map(
           (item: any) => ({
             date: item.date,
-            displayDate: formatDate(item.date),
+            displayDate: formatDate(locale, item.date),
             auto_arima: parseFloat(item.auto_arima || '0'),
             auto_ets: parseFloat(item.auto_ets || '0'),
             auto_theta: parseFloat(item.auto_theta || '0'),
@@ -128,56 +121,6 @@ const CommodityComparison = ({
     loadData();
   }, [toast]);
 
-  const translations = {
-    en: {
-      modelComparison: 'Statistical Model Comparison',
-      selectDate: 'Select Date:',
-      price: 'Price (USD/ton)',
-      auto_arima: 'AutoARIMA',
-      auto_ets: 'AutoETS',
-      auto_theta: 'AutoTheta',
-      ces: 'CES',
-      error: 'Error',
-      tryAgain: 'Try Again',
-      loading: 'Loading comparison data...',
-      noData: 'No data available for the selected date',
-      insights: 'Model Insights',
-      priceRange: 'Price Range',
-      priceVolatility: 'Price Volatility',
-      modelCorrelation: 'Model Correlation',
-      timeRange: 'Time Range',
-      all: 'All Time',
-      last30Days: 'Last 30 Days',
-      last7Days: 'Last 7 Days',
-      custom: 'Custom',
-      high: 'High',
-      low: 'Low',
-      average: 'Average',
-      correlation: 'Correlation',
-      strong: 'Strong',
-      moderate: 'Moderate',
-      weak: 'Weak',
-    },
-    vi: {
-      modelComparison: 'So sánh mặt hàng',
-      selectDate: 'Chọn ngày:',
-      price: 'Giá (USD/tấn)',
-      auto_arima: 'Gạo',
-      auto_ets: 'Lúa mì',
-      auto_theta: 'Ngô',
-    },
-  };
-
-  const t = translations['en'];
-
-  // Filter data based on date range
-  const filteredData = dateRange
-    ? data.filter((d) => {
-        const date = new Date(d.date);
-        return date >= dateRange[0] && date <= dateRange[1];
-      })
-    : data;
-
   // Calculate insights
   const getModelInsights = (modelData: any[], model: string) => {
     if (!modelData.length) return null;
@@ -198,9 +141,6 @@ const CommodityComparison = ({
     const recentValues = values.slice(-trendWindow);
     const trendSlope = calculateTrendSlope(recentValues);
 
-    // Calculate momentum
-    const momentum = calculateMomentum(values);
-
     // Calculate support and resistance levels
     const { support, resistance } = calculateSupportResistance(values);
 
@@ -210,7 +150,6 @@ const CommodityComparison = ({
       average: avg,
       volatility,
       trendSlope,
-      momentum,
       support,
       resistance,
     };
@@ -236,23 +175,6 @@ const CommodityComparison = ({
     }
 
     return denominator === 0 ? 0 : numerator / denominator;
-  };
-
-  const calculateMomentum = (values: number[]) => {
-    if (values.length < 2) return 0;
-
-    const current = values[values.length - 1];
-    const previous = values[values.length - 2];
-
-    if (
-      typeof current !== 'number' ||
-      typeof previous !== 'number' ||
-      previous === 0
-    ) {
-      return 0;
-    }
-
-    return ((current - previous) / previous) * 100;
   };
 
   const calculateSupportResistance = (values: number[]) => {
@@ -286,32 +208,32 @@ const CommodityComparison = ({
 
   const getCorrelationStrength = (correlation: number) => {
     const abs = Math.abs(correlation);
-    if (abs >= 0.7) return t.strong;
-    if (abs >= 0.3) return t.moderate;
-    return t.weak;
+    if (abs >= 0.7) return t('aurora.strong');
+    if (abs >= 0.3) return t('aurora.moderate');
+    return t('aurora.weak');
   };
 
-  const selectedData = filteredData.find((item) => item.date === selectedDate);
+  const selectedData = data.find((item) => item.date === selectedDate);
   const insights = {
-    auto_arima: getModelInsights(filteredData, 'auto_arima'),
-    auto_ets: getModelInsights(filteredData, 'auto_ets'),
-    auto_theta: getModelInsights(filteredData, 'auto_theta'),
-    ces: getModelInsights(filteredData, 'ces'),
+    auto_arima: getModelInsights(data, 'auto_arima'),
+    auto_ets: getModelInsights(data, 'auto_ets'),
+    auto_theta: getModelInsights(data, 'auto_theta'),
+    ces: getModelInsights(data, 'ces'),
   };
 
-  const correlations = filteredData.length
+  const correlations = data.length
     ? {
         auto_arima_auto_ets: calculateCorrelation(
-          filteredData.map((d) => d.auto_arima),
-          filteredData.map((d) => d.auto_ets)
+          data.map((d) => d.auto_arima),
+          data.map((d) => d.auto_ets)
         ),
         auto_arima_auto_theta: calculateCorrelation(
-          filteredData.map((d) => d.auto_arima),
-          filteredData.map((d) => d.auto_theta)
+          data.map((d) => d.auto_arima),
+          data.map((d) => d.auto_theta)
         ),
         auto_arima_ces: calculateCorrelation(
-          filteredData.map((d) => d.auto_arima),
-          filteredData.map((d) => d.ces)
+          data.map((d) => d.auto_arima),
+          data.map((d) => d.ces)
         ),
       }
     : null;
@@ -320,40 +242,7 @@ const CommodityComparison = ({
     <Card className="w-full">
       <CardHeader>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <CardTitle>{t.modelComparison}</CardTitle>
-          <div className="flex items-center gap-2">
-            <Select
-              value={dateRange ? 'custom' : 'all'}
-              onValueChange={(value) => {
-                const now = new Date();
-                switch (value) {
-                  case 'last7Days':
-                    setDateRange([
-                      new Date(now.setDate(now.getDate() - 7)),
-                      new Date(),
-                    ]);
-                    break;
-                  case 'last30Days':
-                    setDateRange([
-                      new Date(now.setDate(now.getDate() - 30)),
-                      new Date(),
-                    ]);
-                    break;
-                  default:
-                    setDateRange(null);
-                }
-              }}
-            >
-              <SelectTrigger className="w-[140px]">
-                <SelectValue placeholder={t.timeRange} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t.all}</SelectItem>
-                <SelectItem value="last30Days">{t.last30Days}</SelectItem>
-                <SelectItem value="last7Days">{t.last7Days}</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <CardTitle>{t('aurora.model_comparison')}</CardTitle>
         </div>
       </CardHeader>
 
@@ -363,14 +252,14 @@ const CommodityComparison = ({
             htmlFor="date"
             className="mb-1 block text-sm font-medium text-muted-foreground"
           >
-            {t.selectDate}
+            {t('aurora.select_date')}
           </label>
           <Select value={selectedDate} onValueChange={setSelectedDate}>
             <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="Select date" />
+              <SelectValue placeholder={t('aurora.select_date')} />
             </SelectTrigger>
             <SelectContent>
-              {filteredData.map((item, idx) => (
+              {data.map((item, idx) => (
                 <SelectItem key={`cc-${item.date}-${idx}`} value={item.date}>
                   {item.displayDate}
                 </SelectItem>
@@ -383,25 +272,29 @@ const CommodityComparison = ({
           <div className="space-y-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <PriceCard
-                title={t.auto_arima}
+                t={t}
+                title="AutoARIMA"
                 value={selectedData.auto_arima}
                 color={colors.primary}
                 insights={insights.auto_arima}
               />
               <PriceCard
-                title={t.auto_ets}
+                t={t}
+                title="AutoETS"
                 value={selectedData.auto_ets}
                 color={colors.success}
                 insights={insights.auto_ets}
               />
               <PriceCard
-                title={t.auto_theta}
+                t={t}
+                title="AutoTheta"
                 value={selectedData.auto_theta}
                 color={colors.warning}
                 insights={insights.auto_theta}
               />
               <PriceCard
-                title={t.ces}
+                t={t}
+                title="CES"
                 value={selectedData.ces}
                 color={colors.info}
                 insights={insights.ces}
@@ -412,14 +305,14 @@ const CommodityComparison = ({
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg">
-                    {t.modelCorrelation}
+                    {t('aurora.model_correlation')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                     <div className="flex flex-col gap-2">
                       <div className="text-sm font-medium">
-                        {t.auto_arima} - {t.auto_ets}
+                        AutoARIMA - AutoETS
                       </div>
                       <div className="flex items-center gap-2">
                         <div
@@ -441,7 +334,7 @@ const CommodityComparison = ({
 
                     <div className="flex flex-col gap-2">
                       <div className="text-sm font-medium">
-                        {t.auto_arima} - {t.auto_theta}
+                        AutoARIMA - AutoTheta
                       </div>
                       <div className="flex items-center gap-2">
                         <div
@@ -462,9 +355,7 @@ const CommodityComparison = ({
                     </div>
 
                     <div className="flex flex-col gap-2">
-                      <div className="text-sm font-medium">
-                        {t.auto_arima} - {t.ces}
-                      </div>
+                      <div className="text-sm font-medium">AutoARIMA - CES</div>
                       <div className="flex items-center gap-2">
                         <div
                           className="h-2 rounded-full"
@@ -521,34 +412,30 @@ const CommodityComparison = ({
                         wrapperStyle={{
                           paddingTop: '20px',
                         }}
-                        formatter={(value) => (
-                          <span style={{ color: colors.text }}>
-                            {t[value as keyof typeof t] || value}
-                          </span>
-                        )}
+                        formatter={(value) => <span>{value}</span>}
                       />
                       <Bar
                         dataKey="auto_arima"
                         fill={colors.primary}
-                        name={t.auto_arima}
+                        name="AutoARIMA"
                         animationDuration={300}
                       />
                       <Bar
                         dataKey="auto_ets"
                         fill={colors.success}
-                        name={t.auto_ets}
+                        name="AutoETS"
                         animationDuration={300}
                       />
                       <Bar
                         dataKey="auto_theta"
                         fill={colors.warning}
-                        name={t.auto_theta}
+                        name="AutoTheta"
                         animationDuration={300}
                       />
                       <Bar
                         dataKey="ces"
                         fill={colors.info}
-                        name={t.ces}
+                        name="CES"
                         animationDuration={300}
                       />
                     </BarChart>
@@ -561,7 +448,7 @@ const CommodityComparison = ({
               <CardContent className="pt-6">
                 <div className="h-[400px]">
                   <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={filteredData}>
+                    <LineChart data={data}>
                       <CartesianGrid
                         strokeDasharray="3 3"
                         stroke={colors.grid}
@@ -593,11 +480,7 @@ const CommodityComparison = ({
                         wrapperStyle={{
                           paddingTop: '20px',
                         }}
-                        formatter={(value) => (
-                          <span style={{ color: colors.text }}>
-                            {t[value as keyof typeof t] || value}
-                          </span>
-                        )}
+                        formatter={(value) => <span>{value}</span>}
                       />
                       <Line
                         type="monotone"
@@ -610,7 +493,7 @@ const CommodityComparison = ({
                           fill: colors.primary,
                           strokeWidth: 0,
                         }}
-                        name={t.auto_arima}
+                        name="AutoARIMA"
                         animationDuration={300}
                       />
                       <Line
@@ -624,7 +507,7 @@ const CommodityComparison = ({
                           fill: colors.success,
                           strokeWidth: 0,
                         }}
-                        name={t.auto_ets}
+                        name="AutoETS"
                         animationDuration={300}
                       />
                       <Line
@@ -638,7 +521,7 @@ const CommodityComparison = ({
                           fill: colors.warning,
                           strokeWidth: 0,
                         }}
-                        name={t.auto_theta}
+                        name="AutoTheta"
                         animationDuration={300}
                       />
                       <Line
@@ -652,7 +535,7 @@ const CommodityComparison = ({
                           fill: colors.info,
                           strokeWidth: 0,
                         }}
-                        name={t.ces}
+                        name="CES"
                         animationDuration={300}
                       />
                     </LineChart>
@@ -664,7 +547,7 @@ const CommodityComparison = ({
         ) : (
           <Alert>
             <AlertCircle className="h-4 w-4" />
-            <AlertTitle>{t.noData}</AlertTitle>
+            <AlertTitle>{t('aurora.no_data')}</AlertTitle>
           </Alert>
         )}
       </CardContent>
@@ -673,11 +556,13 @@ const CommodityComparison = ({
 };
 
 const PriceCard = ({
+  t,
   title,
   value,
   color,
   insights,
 }: {
+  t: any;
   title: string;
   value: number;
   color: string;
@@ -706,16 +591,15 @@ const PriceCard = ({
                 {insights.trendSlope > 0 ? '↗' : '↘'}{' '}
                 {Math.abs(insights.trendSlope).toFixed(2)}
               </div>
-              <div className="text-xs text-muted-foreground">
-                {formatPercentage(insights.momentum)} momentum
-              </div>
             </div>
           )}
         </div>
         {insights && (
           <div className="mt-4 space-y-3 border-t pt-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">High</span>
+              <span className="text-sm text-muted-foreground">
+                {t('aurora.high')}
+              </span>
               <div className="flex items-center gap-2">
                 <div
                   className="h-1.5 rounded-full"
@@ -730,7 +614,9 @@ const PriceCard = ({
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Low</span>
+              <span className="text-sm text-muted-foreground">
+                {t('aurora.low')}
+              </span>
               <div className="flex items-center gap-2">
                 <div
                   className="h-1.5 rounded-full"
@@ -745,7 +631,9 @@ const PriceCard = ({
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Average</span>
+              <span className="text-sm text-muted-foreground">
+                {t('aurora.average')}
+              </span>
               <div className="flex items-center gap-2">
                 <div
                   className="h-1.5 rounded-full"
@@ -760,7 +648,9 @@ const PriceCard = ({
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Volatility</span>
+              <span className="text-sm text-muted-foreground">
+                {t('aurora.volatility')}
+              </span>
               <div className="flex items-center gap-2">
                 <div
                   className="h-1.5 rounded-full"

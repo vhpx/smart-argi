@@ -12,6 +12,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@tutur3u/ui/tabs';
 import { cn } from '@tutur3u/utils/format';
 import { ArrowDownIcon, ArrowUpIcon } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useState } from 'react';
 import {
@@ -33,7 +34,6 @@ const COLORS = {
     info: '#0891b2',
     grid: '#e5e7eb',
     axis: '#4b5563',
-    text: '#1f2937',
     low: '#f87171',
     high: '#34d399',
     tooltip: {
@@ -55,7 +55,6 @@ const COLORS = {
     info: '#06b6d4',
     grid: '#374151',
     axis: '#9ca3af',
-    text: '#f3f4f6',
     low: '#f87171',
     high: '#34d399',
     tooltip: {
@@ -72,14 +71,16 @@ const COLORS = {
   },
 };
 
-const formatDate = (dateStr: string | undefined) => {
+const formatDate = (
+  locale: string,
+  dateStr: string | undefined,
+  showDay = true
+) => {
   if (!dateStr) return '';
-  return new Intl.DateTimeFormat('en-US', {
+  return new Intl.DateTimeFormat(locale, {
     year: 'numeric',
     month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
+    day: showDay ? 'numeric' : undefined,
   }).format(new Date(dateStr));
 };
 
@@ -110,77 +111,24 @@ const calculateTrend = (current: number, previous: number) => {
 };
 
 const Dashboard = ({ data }: { data: AuroraForecast }) => {
+  const locale = useLocale();
+  const t = useTranslations();
+
   const { resolvedTheme } = useTheme();
   const colors = resolvedTheme === 'dark' ? COLORS.dark : COLORS.light;
+
   const [selectedModel, setSelectedModel] = useState('auto_arima');
-  const [dateRange, setDateRange] = useState<[Date, Date] | null>(null);
-
-  const translations = {
-    en: {
-      dashboard: 'Aurora Dashboard',
-      selectModel: 'Select Model:',
-      statisticalModels: 'Statistical Models',
-      mlModels: 'ML Models',
-      price: 'Price (USD/ton)',
-      currentPrice: 'Current Price',
-      change24h: '24h Change',
-      weeklyTrend: 'Weekly Trend',
-      monthlyTrend: 'Monthly Trend',
-      error: 'Error',
-      tryAgain: 'Try Again',
-      loading: 'Loading dashboard data...',
-      auto_arima: 'AutoARIMA',
-      auto_ets: 'AutoETS',
-      auto_theta: 'AutoTheta',
-      ces: 'CES',
-      elasticnet: 'ElasticNet',
-      lightgbm: 'LightGBM',
-      xgboost: 'XGBoost',
-      catboost: 'CatBoost',
-      insights: 'Model Insights',
-      accuracy: 'Prediction Accuracy',
-      trend: 'Price Trend',
-      volatility: 'Price Volatility',
-      forecastRange: 'Forecast Range',
-      high: 'High',
-      low: 'Low',
-      average: 'Average',
-      lastUpdated: 'Last Updated',
-      timeRange: 'Time Range',
-      all: 'All Time',
-      last30Days: 'Last 30 Days',
-      last7Days: 'Last 7 Days',
-      custom: 'Custom',
-    },
-    vi: {
-      dashboard: 'Bảng điều khiển',
-      selectModel: 'Chọn mô hình:',
-      AutoARIMA: 'AutoARIMA',
-      AutoETS: 'AutoETS',
-      AutoTheta: 'AutoTheta',
-      CES: 'CES',
-      priceTrends: 'Xu hướng giá',
-      date: 'Ngày',
-      price: 'Giá (USD/tấn)',
-      currentPrice: 'Giá hiện tại',
-      change24h: 'Thay đổi 24h',
-      weeklyTrend: 'Xu hướng tuần',
-      monthlyTrend: 'Xu hướng tháng',
-    },
-  };
-
-  const t = translations['en'];
 
   const chartData =
     data?.statistical_forecast?.map((item) => ({
       ...item,
-      displayDate: formatDate(item.date),
+      displayDate: formatDate(locale, item.date, false),
     })) || [];
 
   const mlChartData =
     data?.ml_forecast?.map((item) => ({
       ...item,
-      displayDate: formatDate(item.date),
+      displayDate: formatDate(locale, item.date, false),
     })) || [];
 
   // Calculate insights
@@ -212,87 +160,40 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
     ? getModelInsights(chartData, selectedModel)
     : null;
 
-  // Filter data based on date range
-  const filteredChartData = dateRange
-    ? chartData.filter((d) => {
-        const date = new Date(d.date);
-        return date >= dateRange[0] && date <= dateRange[1];
-      })
-    : chartData;
-
-  const filteredMlChartData = dateRange
-    ? mlChartData.filter((d) => {
-        const date = new Date(d.date);
-        return date >= dateRange[0] && date <= dateRange[1];
-      })
-    : mlChartData;
-
   return (
     <Card className="w-full">
-      <CardHeader>
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <CardTitle>{t.dashboard}</CardTitle>
-          <div className="flex items-center gap-2">
-            <Select
-              value={dateRange ? 'custom' : 'all'}
-              onValueChange={(value) => {
-                const now = new Date();
-                switch (value) {
-                  case 'last7Days':
-                    setDateRange([
-                      new Date(now.setDate(now.getDate() - 7)),
-                      new Date(),
-                    ]);
-                    break;
-                  case 'last30Days':
-                    setDateRange([
-                      new Date(now.setDate(now.getDate() - 30)),
-                      new Date(),
-                    ]);
-                    break;
-                  default:
-                    setDateRange(null);
-                }
-              }}
-            >
-              <SelectTrigger className="w-[140px]">
-                <SelectValue placeholder={t.timeRange} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t.all}</SelectItem>
-                <SelectItem value="last30Days">{t.last30Days}</SelectItem>
-                <SelectItem value="last7Days">{t.last7Days}</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      </CardHeader>
+      <CardHeader></CardHeader>
 
       <CardContent>
         <Tabs defaultValue="statistical" className="space-y-4">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="statistical">{t.statisticalModels}</TabsTrigger>
-            <TabsTrigger value="ml">{t.mlModels}</TabsTrigger>
+            <TabsTrigger value="statistical">
+              {t('aurora.statistical_models')}
+            </TabsTrigger>
+            <TabsTrigger value="ml">{t('aurora.ml_models')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="statistical" className="space-y-4">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <Select value={selectedModel} onValueChange={setSelectedModel}>
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder={t.selectModel} />
+                  <SelectValue placeholder={t('aurora_select_model')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="auto_arima">{t.auto_arima}</SelectItem>
-                  <SelectItem value="auto_ets">{t.auto_ets}</SelectItem>
-                  <SelectItem value="auto_theta">{t.auto_theta}</SelectItem>
-                  <SelectItem value="ces">{t.ces}</SelectItem>
+                  <SelectItem value="auto_arima">AutoARIMA</SelectItem>
+                  <SelectItem value="auto_ets">AutoETS</SelectItem>
+                  <SelectItem value="auto_theta">AutoTheta</SelectItem>
+                  <SelectItem value="ces">CES</SelectItem>
                 </SelectContent>
               </Select>
 
               {insights && (
                 <div className="text-sm text-muted-foreground">
-                  {t.lastUpdated}:{' '}
-                  {formatDate(chartData[chartData.length - 1]?.date)}
+                  {t('aurora.last_updated')}:{' '}
+                  {formatDate(
+                    locale,
+                    chartData[chartData.length - 1]?.created_at
+                  )}
                 </div>
               )}
             </div>
@@ -300,24 +201,22 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
             {insights && (
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <MetricCard
-                  title={t.currentPrice}
-                  value={getCurrentPrice(filteredChartData, selectedModel) || 0}
-                  previousValue={
-                    getCurrentPrice(filteredChartData, selectedModel) || 0
-                  }
+                  title={t('aurora.current_price')}
+                  value={getCurrentPrice(chartData, selectedModel) || 0}
+                  previousValue={getCurrentPrice(chartData, selectedModel) || 0}
                   type="currency"
                 />
                 <Card>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium">
-                      {t.forecastRange}
+                      {t('aurora.forecast_range')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-1">
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-muted-foreground">
-                          {t.high}
+                          {t('aurora.high')}
                         </span>
                         <span className="text-success font-medium">
                           {formatCurrency(insights.high)}
@@ -325,7 +224,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-muted-foreground">
-                          {t.low}
+                          {t('aurora.low')}
                         </span>
                         <span className="font-medium text-destructive">
                           {formatCurrency(insights.low)}
@@ -333,7 +232,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-muted-foreground">
-                          {t.average}
+                          {t('aurora.average')}
                         </span>
                         <span className="font-medium">
                           {formatCurrency(insights.average)}
@@ -346,7 +245,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                 <Card>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium">
-                      {t.trend}
+                      {t('aurora.trend')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -372,7 +271,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                 <Card>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium">
-                      {t.volatility}
+                      {t('aurora.volatility')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -390,7 +289,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
               <CardContent className="pt-6">
                 <div className="h-[400px]">
                   <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={filteredChartData}>
+                    <LineChart data={chartData}>
                       <CartesianGrid
                         strokeDasharray="3 3"
                         stroke={colors.grid}
@@ -422,11 +321,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                         wrapperStyle={{
                           paddingTop: '20px',
                         }}
-                        formatter={(value) => (
-                          <span style={{ color: colors.text }}>
-                            {t[value as keyof typeof t] || value}
-                          </span>
-                        )}
+                        formatter={(value) => <span>{value}</span>}
                       />
                       <Line
                         type="monotone"
@@ -434,7 +329,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                         stroke={colors.high}
                         strokeDasharray="3 3"
                         dot={false}
-                        name="90% Confidence (High)"
+                        name={t('aurora.90_confidence_high')}
                       />
                       <Line
                         type="monotone"
@@ -447,7 +342,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                           fill: colors.primary,
                           strokeWidth: 0,
                         }}
-                        name={t[selectedModel as keyof typeof t]}
+                        name={selectedModel}
                         animationDuration={300}
                       />
                       <Line
@@ -456,7 +351,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                         stroke={colors.low}
                         strokeDasharray="3 3"
                         dot={false}
-                        name="90% Confidence (Low)"
+                        name={t('aurora.90_confidence_lo')}
                       />
                     </LineChart>
                   </ResponsiveContainer>
@@ -470,7 +365,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
               <CardContent className="pt-6">
                 <div className="h-[400px]">
                   <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={filteredMlChartData}>
+                    <LineChart data={mlChartData}>
                       <CartesianGrid
                         strokeDasharray="3 3"
                         stroke={colors.grid}
@@ -502,11 +397,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                         wrapperStyle={{
                           paddingTop: '20px',
                         }}
-                        formatter={(value) => (
-                          <span style={{ color: colors.text }}>
-                            {t[value as keyof typeof t] || value}
-                          </span>
-                        )}
+                        formatter={(value) => <span>{value}</span>}
                       />
                       <Line
                         type="monotone"
@@ -519,7 +410,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                           fill: colors.primary,
                           strokeWidth: 0,
                         }}
-                        name={t.elasticnet}
+                        name="elasticnet"
                         animationDuration={300}
                       />
                       <Line
@@ -533,7 +424,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                           fill: colors.success,
                           strokeWidth: 0,
                         }}
-                        name={t.lightgbm}
+                        name="lightgbm"
                         animationDuration={300}
                       />
                       <Line
@@ -547,7 +438,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                           fill: colors.warning,
                           strokeWidth: 0,
                         }}
-                        name={t.xgboost}
+                        name="xgboost"
                         animationDuration={300}
                       />
                       <Line
@@ -561,7 +452,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                           fill: colors.info,
                           strokeWidth: 0,
                         }}
-                        name={t.catboost}
+                        name="catboost"
                         animationDuration={300}
                       />
                     </LineChart>
