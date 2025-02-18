@@ -34,6 +34,10 @@ export default async function WorkspaceHomePage({ params }: Props) {
 
   if (!workspace) notFound();
 
+  if (!forecast || !mlMetrics || !statsMetrics) {
+    return <div>Error loading data</div>;
+  }
+
   return (
     <>
       <FeatureSummary
