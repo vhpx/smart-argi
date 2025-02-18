@@ -268,7 +268,9 @@
     "error_updating_name": "Error updating name",
     "visibility_updated": "Visibility updated successfully",
     "error_updating_visibility": "Error updating visibility",
-    "error_deleting": "Error deleting document"
+    "error_deleting": "Error deleting document",
+    "domain_added": "Domain added",
+    "error_adding_domain": "Failed to add domain"
   },
   "date_helper": {
     "time-unit": "Time unit",
@@ -527,7 +529,9 @@
     "readings": "Readings",
     "diet_and_nutrition": "Diet & Nutrition",
     "progress": "Progress",
-    "metrics": "Metrics"
+    "metrics": "Metrics",
+    "crawlers": "Crawlers",
+    "queues": "Queues"
   },
   "team-tabs": {
     "overview": "Overview",
@@ -895,6 +899,13 @@
     "status": "Status",
     "started_at": "Started at",
     "finished_at": "Finished at",
+    "created_at": "Created at"
+  },
+  "crawled-url-data-table": {
+    "id": "ID",
+    "url": "URL",
+    "html": "HTML",
+    "markdown": "Markdown",
     "created_at": "Created at"
   },
   "ws-home": {
@@ -2463,6 +2474,35 @@
     }
   },
   "ai-whitelist": {
-    "add_email": "Add email"
+    "add_email": "Add email",
+    "add_domain": "Add domain"
+  },
+  "ws-ai-whitelist-domains": {
+    "plural": "Whitelisted domains",
+    "singular": "Whitelisted domain",
+    "description": "Whitelisted domains are used to allow specific domains to access AI features.",
+    "create": "Create whitelisted domain",
+    "create_description": "Create a whitelisted domain"
+  },
+  "ws-crawlers": {
+    "plural": "Crawlers",
+    "singular": "Crawler",
+    "description": "Crawlers are used to scrape data from websites.",
+    "create": "Create crawler",
+    "create_description": "Create a new crawler"
+  },
+  "ws-pipelines": {
+    "plural": "Pipelines",
+    "singular": "Pipeline",
+    "description": "Pipelines are used to run programmable workflows.",
+    "create": "Create pipeline",
+    "create_description": "Create a new pipeline"
+  },
+  "ws-queues": {
+    "plural": "Queues",
+    "singular": "Queue",
+    "description": "Queues are used to manage tasks and jobs.",
+    "create": "Create queue",
+    "create_description": "Create a new queue"
   }
 }

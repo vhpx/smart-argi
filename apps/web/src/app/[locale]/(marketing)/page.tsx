@@ -3,6 +3,12 @@
 import FloatingElements from './floating-elements';
 import GetStartedButton from './get-started-button';
 import GradientHeadline from './gradient-headline';
+<<<<<<< HEAD
+=======
+import { fireConfetti, fireRocket } from '@/lib/confetti';
+import { Badge } from '@tutur3u/ui/badge';
+import { Card } from '@tutur3u/ui/card';
+>>>>>>> main
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';

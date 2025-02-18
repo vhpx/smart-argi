@@ -1,19 +1,14 @@
 import AssistantGradientName from './assistant-gradient-name';
 import { FleetingAssistantMessage } from './fleeting-assistant-message';
-import { AIChat } from '@/types/db';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useChat } from '@repo/ai/react';
-import { type Message } from '@repo/ai/types';
-import { Button } from '@repo/ui/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-} from '@repo/ui/components/ui/form';
-import { Input } from '@repo/ui/components/ui/input';
-import { Separator } from '@repo/ui/components/ui/separator';
-import { toast } from '@repo/ui/hooks/use-toast';
+import { useChat } from '@tutur3u/ai/react';
+import { type Message } from '@tutur3u/ai/types';
+import { AIChat } from '@tutur3u/types/db';
+import { Button } from '@tutur3u/ui/button';
+import { Form, FormControl, FormField, FormItem } from '@tutur3u/ui/form';
+import { toast } from '@tutur3u/ui/hooks/use-toast';
+import { Input } from '@tutur3u/ui/input';
+import { Separator } from '@tutur3u/ui/separator';
 import { ArrowDownToLine, Expand, RotateCcw, Send } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';

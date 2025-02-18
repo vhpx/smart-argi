@@ -10,7 +10,6 @@ import {
 } from '../../table';
 import { DataTablePagination } from './data-table-pagination';
 import { DataTableToolbar } from './data-table-toolbar';
-import { cn } from '@repo/ui/lib/utils';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -24,6 +23,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { cn } from '@tutur3u/utils/format';
 import { ReactNode, useState } from 'react';
 
 export interface DataTableProps<TData, TValue> {

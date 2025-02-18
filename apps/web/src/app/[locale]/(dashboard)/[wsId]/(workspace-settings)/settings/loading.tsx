@@ -1,4 +1,4 @@
-import { Separator } from '@repo/ui/components/ui/separator';
+import { Separator } from '@tutur3u/ui/separator';
 
 export default function Loading() {
   return (

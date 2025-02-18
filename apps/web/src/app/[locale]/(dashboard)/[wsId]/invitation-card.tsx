@@ -1,13 +1,9 @@
 'use client';
 
 import LoadingIndicator from '@/components/common/LoadingIndicator';
-import { Workspace } from '@/types/primitives/Workspace';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@repo/ui/components/ui/avatar';
-import { Button } from '@repo/ui/components/ui/button';
+import { Workspace } from '@tutur3u/types/primitives/Workspace';
+import { Avatar, AvatarFallback, AvatarImage } from '@tutur3u/ui/avatar';
+import { Button } from '@tutur3u/ui/button';
 import {
   Card,
   CardContent,
@@ -15,8 +11,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@repo/ui/components/ui/card';
-import { toast } from '@repo/ui/hooks/use-toast';
+} from '@tutur3u/ui/card';
+import { toast } from '@tutur3u/ui/hooks/use-toast';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';

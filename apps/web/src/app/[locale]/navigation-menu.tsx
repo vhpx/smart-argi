@@ -1,8 +1,52 @@
 'use client';
 
+<<<<<<< HEAD
 import { cn } from '@/lib/utils';
 import { Badge } from '@repo/ui/components/ui/badge';
 import { NavigationMenuLink } from '@repo/ui/components/ui/navigation-menu';
+=======
+import { cn } from '@tutur3u/utils/format';
+import { Badge } from '@tutur3u/ui/badge';
+import { Card } from '@tutur3u/ui/card';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from '@tutur3u/ui/navigation-menu';
+import {
+  Archive,
+  Banknote,
+  BookText,
+  Brain,
+  Building,
+  Calendar,
+  CircleCheck,
+  Factory,
+  FileText,
+  Github,
+  GraduationCap,
+  HardDrive,
+  HardHat,
+  Hotel,
+  Mail,
+  Paintbrush,
+  Pill,
+  Presentation,
+  Shield,
+  Store,
+  Users,
+  UsersRound,
+  Utensils,
+  Workflow,
+  Zap,
+} from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+>>>>>>> main
 import * as React from 'react';
 
 export function MainNavigationMenu() {

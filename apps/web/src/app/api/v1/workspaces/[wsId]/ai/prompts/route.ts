@@ -1,11 +1,11 @@
 import { appConfig } from '@/constants/configs';
-import { AIPrompt } from '@/types/db';
 import {
   GoogleGenerativeAI,
   HarmBlockThreshold,
   HarmCategory,
 } from '@google/generative-ai';
-import { createClient } from '@repo/supabase/next/server';
+import { createClient } from '@tutur3u/supabase/next/server';
+import { AIPrompt } from '@tutur3u/types/db';
 import { NextResponse } from 'next/server';
 
 interface Params {

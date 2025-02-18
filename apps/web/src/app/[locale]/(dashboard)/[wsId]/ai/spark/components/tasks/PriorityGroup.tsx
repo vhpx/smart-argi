@@ -2,13 +2,13 @@
 
 import { Priority, Task } from '../../types';
 import { TaskCard } from './TaskCard';
-import { cn } from '@/lib/utils';
+import { cn } from '@tutur3u/utils/format';
 import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@repo/ui/components/ui/accordion';
-import { Badge } from '@repo/ui/components/ui/badge';
+} from '@tutur3u/ui/accordion';
+import { Badge } from '@tutur3u/ui/badge';
 
 interface PriorityGroupProps {
   priority: Priority;

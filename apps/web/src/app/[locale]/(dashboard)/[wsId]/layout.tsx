@@ -14,7 +14,32 @@ import {
   getWorkspace,
   verifySecret,
 } from '@/lib/workspace-helper';
+<<<<<<< HEAD
 import { Box, ChartArea, Clock, Cog, Database, HardDrive } from 'lucide-react';
+=======
+import {
+  Archive,
+  Banknote,
+  Box,
+  Calendar,
+  ChartArea,
+  CircleCheck,
+  Clock,
+  Cog,
+  Database,
+  FileText,
+  GraduationCap,
+  HardDrive,
+  Logs,
+  Mail,
+  MessageCircleIcon,
+  Play,
+  Presentation,
+  ScanSearch,
+  Sparkles,
+  Users,
+} from 'lucide-react';
+>>>>>>> main
 import { getTranslations } from 'next-intl/server';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -55,7 +80,7 @@ export default async function Layout({ children, params }: LayoutProps) {
           name: 'ENABLE_AI',
           value: 'true',
         })) || withoutPermission('ai_lab'),
-      experimental: 'beta',
+      experimental: 'alpha',
     },
     {
       title: t('sidebar_tabs.datasets'),
@@ -68,9 +93,37 @@ export default async function Layout({ children, params }: LayoutProps) {
           name: 'ENABLE_AI',
           value: 'true',
         })) || withoutPermission('ai_lab'),
-      shortcut: 'A',
       experimental: 'beta',
     },
+<<<<<<< HEAD
+=======
+    {
+      title: t('sidebar_tabs.pipelines'),
+      href: `/${wsId}/pipelines`,
+      icon: <Play className="h-4 w-4" />,
+      disabled:
+        !(await verifySecret({
+          forceAdmin: true,
+          wsId,
+          name: 'ENABLE_AI',
+          value: 'true',
+        })) || withoutPermission('ai_lab'),
+      experimental: 'alpha',
+    },
+    {
+      title: t('sidebar_tabs.crawlers'),
+      href: `/${wsId}/crawlers`,
+      icon: <ScanSearch className="h-4 w-4" />,
+      disabled:
+        !(await verifySecret({
+          forceAdmin: true,
+          wsId,
+          name: 'ENABLE_AI',
+          value: 'true',
+        })) || withoutPermission('ai_lab'),
+      experimental: 'alpha',
+    },
+>>>>>>> main
     {
       title: t('sidebar_tabs.cron'),
       href: `/${wsId}/cron`,
@@ -82,8 +135,20 @@ export default async function Layout({ children, params }: LayoutProps) {
           name: 'ENABLE_AI',
           value: 'true',
         })) || withoutPermission('ai_lab'),
-      shortcut: 'A',
-      experimental: 'beta',
+      experimental: 'alpha',
+    },
+    {
+      title: t('sidebar_tabs.queues'),
+      href: `/${wsId}/queues`,
+      icon: <Logs className="h-4 w-4" />,
+      disabled:
+        !(await verifySecret({
+          forceAdmin: true,
+          wsId,
+          name: 'ENABLE_AI',
+          value: 'true',
+        })) || withoutPermission('ai_lab'),
+      experimental: 'alpha',
     },
     {
       title: t('sidebar_tabs.drive'),

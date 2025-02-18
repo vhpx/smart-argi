@@ -1,17 +1,17 @@
 import { SectionProps } from './index';
-import { cn } from '@/lib/utils';
-import { WorkspaceUser } from '@/types/primitives/WorkspaceUser';
+import { cn } from '@tutur3u/utils/format';
 import { getInitials } from '@/utils/name-helper';
-import { createClient } from '@repo/supabase/next/client';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@repo/ui/components/ui/avatar';
-import { Button } from '@repo/ui/components/ui/button';
-import SearchBar from '@repo/ui/components/ui/custom/search-bar';
 import { useQuery } from '@tanstack/react-query';
+<<<<<<< HEAD
 import { X } from 'lucide-react';
+=======
+import { createClient } from '@tutur3u/supabase/next/client';
+import { WorkspaceUser } from '@tutur3u/types/primitives/WorkspaceUser';
+import { Avatar, AvatarFallback, AvatarImage } from '@tutur3u/ui/avatar';
+import { Button } from '@tutur3u/ui/button';
+import SearchBar from '@tutur3u/ui/custom/search-bar';
+import { User, X } from 'lucide-react';
+>>>>>>> main
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 

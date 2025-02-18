@@ -1,6 +1,5 @@
 'use client';
 
-import { cn } from '../../lib/utils';
 import { buttonVariants } from './button';
 import { DateInput } from './custom/date-input';
 import {
@@ -10,12 +9,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from './select';
+import { cn } from '@tutur3u/utils/format';
 import { format } from 'date-fns';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import * as React from 'react';
-import { DayPicker, DayPickerProps } from 'react-day-picker';
+import { DayPicker } from 'react-day-picker';
 
-export type CalendarProps = DayPickerProps & {
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
   // eslint-disable-next-line no-unused-vars
   onSubmit?: (date: Date) => void;
 };
@@ -208,7 +208,5 @@ function Calendar({
     </div>
   );
 }
-
-Calendar.displayName = 'Calendar';
 
 export { Calendar };

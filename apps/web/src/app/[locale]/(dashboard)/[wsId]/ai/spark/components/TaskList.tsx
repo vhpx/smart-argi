@@ -1,20 +1,20 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@tutur3u/utils/format';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@repo/ui/components/ui/accordion';
-import { Badge } from '@repo/ui/components/ui/badge';
+} from '@tutur3u/ui/accordion';
+import { Badge } from '@tutur3u/ui/badge';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@repo/ui/components/ui/card';
+} from '@tutur3u/ui/card';
 import { CalendarDays } from 'lucide-react';
 
 interface Task {

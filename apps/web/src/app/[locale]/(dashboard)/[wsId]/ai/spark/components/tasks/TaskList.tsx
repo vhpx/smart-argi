@@ -1,15 +1,15 @@
 'use client';
 
 import { Priority, Task, TaskStatus } from '../../types';
-import { Badge } from '@repo/ui/components/ui/badge';
-import { Button } from '@repo/ui/components/ui/button';
+import { Badge } from '@tutur3u/ui/badge';
+import { Button } from '@tutur3u/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@repo/ui/components/ui/card';
+} from '@tutur3u/ui/card';
 import { format, parseISO } from 'date-fns';
 import {
   AlertCircle,

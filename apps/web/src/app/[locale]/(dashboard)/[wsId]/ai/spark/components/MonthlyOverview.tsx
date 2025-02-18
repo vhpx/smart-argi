@@ -1,14 +1,9 @@
 'use client';
 
-import { cn } from '@/lib/utils';
-import { Badge } from '@repo/ui/components/ui/badge';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@repo/ui/components/ui/card';
-import { Progress } from '@repo/ui/components/ui/progress';
+import { cn } from '@tutur3u/utils/format';
+import { Badge } from '@tutur3u/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@tutur3u/ui/card';
+import { Progress } from '@tutur3u/ui/progress';
 import { InfoIcon } from 'lucide-react';
 
 interface Task {

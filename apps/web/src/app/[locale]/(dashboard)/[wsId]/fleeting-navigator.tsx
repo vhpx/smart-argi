@@ -2,10 +2,10 @@
 
 import FleetingAssistant from './fleeting-assistant';
 import FleetingNavigatorMenu from './fleeting-navigator-menu';
-import { AIChat } from '@/types/db';
 import { useClickOutside } from '@mantine/hooks';
-import { useChat } from '@repo/ai/react';
-import { toast } from '@repo/ui/hooks/use-toast';
+import { useChat } from '@tutur3u/ai/react';
+import { AIChat } from '@tutur3u/types/db';
+import { toast } from '@tutur3u/ui/hooks/use-toast';
 import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -28,7 +28,7 @@ export default function FleetingNavigator({ wsId }: { wsId: string }) {
   >();
 
   const defaultProvider = 'google';
-  const defaultModel = 'gemini-2.0-flash-exp';
+  const defaultModel = 'gemini-2.0-flash-001';
 
   const [chat, setChat] = useState<Partial<AIChat> | undefined>();
 

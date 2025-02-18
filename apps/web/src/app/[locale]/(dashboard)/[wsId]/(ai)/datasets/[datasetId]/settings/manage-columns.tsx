@@ -1,17 +1,17 @@
 'use client';
 
 import { EditColumnDialog } from './edit-column-dialog';
-import { Button } from '@repo/ui/components/ui/button';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Button } from '@tutur3u/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@repo/ui/components/ui/dialog';
-import { Input } from '@repo/ui/components/ui/input';
-import { cn } from '@repo/ui/lib/utils';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+} from '@tutur3u/ui/dialog';
+import { Input } from '@tutur3u/ui/input';
+import { cn } from '@tutur3u/utils/format';
 import { Loader2, Pencil, Plus, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';

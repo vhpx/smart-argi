@@ -3,7 +3,7 @@ import {
   HarmBlockThreshold,
   HarmCategory,
 } from '@google/generative-ai';
-import { createClient } from '@repo/supabase/next/server';
+import { createClient } from '@tutur3u/supabase/next/server';
 import { Message } from 'ai';
 import { NextResponse } from 'next/server';
 
@@ -11,7 +11,7 @@ export const runtime = 'edge';
 export const maxDuration = 60;
 export const preferredRegion = 'sin1';
 
-const model = 'gemini-2.0-flash-exp';
+const model = 'gemini-2.0-flash-001';
 
 // eslint-disable-next-line no-undef
 const API_KEY = process.env.GOOGLE_GENERATIVE_AI_API_KEY || '';

@@ -1,18 +1,18 @@
 'use client';
 
 import SecretForm from './form';
-import { WorkspaceSecret } from '@/types/primitives/WorkspaceSecret';
-import { Button } from '@repo/ui/components/ui/button';
-import ModifiableDialogTrigger from '@repo/ui/components/ui/custom/modifiable-dialog-trigger';
+import { Row } from '@tanstack/react-table';
+import { WorkspaceSecret } from '@tutur3u/types/primitives/WorkspaceSecret';
+import { Button } from '@tutur3u/ui/button';
+import ModifiableDialogTrigger from '@tutur3u/ui/custom/modifiable-dialog-trigger';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@repo/ui/components/ui/dropdown-menu';
-import { toast } from '@repo/ui/hooks/use-toast';
-import { Row } from '@tanstack/react-table';
+} from '@tutur3u/ui/dropdown-menu';
+import { toast } from '@tutur3u/ui/hooks/use-toast';
 import { Ellipsis } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
