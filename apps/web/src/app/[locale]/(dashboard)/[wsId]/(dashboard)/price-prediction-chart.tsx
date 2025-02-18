@@ -1,6 +1,5 @@
 'use client';
 
-import { fetchAuroraForecast } from '@/lib/aurora';
 import type { AuroraForecast } from '@tutur3u/types/db';
 import { Card, CardContent, CardHeader, CardTitle } from '@tutur3u/ui/card';
 import {
@@ -11,7 +10,7 @@ import {
   SelectValue,
 } from '@tutur3u/ui/select';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Area,
   CartesianGrid,
@@ -79,28 +78,11 @@ const formatPercentage = (value: number) => {
   }).format(value / 100);
 };
 
-const PricePredictionChart = () => {
+const PricePredictionChart = ({ data }: { data: AuroraForecast }) => {
   const { resolvedTheme } = useTheme();
   const colors = resolvedTheme === 'dark' ? COLORS.dark : COLORS.light;
   const [selectedModel, setSelectedModel] = useState('elasticnet');
-  const [data, setData] = useState<AuroraForecast | null>(null);
-  const [loading, setLoading] = useState(true);
   const [dateRange, setDateRange] = useState<[Date, Date] | null>(null);
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const response = await fetchAuroraForecast();
-        setData(response);
-      } catch (error) {
-        console.error('Failed to fetch forecast:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, []);
 
   const translations = {
     en: {
@@ -219,21 +201,6 @@ const PricePredictionChart = () => {
   const insights = filteredChartData.length
     ? getModelInsights(filteredChartData, selectedModel)
     : null;
-
-  if (loading) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>{t.pricePrediction}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex h-[400px] items-center justify-center">
-            Loading...
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
 
   return (
     <Card>

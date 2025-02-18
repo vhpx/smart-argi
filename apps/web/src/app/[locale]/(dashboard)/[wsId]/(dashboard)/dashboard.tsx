@@ -1,10 +1,7 @@
 'use client';
 
-import { fetchAuroraForecast } from '@/lib/aurora';
 import type { AuroraForecast } from '@tutur3u/types/db';
-import { Alert, AlertDescription, AlertTitle } from '@tutur3u/ui/alert';
 import { Card, CardContent, CardHeader, CardTitle } from '@tutur3u/ui/card';
-import { useToast } from '@tutur3u/ui/hooks/use-toast';
 import {
   Select,
   SelectContent,
@@ -12,12 +9,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@tutur3u/ui/select';
-import { Skeleton } from '@tutur3u/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@tutur3u/ui/tabs';
 import { cn } from '@tutur3u/utils/format';
-import { AlertCircle, ArrowDownIcon, ArrowUpIcon } from 'lucide-react';
+import { ArrowDownIcon, ArrowUpIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   CartesianGrid,
   Legend,
@@ -113,41 +109,11 @@ const calculateTrend = (current: number, previous: number) => {
   };
 };
 
-const Dashboard = () => {
+const Dashboard = ({ data }: { data: AuroraForecast }) => {
   const { resolvedTheme } = useTheme();
   const colors = resolvedTheme === 'dark' ? COLORS.dark : COLORS.light;
   const [selectedModel, setSelectedModel] = useState('auto_arima');
-  const [data, setData] = useState<AuroraForecast | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [dateRange, setDateRange] = useState<[Date, Date] | null>(null);
-  const { toast } = useToast();
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const response = await fetchAuroraForecast();
-        setData(response);
-      } catch (error) {
-        const message =
-          error instanceof Error
-            ? error.message
-            : 'Failed to fetch forecast data';
-        setError(message);
-        toast({
-          variant: 'destructive',
-          title: 'Error',
-          description: message,
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, [toast]);
 
   const translations = {
     en: {
@@ -204,54 +170,6 @@ const Dashboard = () => {
   };
 
   const t = translations['en'];
-
-  if (loading) {
-    return (
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Skeleton className="h-6 w-[200px]" />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <Skeleton className="h-[60px] w-full" />
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <Skeleton key={i} className="h-[100px] w-full" />
-              ))}
-            </div>
-            <Skeleton className="h-[400px] w-full" />
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  if (error) {
-    return (
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle>{t.dashboard}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>{t.error}</AlertTitle>
-            <AlertDescription className="flex flex-col gap-2">
-              {error}
-              <button
-                onClick={() => window.location.reload()}
-                className="w-fit rounded-md bg-destructive/10 px-4 py-2 text-sm font-medium text-destructive hover:bg-destructive/20"
-              >
-                {t.tryAgain}
-              </button>
-            </AlertDescription>
-          </Alert>
-        </CardContent>
-      </Card>
-    );
-  }
 
   const chartData =
     data?.statistical_forecast?.map((item) => ({

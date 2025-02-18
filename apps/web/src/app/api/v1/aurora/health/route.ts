@@ -1,21 +1,13 @@
-import { createClient } from '@tutur3u/supabase/next/server';
-import { NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from "next/server";
 
-export async function POST() {
-  const supabase = await createClient();
+export async function POST(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams;
+  const key = searchParams.get("key");
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json({ message: 'Not authenticated' }, { status: 401 });
-  }
-
-  if (!user.email?.endsWith('@tuturuuu.com')) {
+  if (key !== process.env.AURORA_API_KEY) {
     return NextResponse.json(
-      { message: 'Unauthorized email domain' },
-      { status: 403 }
+      { message: "Invalid API key" },
+      { status: 401 },
     );
   }
 
@@ -23,10 +15,10 @@ export async function POST() {
 
   if (!res.ok) {
     return NextResponse.json(
-      { message: 'Error fetching health' },
-      { status: 500 }
+      { message: "Error fetching health" },
+      { status: 500 },
     );
   }
 
-  return NextResponse.json({ message: 'Success' });
+  return NextResponse.json({ message: "Success" });
 }

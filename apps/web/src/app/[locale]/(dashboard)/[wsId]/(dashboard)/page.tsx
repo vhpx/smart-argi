@@ -1,8 +1,13 @@
 import AdvancedAnalytics from './advanced-analytics';
 import AuroraActions from './aurora-actions';
 import CommodityComparison from './commodity-comparison';
-import DashboardChart from './dashboard';
+import Dashboard from './dashboard';
 import PricePredictionChart from './price-prediction-chart';
+import {
+  fetchAuroraForecast,
+  fetchAuroraMLMetrics,
+  fetchAuroraStatisticalMetrics,
+} from '@/lib/aurora';
 import { getCurrentSupabaseUser } from '@/lib/user-helper';
 import { getWorkspace } from '@/lib/workspace-helper';
 import FeatureSummary from '@tutur3u/ui/custom/feature-summary';
@@ -22,6 +27,10 @@ export default async function WorkspaceHomePage({ params }: Props) {
 
   const user = await getCurrentSupabaseUser();
   const workspace = await getWorkspace(wsId);
+
+  const forecast = await fetchAuroraForecast();
+  const mlMetrics = await fetchAuroraMLMetrics();
+  const statsMetrics = await fetchAuroraStatisticalMetrics();
 
   if (!workspace) notFound();
 
@@ -43,10 +52,13 @@ export default async function WorkspaceHomePage({ params }: Props) {
       <Separator className="my-4" />
       <div className="grid grid-cols-1 gap-4">
         {user?.email?.endsWith('@tuturuuu.com') && <AuroraActions />}
-        <DashboardChart />
-        <PricePredictionChart />
-        <CommodityComparison />
-        <AdvancedAnalytics />
+        <Dashboard data={forecast} />
+        <PricePredictionChart data={forecast} />
+        <CommodityComparison data={forecast} />
+        <AdvancedAnalytics
+          mlMetrics={mlMetrics}
+          statisticalMetrics={statsMetrics}
+        />
       </div>
     </>
   );

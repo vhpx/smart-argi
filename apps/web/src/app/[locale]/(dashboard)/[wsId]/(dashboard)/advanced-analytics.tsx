@@ -1,21 +1,12 @@
 'use client';
 
-import {
-  fetchAuroraMLMetrics,
-  fetchAuroraStatisticalMetrics,
-} from '@/lib/aurora';
 import type {
   AuroraMLMetrics,
   AuroraStatisticalMetrics,
 } from '@tutur3u/types/db';
-import { Alert, AlertDescription, AlertTitle } from '@tutur3u/ui/alert';
 import { Card, CardContent, CardHeader, CardTitle } from '@tutur3u/ui/card';
-import { useToast } from '@tutur3u/ui/hooks/use-toast';
-import { Skeleton } from '@tutur3u/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@tutur3u/ui/tabs';
-import { AlertCircle } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
 import {
   Bar,
   BarChart,
@@ -188,46 +179,15 @@ const translations: { en: Translations; vi: Partial<Translations> } = {
   },
 };
 
-const AdvancedAnalytics = () => {
+const AdvancedAnalytics = ({
+  mlMetrics,
+  statisticalMetrics,
+}: {
+  mlMetrics: AuroraMLMetrics[];
+  statisticalMetrics: AuroraStatisticalMetrics[];
+}) => {
   const { resolvedTheme } = useTheme();
   const colors = resolvedTheme === 'dark' ? COLORS.dark : COLORS.light;
-  const [statisticalMetrics, setStatisticalMetrics] = useState<
-    AuroraStatisticalMetrics[]
-  >([]);
-  const [mlMetrics, setMLMetrics] = useState<AuroraMLMetrics[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const { toast } = useToast();
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const [statistical, ml] = await Promise.all([
-          fetchAuroraStatisticalMetrics(),
-          fetchAuroraMLMetrics(),
-        ]);
-        setStatisticalMetrics(statistical);
-        setMLMetrics(ml);
-      } catch (error) {
-        const message =
-          error instanceof Error
-            ? error.message
-            : 'Failed to fetch metrics data';
-        setError(message);
-        toast({
-          variant: 'destructive',
-          title: 'Error',
-          description: message,
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, [toast]);
 
   const t = translations['en'];
 
@@ -295,49 +255,6 @@ const AdvancedAnalytics = () => {
     statisticalMetrics.filter((m) => !m.no_scaling)
   );
   const mlScores = calculateModelScores(mlMetrics);
-
-  if (loading) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Skeleton className="h-6 w-[200px]" />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <Skeleton className="h-[60px] w-full" />
-            <Skeleton className="h-[400px] w-full" />
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  if (error) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>{t.advancedAnalytics}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>{t.error}</AlertTitle>
-            <AlertDescription className="flex flex-col gap-2">
-              {error}
-              <button
-                onClick={() => window.location.reload()}
-                className="w-fit rounded-md bg-destructive/10 px-4 py-2 text-sm font-medium text-destructive hover:bg-destructive/20"
-              >
-                {t.tryAgain}
-              </button>
-            </AlertDescription>
-          </Alert>
-        </CardContent>
-      </Card>
-    );
-  }
 
   const statisticalData = statisticalMetrics
     .filter((metric) => metric.no_scaling)
@@ -407,6 +324,7 @@ const AdvancedAnalytics = () => {
             )}
 
             <MetricsChart
+              tag="statistical"
               data={[
                 ...statisticalData,
                 ...statisticalScaledData.map((d) => ({
@@ -416,13 +334,6 @@ const AdvancedAnalytics = () => {
               ]}
               scores={statisticalScores?.scores}
             />
-
-            {statisticalScores && (
-              <ModelInsightsSection
-                scores={statisticalScores.scores}
-                translations={t}
-              />
-            )}
           </TabsContent>
 
           <TabsContent value="ml">
@@ -451,10 +362,7 @@ const AdvancedAnalytics = () => {
                 />
               </div>
             )}
-            <MetricsChart data={mlData} scores={mlScores?.scores} />
-            {mlScores && (
-              <ModelInsightsSection scores={mlScores.scores} translations={t} />
-            )}
+            <MetricsChart tag="ml" data={mlData} scores={mlScores?.scores} />
           </TabsContent>
         </Tabs>
       </CardContent>
@@ -604,124 +512,12 @@ const ModelScoreCard = ({
   );
 };
 
-const ModelInsightsSection = ({
-  scores,
-  translations,
-}: {
-  scores?: {
-    model: string;
-    accuracyScore: number;
-    consistencyScore: number;
-    overallScore: number;
-  }[];
-  translations: Translations;
-}) => {
-  if (!scores || scores.length === 0) return null;
-
-  const getModelStrengths = (score: (typeof scores)[0]) => {
-    const strengths = [];
-    if (score.accuracyScore >= 85) strengths.push(translations.highAccuracy);
-    if (score.consistencyScore >= 80)
-      strengths.push(translations.goodConsistency);
-    if (score.overallScore >= 85) strengths.push(translations.lowError);
-    return strengths;
-  };
-
-  const getModelWeaknesses = (score: (typeof scores)[0]) => {
-    const weaknesses = [];
-    if (score.accuracyScore < 70) weaknesses.push('Accuracy');
-    if (score.consistencyScore < 70) weaknesses.push('Consistency');
-    if (score.overallScore < 70) weaknesses.push('Overall Performance');
-    return weaknesses;
-  };
-
-  const sortedScores = [...scores].sort(
-    (a, b) => b.overallScore - a.overallScore
-  );
-  const bestModel = sortedScores[0];
-  const worstModel = sortedScores[sortedScores.length - 1];
-
-  if (!bestModel || !worstModel) return null;
-
-  return (
-    <Card className="mt-6">
-      <CardHeader>
-        <CardTitle>{translations.comparisonInsights}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="grid gap-6 md:grid-cols-2">
-          <div>
-            <h4 className="mb-4 text-lg font-medium">{bestModel.model}</h4>
-            <div className="space-y-4">
-              <div>
-                <h5 className="text-success mb-2 font-medium">
-                  {translations.modelStrengths}
-                </h5>
-                <ul className="space-y-1">
-                  {getModelStrengths(bestModel).map((strength) => (
-                    <li
-                      key={strength}
-                      className="flex items-center gap-2 text-sm"
-                    >
-                      <span className="text-success">✓</span> {strength}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              {getModelWeaknesses(bestModel).length > 0 && (
-                <div>
-                  <h5 className="text-warning mb-2 font-medium">
-                    {translations.needsImprovement}
-                  </h5>
-                  <ul className="space-y-1">
-                    {getModelWeaknesses(bestModel).map((weakness) => (
-                      <li
-                        key={weakness}
-                        className="flex items-center gap-2 text-sm"
-                      >
-                        <span className="text-warning">!</span> {weakness}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <h4 className="mb-4 text-lg font-medium">
-              {translations.recommendations}
-            </h4>
-            <div className="space-y-2">
-              {bestModel.accuracyScore - worstModel.accuracyScore > 15 && (
-                <p className="text-sm">
-                  Consider analyzing the features and training approach of{' '}
-                  {bestModel.model} to improve {worstModel.model}'s accuracy.
-                </p>
-              )}
-              {bestModel.consistencyScore - worstModel.consistencyScore >
-                15 && (
-                <p className="text-sm">
-                  Investigate the stability factors in {bestModel.model} to
-                  enhance {worstModel.model}'s consistency.
-                </p>
-              )}
-              <p className="text-sm">
-                Regular model retraining and validation can help maintain and
-                improve performance across all metrics.
-              </p>
-            </div>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
-
 const MetricsChart = ({
+  tag,
   data,
   scores,
 }: {
+  tag: string;
   data: any[];
   scores?: {
     model: string;
@@ -825,15 +621,21 @@ const MetricsChart = ({
 
       {scores && (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {scores.map((score) => (
-            <Card
-              key={score.model}
-              className="transition-all duration-200 hover:shadow-md"
-            >
-              <CardContent className="pt-6">
-                <h3 className="text-base font-medium">{score.model}</h3>
-                <div className="mt-4 space-y-3">
-                  <div className="space-y-2">
+          {scores
+            // deduplicate models
+            .filter(
+              (score, index, self) =>
+                self.findIndex((s) => s.model === score.model) === index
+            )
+            .map((score) => (
+              <Card
+                key={`${tag}-${score.model}`}
+                className="transition-all duration-200 hover:shadow-md"
+              >
+                <CardContent className="pt-6">
+                  <h3 className="text-base font-medium">{score.model}</h3>
+                  <div className="mt-4 space-y-3">
+                    {/* <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
                         Accuracy
@@ -851,51 +653,51 @@ const MetricsChart = ({
                         }}
                       />
                     </div>
-                  </div>
+                  </div> */}
 
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">
-                        Consistency
-                      </span>
-                      <span className="font-medium">
-                        {formatPercentage(score.consistencyScore)}
-                      </span>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground">
+                          Consistency
+                        </span>
+                        <span className="font-medium">
+                          {formatPercentage(score.consistencyScore)}
+                        </span>
+                      </div>
+                      <div className="h-2 overflow-hidden rounded-full bg-muted/20">
+                        <div
+                          className="h-full rounded-full transition-all duration-300"
+                          style={{
+                            width: `${score.consistencyScore}%`,
+                            background: `linear-gradient(90deg, ${colors.gradient.from}, ${colors.gradient.to})`,
+                          }}
+                        />
+                      </div>
                     </div>
-                    <div className="h-2 overflow-hidden rounded-full bg-muted/20">
-                      <div
-                        className="h-full rounded-full transition-all duration-300"
-                        style={{
-                          width: `${score.consistencyScore}%`,
-                          background: `linear-gradient(90deg, ${colors.gradient.from}, ${colors.gradient.to})`,
-                        }}
-                      />
-                    </div>
-                  </div>
 
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">
-                        Overall
-                      </span>
-                      <span className="font-medium">
-                        {formatPercentage(score.overallScore)}
-                      </span>
-                    </div>
-                    <div className="h-2 overflow-hidden rounded-full bg-muted/20">
-                      <div
-                        className="h-full rounded-full transition-all duration-300"
-                        style={{
-                          width: `${score.overallScore}%`,
-                          background: `linear-gradient(90deg, ${colors.gradient.from}, ${colors.gradient.to})`,
-                        }}
-                      />
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground">
+                          Overall
+                        </span>
+                        <span className="font-medium">
+                          {formatPercentage(score.overallScore)}
+                        </span>
+                      </div>
+                      <div className="h-2 overflow-hidden rounded-full bg-muted/20">
+                        <div
+                          className="h-full rounded-full transition-all duration-300"
+                          style={{
+                            width: `${score.overallScore}%`,
+                            background: `linear-gradient(90deg, ${colors.gradient.from}, ${colors.gradient.to})`,
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            ))}
         </div>
       )}
     </div>

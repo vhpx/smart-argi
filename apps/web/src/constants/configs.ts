@@ -1,11 +1,11 @@
-import { DEV_MODE } from './common';
+import { DEV_MODE } from "./common";
 
 export const siteConfig = {
-  name: 'RMIT Smart Agri',
-  url: DEV_MODE ? 'http://localhost:7803' : 'https://tuturuuu.com',
+  name: "RMIT Smart Agri",
+  url: DEV_MODE ? "http://localhost:7803" : "https://smartargi.ai",
   ogImage: DEV_MODE
-    ? 'http://localhost:7803/media/logos/og-image.png'
-    : 'https://tuturuuu.com/media/logos/og-image.png',
+    ? "http://localhost:7803/media/logos/og-image.png"
+    : "https://smartargi.ai/media/logos/og-image.png",
 };
 
 export interface AppConfig {
@@ -36,15 +36,15 @@ export interface AppConfig {
 export const appConfig: AppConfig = {
   openai: {
     // baseURL: process.env.OPENAI_BASE_URL,
-    apiKey: process.env.OPENAI_API_KEY || '',
+    apiKey: process.env.OPENAI_API_KEY || "",
   },
   google: {
     // baseURL: process.env.GOOGLE_GENERATIVE_AI_BASE_URL,
-    apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY || '',
+    apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY || "",
   },
   anthropic: {
     // baseURL: process.env.ANTHROPIC_BASE_URL,
-    apiKey: process.env.ANTHROPIC_API_KEY || '',
+    apiKey: process.env.ANTHROPIC_API_KEY || "",
   },
   vertex: {
     project: process.env.GOOGLE_VERTEX_PROJECT,
@@ -55,5 +55,5 @@ export const appConfig: AppConfig = {
     privateKeyId: process.env.GOOGLE_VERTEX_PRIVATE_KEY_ID,
     credentials: process.env.GOOGLE_APPLICATION_CREDENTIALS,
   },
-  defaultModel: process.env.DEFAULT_AI_MODEL || 'gemini-2.0-flash-001',
+  defaultModel: process.env.DEFAULT_AI_MODEL || "gemini-2.0-flash-001",
 };
