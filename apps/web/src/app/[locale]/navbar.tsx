@@ -5,7 +5,6 @@ import { MainNavigationMenu } from './navigation-menu';
 import ServerMenu from './server-menu';
 import WorkspaceSelect from './workspace-select';
 import { cn } from '@tutur3u/utils/format';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
 
@@ -28,19 +27,19 @@ export default function Navbar({
         <div className="relative flex items-center justify-between gap-2 md:gap-4">
           <div className="flex w-full items-center gap-2">
             <Link href="/" className="flex flex-none items-center gap-2">
-              <Image
+              {/* <Image
                 src="/media/logos/transparent.png"
                 className="h-8 w-8"
                 width={32}
                 height={32}
                 alt="logo"
-              />
+              /> */}
               <LogoTitle />
             </Link>
 
             <Suspense
               fallback={
-                <div className="bg-foreground/5 h-10 w-32 animate-pulse rounded-lg" />
+                <div className="h-10 w-32 animate-pulse rounded-lg bg-foreground/5" />
               }
             >
               <WorkspaceSelect />
@@ -58,7 +57,7 @@ export default function Navbar({
 
             <Suspense
               fallback={
-                <div className="bg-foreground/5 h-10 w-[88px] animate-pulse rounded-lg" />
+                <div className="h-10 w-[88px] animate-pulse rounded-lg bg-foreground/5" />
               }
             >
               <NavbarActions hideMetadata={hideMetadata} />

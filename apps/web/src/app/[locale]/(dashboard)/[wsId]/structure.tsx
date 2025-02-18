@@ -5,7 +5,6 @@ import WorkspaceSelect from '../../workspace-select';
 import { Nav } from './nav';
 import { NavLink } from '@/components/navigation';
 import { PROD_MODE, ROOT_WORKSPACE_ID } from '@/constants/common';
-import { cn } from '@tutur3u/utils/format';
 import { Workspace } from '@tutur3u/types/primitives/Workspace';
 import { WorkspaceUser } from '@tutur3u/types/primitives/WorkspaceUser';
 import {
@@ -30,10 +29,10 @@ import {
 } from '@tutur3u/ui/resizable';
 import { Separator } from '@tutur3u/ui/separator';
 import { TooltipProvider } from '@tutur3u/ui/tooltip';
+import { cn } from '@tutur3u/utils/format';
 import { debounce } from 'lodash';
 import { Menu, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ReactNode, Suspense, useCallback, useEffect, useState } from 'react';
@@ -146,13 +145,14 @@ export function Structure({
         <div className="flex h-[52px] items-center gap-2">
           <div className="flex flex-none items-center gap-2">
             <Link href="/" className="flex flex-none items-center gap-2">
-              <Image
+              {/* <Image
                 src="/media/logos/transparent.png"
                 className="h-8 w-8"
                 width={32}
                 height={32}
                 alt="logo"
-              />
+              /> */}
+              SA
             </Link>
           </div>
           <div className="mx-2 h-4 w-[1px] flex-none rotate-[30deg] bg-foreground/20" />
@@ -230,13 +230,13 @@ export function Structure({
                         href="/"
                         className="flex flex-none items-center gap-2"
                       >
-                        <Image
+                        {/* <Image
                           src="/media/logos/transparent.png"
                           className="h-8 w-8"
                           width={32}
                           height={32}
                           alt="logo"
-                        />
+                        /> */}
                         <LogoTitle />
                       </Link>
                     )}

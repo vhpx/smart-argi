@@ -11,10 +11,8 @@ import type {
   AuroraMLMetrics,
   AuroraStatisticalMetrics,
 } from '@tutur3u/types/db';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
-import { useRef, useState } from 'react';
 
 export default function MarketingClientPage({
   forecast,
@@ -26,24 +24,6 @@ export default function MarketingClientPage({
   statsMetrics: AuroraStatisticalMetrics[];
 }) {
   const t = useTranslations();
-
-  const logoRef = useRef<HTMLDivElement>(null);
-  const [, setMousePosition] = useState({ x: 0, y: 0 });
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const rotateX = useSpring(useTransform(mouseY, [-100, 100], [30, -30]));
-  const rotateY = useSpring(useTransform(mouseX, [-100, 100], [-30, 30]));
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!logoRef.current) return;
-    const rect = logoRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    setMousePosition({ x, y });
-    mouseX.set(x);
-    mouseY.set(y);
-  };
 
   return (
     <div
@@ -113,7 +93,7 @@ export default function MarketingClientPage({
         {/* Main Content */}
         <div className="relative mx-auto flex max-w-6xl flex-col items-center justify-center px-4 py-64">
           {/* Enhanced 3D Floating Logo */}
-          <motion.div
+          {/* <motion.div
             ref={logoRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={() => {
@@ -141,7 +121,7 @@ export default function MarketingClientPage({
                 className="relative transition-all duration-300 group-hover:scale-110 group-hover:brightness-110"
               />
             </motion.div>
-          </motion.div>
+          </motion.div> */}
 
           {/* Enhanced Headline and CTA */}
           <motion.div

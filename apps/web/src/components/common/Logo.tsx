@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 interface LogoProps {
@@ -9,7 +8,7 @@ interface LogoProps {
 }
 
 export default function Logo({
-  showLogo = true,
+  // showLogo = true,
   showLabel = true,
   alwaysShowLabel = false,
   onClick,
@@ -22,7 +21,7 @@ export default function Logo({
       onClick={onClick}
       className="flex items-center gap-2"
     >
-      {showLogo && (
+      {/* {showLogo && (
         <div className="flex-none">
           <Image
             src="/media/logos/transparent.png"
@@ -32,7 +31,7 @@ export default function Logo({
             className="h-8 w-8"
           />
         </div>
-      )}
+      )} */}
 
       {showLabel && (
         <div
