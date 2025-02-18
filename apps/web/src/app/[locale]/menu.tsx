@@ -2,21 +2,15 @@
 
 import { AuthButton } from './auth-button';
 import { ThemeToggle } from './theme-toggle';
-import { cn } from '@tutur3u/utils/format';
 import type { SupabaseUser } from '@tutur3u/supabase/next/user';
 import { WorkspaceUser } from '@tutur3u/types/primitives/WorkspaceUser';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@tutur3u/ui/accordion';
 import {
   Sheet,
   SheetContent,
   SheetTitle,
   SheetTrigger,
 } from '@tutur3u/ui/sheet';
+import { cn } from '@tutur3u/utils/format';
 import { MenuIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -43,103 +37,7 @@ interface NavItem {
 }
 
 const navItems = (t: any) => {
-  return [
-    // Main Links
-    { href: '/', label: t('common.home') },
-
-    // Products
-    { href: '/meet-together', label: t('common.meet-together') },
-    {
-      href: '/products/ai',
-      label: t('common.ai-assistant'),
-      badge: t('common.coming_soon'),
-    },
-    {
-      href: '/products/lms',
-      label: t('common.lms'),
-      badge: t('common.coming_soon'),
-    },
-    {
-      href: '/products/calendar',
-      label: t('common.calendar'),
-      badge: t('common.coming_soon'),
-    },
-    {
-      href: '/products/documents',
-      label: t('common.documents'),
-      badge: t('common.coming_soon'),
-    },
-    {
-      href: '/products/drive',
-      label: t('common.drive'),
-      badge: t('common.coming_soon'),
-    },
-    {
-      href: '/products/crm',
-      label: t('common.crm'),
-      badge: t('common.coming_soon'),
-    },
-    {
-      href: '/products/inventory',
-      label: t('common.inventory'),
-      badge: t('common.coming_soon'),
-    },
-    {
-      href: '/products/finance',
-      label: t('common.finance'),
-      badge: t('common.coming_soon'),
-    },
-    {
-      href: '/products/mail',
-      label: t('common.mail'),
-      badge: t('common.coming_soon'),
-    },
-    {
-      href: '/products/tasks',
-      label: t('common.tasks'),
-      badge: t('common.coming_soon'),
-    },
-    {
-      href: '/products/workflows',
-      label: t('common.workflows'),
-      badge: t('common.coming_soon'),
-    },
-
-    // Solutions
-    { href: '/solutions/manufacturing', label: t('common.manufacturing') },
-    { href: '/solutions/restaurants', label: t('common.restaurants') },
-    { href: '/solutions/pharmacies', label: t('common.pharmacies') },
-    { href: '/solutions/realestate', label: t('common.realestate') },
-    { href: '/solutions/retail', label: t('common.retail') },
-    { href: '/solutions/education', label: t('common.education') },
-    { href: '/solutions/hospitality', label: t('common.hospitality') },
-    { href: '/solutions/construction', label: t('common.construction') },
-
-    // Resources
-    { href: '/blog', label: t('common.blog'), badge: t('common.coming_soon') },
-    { href: '/changelog', label: t('common.changelog') },
-    { href: '/pitch', label: t('common.pitch') },
-    { href: '/branding', label: t('common.branding') },
-    {
-      href: 'https://docs.tuturuuu.com',
-      label: t('common.documentation'),
-      external: true,
-    },
-    {
-      href: 'https://github.com/tutur3u',
-      label: 'GitHub',
-      external: true,
-    },
-
-    // Company
-    { href: '/pricing', label: t('common.pricing') },
-    { href: '/about', label: t('common.about') },
-    {
-      href: '/careers',
-      label: t('common.careers'),
-    },
-    { href: '/contact', label: t('common.contact') },
-  ] as NavItem[];
+  return [{ href: '/', label: t('common.home') }] as NavItem[];
 };
 
 const NavLink: React.FC<NavLinkProps> = ({ item, onClick, className }) => {
@@ -237,84 +135,6 @@ const MobileMenu: React.FC<MenuProps> = ({ sbUser, user, t }) => {
                   ))}
                 </div>
               </div>
-
-              <Accordion type="multiple" className="space-y-3">
-                {/* Products Section */}
-                <AccordionItem value="products" className="border-none px-4">
-                  <AccordionTrigger className="rounded-lg px-4 py-3 transition-all hover:bg-accent active:bg-accent/80 data-[state=open]:bg-accent/50">
-                    <span className="text-sm font-semibold">Products</span>
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-3 pb-2">
-                    <div className="grid gap-2 px-2">
-                      {products.map((item) => (
-                        <MobileNavLink
-                          key={item.href}
-                          item={item}
-                          onClick={closeMenu}
-                          className="rounded-lg px-4 py-2.5 transition-all hover:bg-accent active:bg-accent/80"
-                        />
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-
-                {/* Solutions Section */}
-                <AccordionItem value="solutions" className="border-none px-4">
-                  <AccordionTrigger className="rounded-lg px-4 py-3 transition-all hover:bg-accent active:bg-accent/80 data-[state=open]:bg-accent/50">
-                    <span className="text-sm font-semibold">Solutions</span>
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-3 pb-2">
-                    <div className="grid gap-2 px-2">
-                      {solutions.map((item) => (
-                        <MobileNavLink
-                          key={item.href}
-                          item={item}
-                          onClick={closeMenu}
-                          className="rounded-lg px-4 py-2.5 transition-all hover:bg-accent active:bg-accent/80"
-                        />
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-
-                {/* Resources Section */}
-                <AccordionItem value="resources" className="border-none px-4">
-                  <AccordionTrigger className="rounded-lg px-4 py-3 transition-all hover:bg-accent active:bg-accent/80 data-[state=open]:bg-accent/50">
-                    <span className="text-sm font-semibold">Resources</span>
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-3 pb-2">
-                    <div className="grid gap-2 px-2">
-                      {resources.map((item) => (
-                        <MobileNavLink
-                          key={item.href}
-                          item={item}
-                          onClick={closeMenu}
-                          className="rounded-lg px-4 py-2.5 transition-all hover:bg-accent active:bg-accent/80"
-                        />
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-
-                {/* Company Section */}
-                <AccordionItem value="company" className="border-none px-4">
-                  <AccordionTrigger className="rounded-lg px-4 py-3 transition-all hover:bg-accent active:bg-accent/80 data-[state=open]:bg-accent/50">
-                    <span className="text-sm font-semibold">Company</span>
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-3 pb-2">
-                    <div className="grid gap-2 px-2">
-                      {company.map((item) => (
-                        <MobileNavLink
-                          key={item.href}
-                          item={item}
-                          onClick={closeMenu}
-                          className="rounded-lg px-4 py-2.5 transition-all hover:bg-accent active:bg-accent/80"
-                        />
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
             </div>
           </div>
         </div>
