@@ -3,12 +3,6 @@
 import FloatingElements from './floating-elements';
 import GetStartedButton from './get-started-button';
 import GradientHeadline from './gradient-headline';
-<<<<<<< HEAD
-=======
-import { fireConfetti, fireRocket } from '@/lib/confetti';
-import { Badge } from '@tutur3u/ui/badge';
-import { Card } from '@tutur3u/ui/card';
->>>>>>> main
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -46,7 +40,7 @@ export default function MarketingPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="from-background via-background to-dynamic-light-pink/10 relative min-h-[calc(100vh-3.5rem+53px)] w-full bg-gradient-to-b"
+        className="relative min-h-[calc(100vh-3.5rem+53px)] w-full bg-gradient-to-b from-background via-background to-dynamic-light-pink/10"
       >
         {/* Enhanced Animated Background Patterns */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -60,7 +54,7 @@ export default function MarketingPage() {
               repeat: Infinity,
               ease: 'linear',
             }}
-            className="absolute -left-32 top-0 h-[20rem] w-[20rem] rounded-full bg-gradient-to-br from-purple-500/30 via-pink-500/20 to-transparent blur-3xl sm:-left-64 sm:h-[40rem] sm:w-[40rem]"
+            className="absolute top-0 -left-32 h-[20rem] w-[20rem] rounded-full bg-gradient-to-br from-purple-500/30 via-pink-500/20 to-transparent blur-3xl sm:-left-64 sm:h-[40rem] sm:w-[40rem]"
           />
           <motion.div
             animate={{
@@ -72,7 +66,7 @@ export default function MarketingPage() {
               repeat: Infinity,
               ease: 'linear',
             }}
-            className="absolute -right-32 top-[30%] h-[17.5rem] w-[17.5rem] rounded-full bg-gradient-to-br from-blue-500/30 via-cyan-500/20 to-transparent blur-3xl sm:-right-64 sm:h-[35rem] sm:w-[35rem]"
+            className="absolute top-[30%] -right-32 h-[17.5rem] w-[17.5rem] rounded-full bg-gradient-to-br from-blue-500/30 via-cyan-500/20 to-transparent blur-3xl sm:-right-64 sm:h-[35rem] sm:w-[35rem]"
           />
           <motion.div
             animate={{
@@ -121,7 +115,7 @@ export default function MarketingPage() {
               }}
               className="relative"
             >
-              <div className="from-primary/20 absolute inset-0 -z-10 rounded-full bg-gradient-to-br via-transparent to-transparent opacity-50 blur-lg transition-all duration-300 group-hover:opacity-100" />
+              <div className="absolute inset-0 -z-10 rounded-full bg-gradient-to-br from-primary/20 via-transparent to-transparent opacity-50 blur-lg transition-all duration-300 group-hover:opacity-100" />
               <Image
                 src="/media/logos/transparent.png"
                 width={200}
@@ -140,12 +134,12 @@ export default function MarketingPage() {
             transition={{ delay: 0.2 }}
             className="relative text-center"
           >
-            <div className="from-primary/20 via-primary/10 to-primary/20 absolute -inset-x-4 -inset-y-2 rounded-xl bg-gradient-to-r opacity-0 blur-xl transition-all duration-300 group-hover:opacity-100" />
-            <h1 className="text-foreground relative mx-auto mb-4 text-center text-2xl font-bold tracking-tight md:text-4xl lg:text-6xl">
-              <span className="from-primary/20 to-primary/10 absolute -inset-1 rounded-lg bg-gradient-to-r opacity-0 blur transition-all duration-300 group-hover:opacity-100" />
+            <div className="absolute -inset-x-4 -inset-y-2 rounded-xl bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 opacity-0 blur-xl transition-all duration-300 group-hover:opacity-100" />
+            <h1 className="relative mx-auto mb-4 text-center text-2xl font-bold tracking-tight text-foreground md:text-4xl lg:text-6xl">
+              <span className="absolute -inset-1 rounded-lg bg-gradient-to-r from-primary/20 to-primary/10 opacity-0 blur transition-all duration-300 group-hover:opacity-100" />
               <GradientHeadline title={t('landing.headline')} />
             </h1>
-            <h2 className="text-foreground mb-12 text-balance text-lg font-bold tracking-tight md:text-2xl lg:text-3xl">
+            <h2 className="mb-12 text-lg font-bold tracking-tight text-balance text-foreground md:text-2xl lg:text-3xl">
               {t('landing.subheadline')}
             </h2>
 
@@ -161,7 +155,7 @@ export default function MarketingPage() {
           transition={{ repeat: Infinity, duration: 2 }}
           className="absolute inset-x-0 bottom-12 flex w-full flex-col items-center"
         >
-          <div className="text-muted-foreground flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-2 text-muted-foreground">
             <span className="text-sm font-medium">
               {t('common.scroll_to_explore')}
             </span>
@@ -170,8 +164,8 @@ export default function MarketingPage() {
               transition={{ repeat: Infinity, duration: 2 }}
               className="relative h-8 w-8"
             >
-              <div className="bg-primary/20 absolute inset-0 animate-ping rounded-full" />
-              <div className="bg-primary/10 relative flex h-full w-full items-center justify-center rounded-full">
+              <div className="absolute inset-0 animate-ping rounded-full bg-primary/20" />
+              <div className="relative flex h-full w-full items-center justify-center rounded-full bg-primary/10">
                 ↓
               </div>
             </motion.div>
