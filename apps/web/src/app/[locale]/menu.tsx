@@ -81,22 +81,6 @@ const MobileMenu: React.FC<MenuProps> = ({ sbUser, user, t }) => {
 
   const items = navItems(t);
   const mainLinks = items.slice(0, 1); // Only home
-  const products = items.filter(
-    (item) =>
-      item.href === '/meet-together' || item.href.startsWith('/products')
-  );
-  const solutions = items.filter((item) => item.href.startsWith('/solutions'));
-  const resources = items.filter(
-    (item) =>
-      item.href.startsWith('/blog') ||
-      item.href.startsWith('/changelog') ||
-      item.href.startsWith('/pitch') ||
-      item.href.startsWith('/branding') ||
-      item.href.startsWith('https://')
-  );
-  const company = items.filter((item) =>
-    ['/pricing', '/about', '/careers', '/contact'].includes(item.href)
-  );
 
   return (
     <Sheet open={isOpened} onOpenChange={setIsOpened}>
