@@ -1,3 +1,16 @@
 {
+<<<<<<< HEAD
   "$schema": "https://openapi.vercel.sh/vercel.json"
 }
+=======
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "github": {
+    "enabled": false
+  },
+  "functions": {
+    "src/app/api/**/*": {
+      "maxDuration": 300
+    }
+  }
+}
+>>>>>>> main

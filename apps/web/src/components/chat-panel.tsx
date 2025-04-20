@@ -1,25 +1,22 @@
 import { ChatModelSelector } from './chat-model-selector';
-import LoadingIndicator from './common/LoadingIndicator';
 import { PromptForm } from './prompt-form';
 import { ScrollToBottomButton } from './scroll-to-bottom-button';
 import { ScrollToTopButton } from './scroll-to-top-button';
 import { BASE_URL } from '@/constants/common';
-import { Model } from '@tutur3u/ai/models';
-import { type Message, type UseChatHelpers } from '@tutur3u/ai/types';
-import { createDynamicClient } from '@tutur3u/supabase/next/client';
-import { AIChat } from '@tutur3u/types/db';
-import { Button } from '@tutur3u/ui/button';
-import { FileUploader, StatedFile } from '@tutur3u/ui/custom/file-uploader';
+import { Model } from '@tuturuuu/ai/models';
+import { type Message, type UseChatHelpers } from '@tuturuuu/ai/types';
+import { createDynamicClient } from '@tuturuuu/supabase/next/client';
+import { AIChat } from '@tuturuuu/types/db';
+import { Button } from '@tuturuuu/ui/button';
+import { FileUploader, StatedFile } from '@tuturuuu/ui/custom/file-uploader';
+import { LoadingIndicator } from '@tuturuuu/ui/custom/loading-indicator';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@tutur3u/ui/dialog';
-import { ScrollArea } from '@tutur3u/ui/scroll-area';
-import { Separator } from '@tutur3u/ui/separator';
-import { cn } from '@tutur3u/utils/format';
+} from '@tuturuuu/ui/dialog';
 import {
   ArrowDownToLine,
   Check,
@@ -29,11 +26,14 @@ import {
   Globe,
   LinkIcon,
   Lock,
-} from 'lucide-react';
+} from '@tuturuuu/ui/icons';
+import { ScrollArea } from '@tuturuuu/ui/scroll-area';
+import { Separator } from '@tuturuuu/ui/separator';
+import { cn } from '@tuturuuu/utils/format';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import { QRCodeCanvas } from 'qrcode.react';
 import React, { useEffect, useState } from 'react';
-import { QRCode } from 'react-qrcode-logo';
 
 export interface ChatPanelProps
   extends Pick<
@@ -160,7 +160,7 @@ export function ChatPanel({
               <Button
                 size="icon"
                 variant="outline"
-                className="pointer-events-auto flex-none bg-background/20 backdrop-blur-lg"
+                className="bg-background/20 pointer-events-auto flex-none backdrop-blur-lg"
                 onClick={() => setCollapsed(!collapsed)}
               >
                 {collapsed ? (
@@ -193,7 +193,7 @@ export function ChatPanel({
                   }`}
                 >
                   <div className="text-center">
-                    <div className="font-semibold text-foreground">
+                    <div className="text-foreground font-semibold">
                       {t('chats')}
                       {count ? (
                         <span className="opacity-50"> ({count})</span>
@@ -236,7 +236,7 @@ export function ChatPanel({
                             )
                           )
                         ) : (
-                          <div className="mt-8 p-8 text-foreground/60">
+                          <div className="text-foreground/60 mt-8 p-8">
                             {t('no_chats')}
                           </div>
                         )}
@@ -287,7 +287,7 @@ export function ChatPanel({
             </div>
 
             <div
-              className={`flex flex-col items-start justify-start rounded-xl border bg-background/70 p-2 shadow-lg backdrop-blur-lg transition-all md:p-4`}
+              className={`bg-background/70 flex flex-col items-start justify-start rounded-xl border p-2 shadow-lg backdrop-blur-lg transition-all md:p-4`}
             >
               <ChatModelSelector
                 open={showExtraOptions}
@@ -413,12 +413,11 @@ export function ChatPanel({
                   <Separator className="my-4" />
 
                   <div className="flex items-center justify-center">
-                    <QRCode
+                    <QRCodeCanvas
                       value={`${BASE_URL}/ai/chats/${id}`}
                       size={256}
-                      style={{
-                        borderRadius: '0.5rem',
-                      }}
+                      marginSize={2}
+                      className="rounded-lg"
                     />
                   </div>
                 </>

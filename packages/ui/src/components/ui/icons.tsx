@@ -1,7 +1,9 @@
 'use client';
 
-import { cn } from '@tutur3u/utils/format';
+import { cn } from '@tuturuuu/utils/format';
 import * as React from 'react';
+
+export * from 'lucide-react';
 
 function IconNextChat({
   className,

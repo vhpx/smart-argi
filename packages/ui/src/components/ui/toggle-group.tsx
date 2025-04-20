@@ -2,7 +2,7 @@
 
 import { toggleVariants } from './toggle';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
-import { cn } from '@tutur3u/utils/format';
+import { cn } from '@tuturuuu/utils/format';
 import { type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 
@@ -27,7 +27,7 @@ function ToggleGroup({
       data-variant={variant}
       data-size={size}
       className={cn(
-        'group/toggle-group flex items-center justify-center rounded-md data-[variant=outline]:shadow-xs',
+        'group/toggle-group data-[variant=outline]:shadow-xs flex items-center justify-center rounded-md',
         className
       )}
       {...props}

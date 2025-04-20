@@ -1,10 +1,9 @@
 'use client';
 
 import { useWorkspaceDatasets } from '@/hooks/useWorkspaceDatasets';
-import { zodResolver } from '@hookform/resolvers/zod';
-import type { WorkspaceCronJob } from '@tutur3u/types/db';
-import { Button } from '@tutur3u/ui/button';
-import { Checkbox } from '@tutur3u/ui/checkbox';
+import type { WorkspaceCronJob } from '@tuturuuu/types/db';
+import { Button } from '@tuturuuu/ui/button';
+import { Checkbox } from '@tuturuuu/ui/checkbox';
 import {
   Form,
   FormControl,
@@ -13,22 +12,23 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@tutur3u/ui/form';
-import { toast } from '@tutur3u/ui/hooks/use-toast';
-import { Input } from '@tutur3u/ui/input';
-import { ScrollArea } from '@tutur3u/ui/scroll-area';
+} from '@tuturuuu/ui/form';
+import { useForm } from '@tuturuuu/ui/hooks/use-form';
+import { toast } from '@tuturuuu/ui/hooks/use-toast';
+import { Input } from '@tuturuuu/ui/input';
+import { zodResolver } from '@tuturuuu/ui/resolvers';
+import { ScrollArea } from '@tuturuuu/ui/scroll-area';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@tutur3u/ui/select';
-import { Separator } from '@tutur3u/ui/separator';
+} from '@tuturuuu/ui/select';
+import { Separator } from '@tuturuuu/ui/separator';
 import cronstrue from 'cronstrue';
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 function getHumanReadableSchedule(cronExpression: string) {
@@ -168,14 +168,14 @@ export function CronJobForm({ wsId, data, onFinish }: Props) {
                   </FormControl>
                   <FormDescription className="flex flex-col gap-1">
                     <span>Common examples:</span>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-muted-foreground text-xs">
                       • "0 0 * * *" - At midnight, every day
                       <br />
                       • "*/15 * * * *" - Every 15 minutes
                       <br />• "0 9 * * 1-5" - At 9 AM, Monday through Friday
                     </span>
                     {field.value && (
-                      <span className="mt-2 text-sm text-muted-foreground">
+                      <span className="text-muted-foreground mt-2 text-sm">
                         ↳ {getHumanReadableSchedule(field.value)}
                       </span>
                     )}
@@ -239,7 +239,7 @@ export function CronJobForm({ wsId, data, onFinish }: Props) {
                   </FormControl>
                   <label
                     htmlFor="active"
-                    className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
                     Active
                   </label>

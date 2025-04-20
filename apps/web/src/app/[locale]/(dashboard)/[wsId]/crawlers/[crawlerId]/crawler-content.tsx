@@ -2,17 +2,21 @@
 
 import CrawlButton from './crawl-button';
 import { formatHTML, unescapeMarkdownString } from './utils';
-import { MemoizedReactMarkdown } from '@/components/markdown';
+import { Button } from '@tuturuuu/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@tutur3u/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@tutur3u/ui/tabs';
+} from '@tuturuuu/ui/card';
+import { CheckIcon, CopyIcon } from '@tuturuuu/ui/icons';
+import { MemoizedReactMarkdown } from '@tuturuuu/ui/markdown';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@tuturuuu/ui/tabs';
+import { cn } from '@tuturuuu/utils/format';
 import { formatDistance } from 'date-fns';
 import Link from 'next/link';
+import { useState } from 'react';
 
 interface CrawledUrl {
   created_at: string;
@@ -42,10 +46,33 @@ export function CrawlerContent({
   wsId: string;
   url: string;
 }) {
+  const [copyingMarkdown, setCopyingMarkdown] = useState(false);
+  const [copyingHtml, setCopyingHtml] = useState(false);
+
+  const handleCopy = async (content: string, type: 'markdown' | 'html') => {
+    try {
+      await navigator.clipboard.writeText(content);
+      if (type === 'markdown') setCopyingMarkdown(true);
+      else setCopyingHtml(true);
+
+      setTimeout(() => {
+        if (type === 'markdown') setCopyingMarkdown(false);
+        else setCopyingHtml(false);
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
   // Create a map of crawled URLs for quick lookup
   const crawledUrlsMap = new Map(
     crawledRelatedUrls.map((url) => [url.url, url])
   );
+
+  // Count uncrawled URLs that weren't skipped
+  const uncrawledCount = relatedUrls.filter(
+    (url) => !url.skipped && !crawledUrlsMap.has(url.url)
+  ).length;
 
   return (
     <>
@@ -65,7 +92,7 @@ export function CrawlerContent({
 
         {!(crawledUrl?.html && crawledUrl?.markdown) && (
           <CardContent>
-            <CrawlButton id={crawledUrl?.id} wsId={wsId} url={url} />
+            <CrawlButton wsId={wsId} url={url} />
           </CardContent>
         )}
       </Card>
@@ -84,35 +111,94 @@ export function CrawlerContent({
                 <TabsTrigger value="markdown">Markdown</TabsTrigger>
                 <TabsTrigger value="html">HTML</TabsTrigger>
                 <TabsTrigger value="urls">
-                  URLs ({relatedUrls.length})
+                  URLs ({relatedUrls.length}){' '}
+                  {uncrawledCount > 0 && (
+                    <span className="ml-1 text-xs text-blue-500">
+                      • {uncrawledCount} uncrawled
+                    </span>
+                  )}
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="markdown" className="mt-4">
-                <div className="rounded-md border p-4">
-                  {crawledUrl.markdown ? (
-                    <MemoizedReactMarkdown className="prose max-w-full dark:prose-invert">
-                      {unescapeMarkdownString(
-                        JSON.parse(crawledUrl.markdown)?.text_content
+                <div className="rounded-md border">
+                  <div className="flex items-center justify-end border-b p-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        if (crawledUrl.markdown) {
+                          const content = unescapeMarkdownString(
+                            JSON.parse(crawledUrl.markdown)?.text_content
+                          );
+                          handleCopy(content, 'markdown');
+                        }
+                      }}
+                      disabled={!crawledUrl.markdown}
+                    >
+                      {copyingMarkdown ? (
+                        <CheckIcon className="h-4 w-4" />
+                      ) : (
+                        <CopyIcon className="h-4 w-4" />
                       )}
-                    </MemoizedReactMarkdown>
-                  ) : (
-                    <p className="text-muted-foreground">
-                      No markdown content available
-                    </p>
-                  )}
+                      <span className="ml-2">
+                        {copyingMarkdown ? 'Copied!' : 'Copy'}
+                      </span>
+                    </Button>
+                  </div>
+                  <div
+                    className={cn(
+                      'p-4',
+                      'prose text-foreground dark:prose-invert prose-p:leading-relaxed prose-p:before:hidden prose-p:after:hidden prose-code:before:hidden prose-code:after:hidden prose-pre:p-2 prose-li:marker:text-foreground/80 prose-tr:border-border prose-th:border prose-th:border-b-4 prose-th:border-foreground/20 prose-th:p-2 prose-th:text-center prose-th:text-lg prose-td:border prose-td:p-2 w-[calc(100vw-8rem)] min-w-full break-words md:w-[38rem] lg:w-full'
+                    )}
+                  >
+                    {crawledUrl.markdown ? (
+                      <MemoizedReactMarkdown>
+                        {unescapeMarkdownString(
+                          JSON.parse(crawledUrl.markdown)?.text_content
+                        )}
+                      </MemoizedReactMarkdown>
+                    ) : (
+                      <p className="text-muted-foreground">
+                        No markdown content available
+                      </p>
+                    )}
+                  </div>
                 </div>
               </TabsContent>
               <TabsContent value="html" className="mt-4">
-                <div className="overflow-x-auto rounded-md border p-4">
-                  {crawledUrl.html ? (
-                    <pre className="text-sm whitespace-pre">
-                      <code>{formatHTML(crawledUrl.html)}</code>
-                    </pre>
-                  ) : (
-                    <p className="text-muted-foreground">
-                      No HTML content available
-                    </p>
-                  )}
+                <div className="rounded-md border">
+                  <div className="flex items-center justify-end border-b p-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        if (crawledUrl.html) {
+                          handleCopy(formatHTML(crawledUrl.html), 'html');
+                        }
+                      }}
+                      disabled={!crawledUrl.html}
+                    >
+                      {copyingHtml ? (
+                        <CheckIcon className="h-4 w-4" />
+                      ) : (
+                        <CopyIcon className="h-4 w-4" />
+                      )}
+                      <span className="ml-2">
+                        {copyingHtml ? 'Copied!' : 'Copy'}
+                      </span>
+                    </Button>
+                  </div>
+                  <div className="overflow-x-auto p-4">
+                    {crawledUrl.html ? (
+                      <pre className="whitespace-pre text-sm">
+                        <code>{formatHTML(crawledUrl.html)}</code>
+                      </pre>
+                    ) : (
+                      <p className="text-muted-foreground">
+                        No HTML content available
+                      </p>
+                    )}
+                  </div>
                 </div>
               </TabsContent>
               <TabsContent value="urls" className="mt-4">
@@ -124,7 +210,10 @@ export function CrawlerContent({
                         const crawledData = crawledUrlsMap.get(relatedUrl.url);
 
                         return (
-                          <div key={relatedUrl.url} className="p-4">
+                          <div
+                            key={relatedUrl.url}
+                            className={`p-4 ${!relatedUrl.skipped && !isCrawled ? 'bg-blue-500/5' : ''}`}
+                          >
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-2">
                                 {crawledData?.id ? (
@@ -149,7 +238,9 @@ export function CrawlerContent({
                                     className={
                                       relatedUrl.skipped
                                         ? 'text-muted-foreground/50'
-                                        : 'text-muted-foreground'
+                                        : !isCrawled
+                                          ? '' // Not muted if uncrawled
+                                          : 'text-muted-foreground'
                                     }
                                   >
                                     {relatedUrl.skipped
@@ -166,7 +257,7 @@ export function CrawlerContent({
                                 >
                                   {relatedUrl.skipped ? 'Skipped' : 'Kept'}
                                 </span>
-                                {isCrawled && (
+                                {isCrawled ? (
                                   <span className="text-xs text-blue-500">
                                     Crawled{' '}
                                     {formatDistance(
@@ -175,6 +266,12 @@ export function CrawlerContent({
                                       { addSuffix: true }
                                     )}
                                   </span>
+                                ) : (
+                                  !relatedUrl.skipped && (
+                                    <span className="text-xs text-blue-500">
+                                      Not yet crawled
+                                    </span>
+                                  )
                                 )}
                               </div>
                               {!relatedUrl.skipped && !isCrawled && (

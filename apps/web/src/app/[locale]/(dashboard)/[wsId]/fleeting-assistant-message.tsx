@@ -1,12 +1,12 @@
 // Inspired by Chatbot-UI and modified to fit the needs of this project
 // @see https://github.com/mckaywrigley/chatbot-ui/blob/main/components/Chat/ChatMessage.tsx
 import { ChatMessageActions } from '@/components/chat-message-actions';
-import { MemoizedReactMarkdown } from '@/components/markdown';
-import { type Message } from '@tutur3u/ai/types';
-import { Avatar, AvatarFallback, AvatarImage } from '@tutur3u/ui/avatar';
-import { CodeBlock } from '@tutur3u/ui/codeblock';
-import { IconUser } from '@tutur3u/ui/icons';
-import { cn } from '@tutur3u/utils/format';
+import { type Message } from '@tuturuuu/ai/types';
+import { Avatar, AvatarFallback, AvatarImage } from '@tuturuuu/ui/avatar';
+import { CodeBlock } from '@tuturuuu/ui/codeblock';
+import { IconUser } from '@tuturuuu/ui/icons';
+import { MemoizedReactMarkdown } from '@tuturuuu/ui/markdown';
+import { cn } from '@tuturuuu/utils/format';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -20,6 +20,7 @@ import remarkMath from 'remark-math';
 export interface ChatMessageProps {
   message: Message & { chat_id?: string; created_at?: string };
   model?: string | null;
+  // eslint-disable-next-line no-unused-vars
   setInput?: (input: string) => void;
 }
 
@@ -51,11 +52,11 @@ export function FleetingAssistantMessage({
               : resolvedTheme === 'dark' || resolvedTheme?.startsWith('light')
                 ? 'bg-foreground/5'
                 : 'bg-foreground/10'
-          } flex h-fit w-fit items-center space-x-2 rounded-lg border p-2 select-none`}
+          } flex h-fit w-fit select-none items-center space-x-2 rounded-lg border p-2`}
         >
           <div
             className={cn(
-              'flex h-10 w-10 shrink-0 items-center justify-center rounded-md border bg-foreground/10 text-foreground shadow'
+              'bg-foreground/10 text-foreground flex h-10 w-10 shrink-0 items-center justify-center rounded-md border shadow'
             )}
           >
             {message.role === 'user' ? (
@@ -100,33 +101,37 @@ export function FleetingAssistantMessage({
         <ChatMessageActions message={message} />
       </div>
 
-      <div className="flex-1 space-y-2">
+      <div
+        className={cn(
+          'flex-1 space-y-2',
+          'prose text-foreground dark:prose-invert prose-p:leading-relaxed prose-p:before:hidden prose-p:after:hidden prose-code:before:hidden prose-code:after:hidden prose-pre:p-2 prose-li:marker:text-foreground/80 prose-tr:border-border prose-th:border prose-th:border-b-4 prose-th:border-foreground/20 prose-th:p-2 prose-th:text-center prose-th:text-lg prose-td:border prose-td:p-2 w-[calc(100vw-8rem)] min-w-full break-words md:w-[38rem] lg:w-full'
+        )}
+      >
         <MemoizedReactMarkdown
-          className="prose w-[calc(100%-2rem)] break-words text-foreground md:w-[30.8rem] dark:prose-invert prose-p:leading-relaxed prose-p:before:hidden prose-p:after:hidden prose-code:before:hidden prose-code:after:hidden prose-pre:p-2 prose-li:marker:text-foreground/80 prose-tr:border-border prose-th:border prose-th:border-b-4 prose-th:border-foreground/20 prose-th:p-2 prose-th:text-center prose-th:text-lg prose-td:border prose-td:p-2"
           remarkPlugins={[remarkGfm, remarkMath]}
           rehypePlugins={[rehypeKatex]}
           components={{
             h1({ children }) {
-              return <h1 className="mt-6 mb-2 text-foreground">{children}</h1>;
+              return <h1 className="text-foreground mb-2 mt-6">{children}</h1>;
             },
             h2({ children }) {
-              return <h2 className="mt-6 mb-2 text-foreground">{children}</h2>;
+              return <h2 className="text-foreground mb-2 mt-6">{children}</h2>;
             },
             h3({ children }) {
-              return <h3 className="mt-6 mb-2 text-foreground">{children}</h3>;
+              return <h3 className="text-foreground mb-2 mt-6">{children}</h3>;
             },
             h4({ children }) {
-              return <h4 className="mt-6 mb-2 text-foreground">{children}</h4>;
+              return <h4 className="text-foreground mb-2 mt-6">{children}</h4>;
             },
             h5({ children }) {
-              return <h5 className="mt-6 mb-2 text-foreground">{children}</h5>;
+              return <h5 className="text-foreground mb-2 mt-6">{children}</h5>;
             },
             h6({ children }) {
-              return <h6 className="mt-6 mb-2 text-foreground">{children}</h6>;
+              return <h6 className="text-foreground mb-2 mt-6">{children}</h6>;
             },
             strong({ children }) {
               return (
-                <strong className="font-semibold text-foreground">
+                <strong className="text-foreground font-semibold">
                   {children}
                 </strong>
               );
@@ -157,7 +162,7 @@ export function FleetingAssistantMessage({
                 if (setInput)
                   return (
                     <button
-                      className="mb-2 rounded-full border bg-foreground/5 text-left font-semibold text-foreground transition last:mb-0 hover:bg-foreground/10"
+                      className="bg-foreground/5 text-foreground hover:bg-foreground/10 mb-2 rounded-full border text-left font-semibold transition last:mb-0"
                       onClick={() => setInput(content || '')}
                     >
                       <span className="line-clamp-1 px-3 py-1">
@@ -167,7 +172,7 @@ export function FleetingAssistantMessage({
                   );
 
                 return (
-                  <span className="mb-2 inline-block rounded-full border bg-foreground/5 text-left text-foreground transition last:mb-0">
+                  <span className="bg-foreground/5 text-foreground mb-2 inline-block rounded-full border text-left transition last:mb-0">
                     <span className="line-clamp-1 px-3 py-1">
                       {content || '...'}
                     </span>
@@ -176,17 +181,17 @@ export function FleetingAssistantMessage({
               }
 
               return (
-                <p className="mb-2 text-foreground last:mb-0">{children}</p>
+                <p className="text-foreground mb-2 last:mb-0">{children}</p>
               );
             },
             blockquote({ children }) {
               return (
-                <blockquote className="border-l-4 border-foreground/30 pl-2 text-foreground/80">
+                <blockquote className="border-foreground/30 text-foreground/80 border-l-4 pl-2">
                   {children}
                 </blockquote>
               );
             },
-            code({ node, className, children, ...props }) {
+            code({ className, children, ...props }) {
               if (children && Array.isArray(children) && children.length) {
                 if (children[0] == '▍') {
                   return (
@@ -215,7 +220,7 @@ export function FleetingAssistantMessage({
                 />
               ) : (
                 <code
-                  className={cn('font-semibold text-foreground', className)}
+                  className={cn('text-foreground font-semibold', className)}
                   {...props}
                 >
                   {children}
@@ -227,7 +232,7 @@ export function FleetingAssistantMessage({
             },
             pre({ children }) {
               return (
-                <pre className="rounded-lg border bg-foreground/5">
+                <pre className="bg-foreground/5 rounded-lg border">
                   {children}
                 </pre>
               );

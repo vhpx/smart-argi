@@ -1,11 +1,9 @@
 'use client';
 
-import { getInitials } from '@/utils/name-helper';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { User } from '@tutur3u/types/primitives/User';
-import { Workspace } from '@tutur3u/types/primitives/Workspace';
-import { Avatar, AvatarFallback, AvatarImage } from '@tutur3u/ui/avatar';
-import { Button } from '@tutur3u/ui/button';
+import { User } from '@tuturuuu/types/primitives/User';
+import { Workspace } from '@tuturuuu/types/primitives/Workspace';
+import { Avatar, AvatarFallback, AvatarImage } from '@tuturuuu/ui/avatar';
+import { Button } from '@tuturuuu/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -13,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@tutur3u/ui/dialog';
+} from '@tuturuuu/ui/dialog';
 import {
   Form,
   FormControl,
@@ -22,14 +20,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@tutur3u/ui/form';
-import { toast } from '@tutur3u/ui/hooks/use-toast';
-import { Input } from '@tutur3u/ui/input';
-import { Settings, User as UserIcon } from 'lucide-react';
+} from '@tuturuuu/ui/form';
+import { useForm } from '@tuturuuu/ui/hooks/use-form';
+import { toast } from '@tuturuuu/ui/hooks/use-toast';
+import { Settings, User as UserIcon } from '@tuturuuu/ui/icons';
+import { Input } from '@tuturuuu/ui/input';
+import { zodResolver } from '@tuturuuu/ui/resolvers';
+import { getInitials } from '@tuturuuu/utils/name-helper';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 interface Props {
@@ -146,7 +146,7 @@ export function MemberSettingsButton({
     >
       <DialogTrigger asChild>
         <Button variant="ghost" size="icon">
-          <Settings className="h-6 w-6 text-foreground/70" />
+          <Settings className="text-foreground/70 h-6 w-6" />
         </Button>
       </DialogTrigger>
       <DialogContent
@@ -173,7 +173,7 @@ export function MemberSettingsButton({
           </Avatar>
 
           <div className="flex-1 space-y-1">
-            <p className="line-clamp-1 text-sm leading-none font-medium">
+            <p className="line-clamp-1 text-sm font-medium leading-none">
               {user?.display_name ? (
                 user.display_name
               ) : (
@@ -182,7 +182,7 @@ export function MemberSettingsButton({
               {role ? <span className="text-orange-300">({role})</span> : null}
             </p>
 
-            <p className="line-clamp-1 text-sm text-foreground/60">
+            <p className="text-foreground/60 line-clamp-1 text-sm">
               {user?.email ||
                 (user?.handle
                   ? `@${user.handle}`

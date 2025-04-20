@@ -1,4 +1,4 @@
-import { Database, Tables } from '@tutur3u/types/supabase';
+import { Database, Tables } from './supabase';
 
 export type AIChat = Tables<'ai_chats'>;
 export type AIPrompt = Tables<'workspace_ai_prompts'>;
@@ -77,3 +77,15 @@ export type AuroraForecast = {
   statistical_forecast: AuroraStatisticalForecast[];
   ml_forecast: AuroraMLForecast[];
 };
+
+export type NovaChallengeCriteria = Tables<'nova_challenge_criteria'>;
+export type NovaChallenge = Tables<'nova_challenges'>;
+export type NovaChallengeWhitelistedEmail =
+  Tables<'nova_challenge_whitelisted_emails'>;
+export type NovaProblemCriteriaScore = Tables<'nova_problem_criteria_scores'>;
+export type NovaProblemTestCase = Tables<'nova_problem_test_cases'>;
+export type NovaProblem = Tables<'nova_problems'>;
+export type NovaRole = Tables<'nova_roles'>;
+export type NovaSession = Tables<'nova_sessions'>;
+export type NovaSubmissionOutput = Tables<'nova_submission_outputs'>;
+export type NovaSubmission = Tables<'nova_submissions'>;

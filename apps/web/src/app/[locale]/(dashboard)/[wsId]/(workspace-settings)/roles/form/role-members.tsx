@@ -1,4 +1,5 @@
 import { SectionProps } from './index';
+<<<<<<< HEAD
 import { getInitials } from '@/utils/name-helper';
 import { useQuery } from '@tanstack/react-query';
 import { createClient } from '@tutur3u/supabase/next/client';
@@ -8,6 +9,17 @@ import { Button } from '@tutur3u/ui/button';
 import SearchBar from '@tutur3u/ui/custom/search-bar';
 import { cn } from '@tutur3u/utils/format';
 import { X } from 'lucide-react';
+=======
+import { useQuery } from '@tanstack/react-query';
+import { createClient } from '@tuturuuu/supabase/next/client';
+import { WorkspaceUser } from '@tuturuuu/types/primitives/WorkspaceUser';
+import { Avatar, AvatarFallback, AvatarImage } from '@tuturuuu/ui/avatar';
+import { Button } from '@tuturuuu/ui/button';
+import SearchBar from '@tuturuuu/ui/custom/search-bar';
+import { User, X } from '@tuturuuu/ui/icons';
+import { cn } from '@tuturuuu/utils/format';
+import { getInitials } from '@tuturuuu/utils/name-helper';
+>>>>>>> main
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
@@ -72,11 +84,47 @@ export default function RoleFormMembersSection({
 
   return (
     <>
-      <div className="mb-2 rounded-md border border-dynamic-blue/20 bg-dynamic-blue/10 p-2 text-center font-bold text-dynamic-blue">
+      <div className="border-dynamic-blue/20 bg-dynamic-blue/10 text-dynamic-blue mb-2 rounded-md border p-2 text-center font-bold">
         {form.watch('name') || '-'}
       </div>
       <div className="flex items-center gap-2">
         <SearchBar t={t} className={cn('w-full')} onSearch={setQuery} />
+<<<<<<< HEAD
+=======
+        <Filter
+          title={t('ws-members.invite_member')}
+          icon={<User className="mr-2 h-4 w-4" />}
+          options={users.map((user) => ({
+            label: user.display_name || user.full_name || 'No name',
+            description: user.email,
+            icon: (
+              <Avatar className="relative h-8 w-8 cursor-pointer overflow-visible font-semibold">
+                <AvatarImage
+                  src={user?.avatar_url ?? undefined}
+                  className="border-foreground/50 overflow-clip rounded-full border"
+                />
+                <AvatarFallback className="border-foreground/50 border font-semibold">
+                  {user?.display_name ? (
+                    getInitials(user.display_name)
+                  ) : (
+                    <User className="h-5 w-5" />
+                  )}
+                </AvatarFallback>
+              </Avatar>
+            ),
+            value: user.id,
+            checked: roleUsers.some((u) => u.id === user.id),
+            disabled: roleUsers.some((u) => u.id === user.id),
+          }))}
+          onSet={handleNewMembers}
+          sortCheckedFirst={false}
+          className="border-solid"
+          contentClassName="w-[min(calc(100vw-1rem),20rem)]"
+          variant="secondary"
+          align="end"
+          hideSelected
+        />
+>>>>>>> main
       </div>
       {roleUsers.length > 0 ? (
         <div className="mt-4 grid grid-cols-1 gap-2">
@@ -89,9 +137,9 @@ export default function RoleFormMembersSection({
                 <Avatar className="relative h-12 w-12 overflow-visible font-semibold">
                   <AvatarImage
                     src={user?.avatar_url ?? undefined}
-                    className="overflow-clip rounded-full border border-foreground/50"
+                    className="border-foreground/50 overflow-clip rounded-full border"
                   />
-                  <AvatarFallback className="border border-foreground/50 font-semibold">
+                  <AvatarFallback className="border-foreground/50 border font-semibold">
                     {user?.display_name
                       ? getInitials(user?.display_name)
                       : null}
@@ -119,7 +167,7 @@ export default function RoleFormMembersSection({
           ))}
         </div>
       ) : (
-        <div className="mt-4 rounded border border-dashed p-4 text-center font-semibold text-foreground/50 md:p-8">
+        <div className="text-foreground/50 mt-4 rounded border border-dashed p-4 text-center font-semibold md:p-8">
           This role has no members yet.
         </div>
       )}

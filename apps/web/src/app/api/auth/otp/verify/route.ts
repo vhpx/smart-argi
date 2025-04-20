@@ -1,4 +1,9 @@
-import { createAdminClient, createClient } from '@tutur3u/supabase/next/server';
+import {
+  createAdminClient,
+  createClient,
+} from '@tuturuuu/supabase/next/server';
+import { validateEmail, validateOtp } from '@tuturuuu/utils/email';
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 export const runtime = 'edge';
@@ -38,23 +43,20 @@ export async function POST(request: Request) {
   if (updateError)
     return NextResponse.json({ error: updateError.message }, { status: 400 });
 
-  return NextResponse.json({ message: 'OTP verified successfully' });
+  const cookieStore = await cookies();
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const supabaseCookies = cookieStore
+    .getAll()
+    .filter(({ name }) => name.startsWith('sb-'))
+    .map(({ name, value }) => ({ name, value }));
+
+  return NextResponse.json({
+    message: 'OTP verified successfully',
+    cookies: supabaseCookies,
+    session,
+  });
 }
-
-const validateEmail = async (email?: string | null) => {
-  if (!email) throw 'Email is required';
-
-  const regex = /\S+@\S+\.\S+/;
-  if (!regex.test(email)) throw 'Email is invalid';
-
-  return email;
-};
-
-const validateOtp = async (otp?: string | null) => {
-  if (!otp) throw 'OTP is required';
-
-  const regex = /^\d{6}$/;
-  if (!regex.test(otp)) throw 'OTP is invalid';
-
-  return otp;
-};

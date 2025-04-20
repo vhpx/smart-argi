@@ -7,25 +7,15 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@tutur3u/ui/breadcrumb';
-import { Button } from '@tutur3u/ui/button';
+} from '@tuturuuu/ui/breadcrumb';
+import { Button } from '@tuturuuu/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
   DialogTrigger,
-} from '@tutur3u/ui/dialog';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarProvider,
-} from '@tutur3u/ui/sidebar';
+} from '@tuturuuu/ui/dialog';
 import {
   Bell,
   Check,
@@ -39,7 +29,17 @@ import {
   Paintbrush,
   Settings,
   Video,
-} from 'lucide-react';
+} from '@tuturuuu/ui/icons';
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+} from '@tuturuuu/ui/sidebar';
 import * as React from 'react';
 
 const data = {
@@ -116,7 +116,7 @@ export function WSSettingsDialog() {
               {Array.from({ length: 10 }).map((_, i) => (
                 <div
                   key={i}
-                  className="aspect-video max-w-3xl rounded-xl bg-muted/50"
+                  className="bg-muted/50 aspect-video max-w-3xl rounded-xl"
                 />
               ))}
             </div>

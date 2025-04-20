@@ -1,7 +1,7 @@
 'use client';
 
-import { DropdownMenuItem } from '@tutur3u/ui/dropdown-menu';
-import { LogOut } from 'lucide-react';
+import { DropdownMenuItem } from '@tuturuuu/ui/dropdown-menu';
+import { LogOut } from '@tuturuuu/ui/icons';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 

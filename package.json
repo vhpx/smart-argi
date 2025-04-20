@@ -3,23 +3,27 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "buildx": "pnpm i && turbo test lint build",
+    "buildx": "pnpm i && bun i && turbo test lint build",
     "dev": "turbo run dev --parallel",
     "devx": "cd apps/db && pnpm supabase stop && pnpm i && pnpm supabase start && cd ../.. && turbo run dev --parallel",
+    "devrs": "cd apps/db && pnpm supabase stop && pnpm i && pnpm supabase start && pnpm sb:reset && cd ../.. && turbo run dev --parallel",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "stop": "cd apps/db && pnpm stop",
     "diff": "cd apps/db && pnpm sb:diff",
     "typegen": "cd apps/db && pnpm sb:typegen",
     "sb:status": "cd apps/db && pnpm sb:status",
     "sb:start": "cd apps/db && pnpm sb:start",
     "sb:stop": "cd apps/db && pnpm sb:stop",
-    "sb:sync": "cd apps/db && pnpm sb:sync",
-    "sb:link": "cd apps/db && pnpm supabase link",
+    "sb:pull": "cd apps/db && pnpm sb:pull",
+    "sb:push": "cd apps/db && pnpm sb:push",
+    "sb:link": "cd apps/db && pnpm sb:link",
+    "sb:linkpush": "cd apps/db && pnpm sb:link && pnpm sb:push",
     "sb:reset": "cd apps/db && pnpm sb:reset",
-    "sb:diff": "cd apps/db && pnpm sb:diff",
+    "sb:diff": "cd apps/db && pnpm sb:up && pnpm sb:diff",
     "sb:new": "cd apps/db && pnpm sb:new",
     "sb:up": "cd apps/db && pnpm sb:up",
     "sb:typegen": "cd apps/db && pnpm sb:typegen",
@@ -27,29 +31,29 @@
     "ui:diff": "pnpm --filter ui ui:diff"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.2.0",
-    "@eslint/js": "^9.20.0",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.25.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
-    "@tutur3u/eslint-config": "workspace:*",
-    "@tutur3u/typescript-config": "workspace:*",
-    "eslint": "^9.20.1",
-    "prettier": "^3.5.1",
+    "@tuturuuu/eslint-config": "workspace:*",
+    "@tuturuuu/typescript-config": "workspace:*",
+    "@vitest/coverage-v8": "^3.1.1",
+    "eslint": "^9.25.0",
+    "prettier": "^3.5.3",
+    "prettier-eslint": "^16.4.1",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "turbo": "^2.4.2",
-    "typescript": "^5.7.3",
-    "vite": "^6.1.0",
-    "vitest": "^3.0.5"
+    "turbo": "^2.5.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.2",
+    "vitest": "^3.1.1"
   },
   "engines": {
     "node": ">=20"
   },
-  "packageManager": "pnpm@10.4.1",
-  "workspaces": {
-    "packages": [
-      "apps/*",
-      "packages/*"
-    ]
-  },
+  "packageManager": "pnpm@10.8.1",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "trustedDependencies": [
     "@vercel/speed-insights",
     "canvas",
@@ -61,9 +65,11 @@
     "onlyBuiltDependencies": [
       "@vercel/speed-insights",
       "canvas",
+      "core-js",
       "esbuild",
       "sharp",
-      "supabase"
+      "supabase",
+      "unrs-resolver"
     ]
   }
 }

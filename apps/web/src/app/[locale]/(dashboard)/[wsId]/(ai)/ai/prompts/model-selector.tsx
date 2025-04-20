@@ -1,5 +1,5 @@
 import { fetcher } from '@/utils/fetcher';
-import { Button } from '@tutur3u/ui/button';
+import { Button } from '@tuturuuu/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -7,11 +7,11 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@tutur3u/ui/command';
-import { FormControl, FormLabel } from '@tutur3u/ui/form';
-import { Popover, PopoverContent, PopoverTrigger } from '@tutur3u/ui/popover';
-import { cn } from '@tutur3u/utils/format';
-import { CheckIcon, ChevronsUpDown } from 'lucide-react';
+} from '@tuturuuu/ui/command';
+import { FormControl, FormLabel } from '@tuturuuu/ui/form';
+import { CheckIcon, ChevronsUpDown } from '@tuturuuu/ui/icons';
+import { Popover, PopoverContent, PopoverTrigger } from '@tuturuuu/ui/popover';
+import { cn } from '@tuturuuu/utils/format';
 import useSWR from 'swr';
 
 export default function AIModelSelector({

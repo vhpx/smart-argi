@@ -1,12 +1,9 @@
 'use client';
 
-import { getInitials } from '@/utils/name-helper';
-import { generateRandomUUID } from '@/utils/uuid-helper';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { createClient } from '@tutur3u/supabase/next/client';
-import { WorkspaceUser } from '@tutur3u/types/primitives/WorkspaceUser';
-import { Avatar, AvatarFallback, AvatarImage } from '@tutur3u/ui/avatar';
-import { Button } from '@tutur3u/ui/button';
+import { createClient } from '@tuturuuu/supabase/next/client';
+import { WorkspaceUser } from '@tuturuuu/types/primitives/WorkspaceUser';
+import { Avatar, AvatarFallback, AvatarImage } from '@tuturuuu/ui/avatar';
+import { Button } from '@tuturuuu/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -15,15 +12,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@tutur3u/ui/dialog';
-import { Form } from '@tutur3u/ui/form';
-import { toast } from '@tutur3u/ui/hooks/use-toast';
-import { Label } from '@tutur3u/ui/label';
-import { Loader2, Settings, UserIcon } from 'lucide-react';
+} from '@tuturuuu/ui/dialog';
+import { Form } from '@tuturuuu/ui/form';
+import { useForm } from '@tuturuuu/ui/hooks/use-form';
+import { toast } from '@tuturuuu/ui/hooks/use-toast';
+import { Loader2, Settings, UserIcon } from '@tuturuuu/ui/icons';
+import { Label } from '@tuturuuu/ui/label';
+import { zodResolver } from '@tuturuuu/ui/resolvers';
+import { getInitials } from '@tuturuuu/utils/name-helper';
+import { generateRandomUUID } from '@tuturuuu/utils/uuid-helper';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 interface AvatarProps {
@@ -214,7 +214,7 @@ export default function UserAvatar({ user }: AvatarProps) {
         <DialogTrigger asChild>
           <div className="flex items-center justify-center">
             <div className="relative flex w-fit flex-col items-center justify-center gap-4">
-              <Avatar className="h-32 w-32 cursor-pointer overflow-visible border border-foreground text-3xl font-semibold">
+              <Avatar className="border-foreground h-32 w-32 cursor-pointer overflow-visible border text-3xl font-semibold">
                 <AvatarImage
                   src={previewSrc || undefined}
                   alt="Avatar"
@@ -228,7 +228,7 @@ export default function UserAvatar({ user }: AvatarProps) {
               </Avatar>
               <Button
                 size="icon"
-                className="absolute right-0 bottom-0 rounded-full backdrop-blur-lg"
+                className="absolute bottom-0 right-0 rounded-full backdrop-blur-lg"
               >
                 <Settings className="h-5 w-5" />
               </Button>

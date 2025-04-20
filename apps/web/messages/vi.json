@@ -15,7 +15,11 @@
     "coming_soon": "Sắp ra mắt",
     "get-started": "Đăng nhập",
     "get-started-desc": "Đăng ký miễn phí và bắt đầu sử dụng nền tảng của chúng tôi ngay hôm nay.",
+<<<<<<< HEAD
     "copyright": "Bản quyền © 2025 RMIT Smart Agri - Tất cả quyền được bảo lưu.",
+=======
+    "copyright": "Bản quyền © 2025 Công ty Cổ phần Tuturuuu – Mọi quyền được bảo lưu.",
+>>>>>>> main
     "legal": "Pháp lý",
     "terms": "Điều khoản sử dụng",
     "privacy": "Chính sách bảo mật",
@@ -232,6 +236,10 @@
     "construction": "Thi công",
     "changelog": "Nhật ký thay đổi",
     "changelog-description": "Cập nhật những thay đổi mới nhất về sản phẩm và cải tiến.",
+    "about-description": "Tìm hiểu thêm về Tuturuuu và sứ mệnh của chúng tôi.",
+    "careers-description": "Tham gia cùng chúng tôi và giúp chúng tôi xây dựng tương lai của Tuturuuu.",
+    "contributors": "Người đóng góp",
+    "contributors-description": "Gặp gỡ những người đã giúp tạo nên Tuturuuu.",
     "security": "Bảo mật",
     "security-description": "Tìm hiểu về cách chúng tôi bảo vệ dữ liệu và thông tin của bạn.",
     "pitch-description": "Kế hoạch kinh doanh của RMIT Smart Agri.",
@@ -270,7 +278,10 @@
     "error_updating_visibility": "Lỗi khi cập nhật quyền truy cập",
     "error_deleting": "Lỗi khi xoá tài liệu",
     "domain_added": "Tên miền được thêm vào",
-    "error_adding_domain": "Không thể thêm miền"
+    "error_adding_domain": "Không thể thêm miền",
+    "rewise-description": "Truy cập một loạt các công cụ hỗ trợ AI dành cho doanh nghiệp.",
+    "nova-description": "Sân chơi prompt engineering cho mọi người.",
+    "waitlist": "Danh sách chờ"
   },
   "date_helper": {
     "time-unit": "Đơn vị thời gian",
@@ -397,7 +408,10 @@
     "delete_plan_warning": "Thao tác này không thể hoàn tác. Kế hoạch và tất cả thông tin liên quan sẽ bị xóa vĩnh viễn khỏi hệ thống của RMIT Smart Agri.",
     "select_users_to_filter": "Chọn người dùng để lọc kết quả",
     "show_qr_code": "Xem mã QR",
-    "qr_code_description": "Quét mã QR này để truy cập nhanh vào thông tin chi tiết về kế hoạch gặp mặt."
+    "qr_code_description": "Quét mã QR này để truy cập nhanh vào thông tin chi tiết về kế hoạch gặp mặt.",
+    "save_credentials": "Lưu thông tin đăng nhập cho kế hoạch này",
+    "save_credentials_desc": "Tự động đăng nhập khi bạn quay lại kế hoạch này",
+    "logged_in_as": "Đăng nhập như"
   },
   "invite": {
     "invited-to": "Bạn được mời vào",
@@ -453,7 +467,9 @@
     "continue_with_google": "Tiếp tục với Google",
     "continue_with_github": "Tiếp tục với GitHub",
     "continue_with_apple": "Tiếp tục với Apple",
-    "continue_with_discord": "Tiếp tục với Discord"
+    "continue_with_discord": "Tiếp tục với Discord",
+    "or_continue_with": "Hoặc tiếp tục với",
+    "verify": "Xác minh"
   },
   "signup": {
     "get-started": "Bắt đầu ngay",
@@ -1476,7 +1492,10 @@
     "current": "Hiện tại",
     "day": "Ngày",
     "4-days": "4 ngày",
-    "week": "Tuần"
+    "week": "Tuần",
+    "month": "Tháng",
+    "view": "Chế độ hiển thị",
+    "this-month": "Tháng này"
   },
   "documents": {
     "documents": "Tài liệu",
@@ -1696,7 +1715,8 @@
     "pipelines": "Luồng xử lý",
     "executions": "Lịch sử chạy",
     "cron_jobs": "Lịch trình",
-    "jobs": "Lịch trình"
+    "jobs": "Lịch trình",
+    "uncrawled": "Chưa cào"
   },
   "workspace-settings-layout": {
     "workspace": "Không gian làm việc",
@@ -2414,7 +2434,11 @@
     "singular": "Công cụ cào dữ liệu",
     "description": "Công cụ cào dữ liệu được sử dụng để thu thập dữ liệu từ các trang web và nguồn dữ liệu khác.",
     "create": "Tạo công cụ cào dữ liệu",
-    "create_description": "Tạo một công cụ cào dữ liệu mới"
+    "create_description": "Tạo một công cụ cào dữ liệu mới",
+    "uncrawled": "Chưa cào",
+    "domains": "Tên miền",
+    "connections": "Kết nối",
+    "crawled": "Đã cào"
   },
   "ws-pipelines": {
     "plural": "Quy trình",

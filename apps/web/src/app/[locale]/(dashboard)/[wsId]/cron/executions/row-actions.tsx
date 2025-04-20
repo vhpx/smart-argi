@@ -1,17 +1,17 @@
 'use client';
 
 import { Row } from '@tanstack/react-table';
-import type { WorkspaceCronExecution } from '@tutur3u/types/db';
-import { Button } from '@tutur3u/ui/button';
+import type { WorkspaceCronExecution } from '@tuturuuu/types/db';
+import { Button } from '@tuturuuu/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@tutur3u/ui/dropdown-menu';
-import { toast } from '@tutur3u/ui/hooks/use-toast';
-import { Ellipsis, Eye } from 'lucide-react';
+} from '@tuturuuu/ui/dropdown-menu';
+import { toast } from '@tuturuuu/ui/hooks/use-toast';
+import { Ellipsis, Eye } from '@tuturuuu/ui/icons';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -66,7 +66,7 @@ export function RowActions({ row, href }: RowActionsProps) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+            className="data-[state=open]:bg-muted flex h-8 w-8 p-0"
           >
             <Ellipsis className="h-4 w-4" />
             <span className="sr-only">Open menu</span>

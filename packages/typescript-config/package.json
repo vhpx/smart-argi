@@ -1,9 +1,9 @@
 {
-  "name": "@tutur3u/typescript-config",
+  "name": "@tuturuuu/typescript-config",
   "license": "MIT",
   "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
-  "packageManager": "pnpm@10.4.1"
+  "packageManager": "pnpm@10.8.1"
 }

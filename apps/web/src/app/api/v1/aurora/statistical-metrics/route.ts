@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import { createAdminClient, createClient } from "@tutur3u/supabase/next/server";
 import { type NextRequest, NextResponse } from "next/server";
 import type { AuroraExternalStatisticalMetrics } from "../types";
+=======
+import type { AuroraExternalStatisticalMetrics } from '../types';
+import { createClient } from '@tuturuuu/supabase/next/server';
+import { NextResponse } from 'next/server';
+>>>>>>> main
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;

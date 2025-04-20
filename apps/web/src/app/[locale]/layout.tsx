@@ -3,11 +3,11 @@ import { ProductionIndicator } from '@/components/production-indicator';
 import { Providers } from '@/components/providers';
 import { TailwindIndicator } from '@/components/tailwind-indicator';
 import { siteConfig } from '@/constants/configs';
-import { routing, supportedLocales } from '@/i18n/routing';
+import { type Locale, routing, supportedLocales } from '@/i18n/routing';
 import '@/style/prosemirror.css';
-import '@tutur3u/ui/globals.css';
-import { Toaster } from '@tutur3u/ui/toaster';
-import { cn } from '@tutur3u/utils/format';
+import '@tuturuuu/ui/globals.css';
+import { Toaster } from '@tuturuuu/ui/toaster';
+import { cn } from '@tuturuuu/utils/format';
 import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 import { SpeedInsights as VercelInsights } from '@vercel/speed-insights/next';
 import { Metadata, Viewport } from 'next';
@@ -79,7 +79,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: siteConfig.name,
       description,
       images: [siteConfig.ogImage],
-      creator: '@tutur3u',
+      creator: '@tuturuuu',
     },
     icons: {
       icon: '/favicon.ico',
@@ -107,7 +107,7 @@ export function generateStaticParams() {
 
 export default async function RootLayout({ children, params }: Props) {
   // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes((await params).locale as any)) {
+  if (!routing.locales.includes((await params).locale as Locale)) {
     notFound();
   }
 
@@ -119,7 +119,7 @@ export default async function RootLayout({ children, params }: Props) {
     <html lang={locale} suppressHydrationWarning>
       <body
         className={cn(
-          'overflow-y-scroll bg-background antialiased',
+          'bg-background overflow-y-scroll antialiased',
           font.className
         )}
       >

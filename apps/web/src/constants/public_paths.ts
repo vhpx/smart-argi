@@ -12,6 +12,8 @@ export const APP_PUBLIC_PATHS = [
   '/pitch',
   '/careers',
   '/security',
+  '/security/bug-bounty',
+  '/contributors',
   '/blog',
   '/faq',
   '/terms',
@@ -21,6 +23,7 @@ export const APP_PUBLIC_PATHS = [
   '/qr-generator',
   '/documents',
   '/meet-together',
+  '/visualizations/horse-racing',
 ].reduce((acc: string[], path) => {
   // Add the original path
   acc.push(path);

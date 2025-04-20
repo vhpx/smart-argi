@@ -1,19 +1,19 @@
 import AssistantGradientName from './assistant-gradient-name';
 import { FleetingAssistantMessage } from './fleeting-assistant-message';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useChat } from '@tutur3u/ai/react';
-import { type Message } from '@tutur3u/ai/types';
-import { AIChat } from '@tutur3u/types/db';
-import { Button } from '@tutur3u/ui/button';
-import { Form, FormControl, FormField, FormItem } from '@tutur3u/ui/form';
-import { toast } from '@tutur3u/ui/hooks/use-toast';
-import { Input } from '@tutur3u/ui/input';
-import { Separator } from '@tutur3u/ui/separator';
-import { ArrowDownToLine, Expand, RotateCcw, Send } from 'lucide-react';
+import { useChat } from '@tuturuuu/ai/react';
+import { type Message } from '@tuturuuu/ai/types';
+import { AIChat } from '@tuturuuu/types/db';
+import { Button } from '@tuturuuu/ui/button';
+import { Form, FormControl, FormField, FormItem } from '@tuturuuu/ui/form';
+import { useForm } from '@tuturuuu/ui/hooks/use-form';
+import { toast } from '@tuturuuu/ui/hooks/use-toast';
+import { ArrowDownToLine, Expand, RotateCcw, Send } from '@tuturuuu/ui/icons';
+import { Input } from '@tuturuuu/ui/input';
+import { zodResolver } from '@tuturuuu/ui/resolvers';
+import { Separator } from '@tuturuuu/ui/separator';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const FormSchema = z.object({
@@ -142,7 +142,7 @@ export default function FleetingAssistant({
     <div className="flex h-full flex-col">
       <div className="flex h-[28.25rem] flex-col p-2">
         <div className="mb-2 flex items-center justify-between gap-2 transition">
-          <div className="w-fit rounded border bg-foreground px-2 py-0.5 font-mono text-xs font-bold text-background">
+          <div className="bg-foreground text-background w-fit rounded border px-2 py-0.5 font-mono text-xs font-bold">
             ALPHA
           </div>
 

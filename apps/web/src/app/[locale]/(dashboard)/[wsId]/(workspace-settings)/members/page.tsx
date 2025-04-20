@@ -1,15 +1,18 @@
 import InviteMemberButton from './_components/invite-member-button';
 import MemberList from './_components/member-list';
 import MemberTabs from './_components/member-tabs';
-import { getCurrentUser } from '@/lib/user-helper';
 import {
   getPermissions,
   getWorkspace,
   verifyHasSecrets,
 } from '@/lib/workspace-helper';
-import { createAdminClient, createClient } from '@tutur3u/supabase/next/server';
-import { User } from '@tutur3u/types/primitives/User';
-import { Separator } from '@tutur3u/ui/separator';
+import {
+  createAdminClient,
+  createClient,
+} from '@tuturuuu/supabase/next/server';
+import { User } from '@tuturuuu/types/primitives/User';
+import { Separator } from '@tuturuuu/ui/separator';
+import { getCurrentUser } from '@tuturuuu/utils/user-helper';
 import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';
 
@@ -45,7 +48,7 @@ export default async function WorkspaceMembersPage({
 
   return (
     <>
-      <div className="flex flex-col justify-between gap-4 rounded-lg border border-border bg-foreground/5 p-4 md:flex-row md:items-start">
+      <div className="border-border bg-foreground/5 flex flex-col justify-between gap-4 rounded-lg border p-4 md:flex-row md:items-start">
         <div>
           <h1 className="text-2xl font-bold">
             {t('workspace-settings-layout.members')}

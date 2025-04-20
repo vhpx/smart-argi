@@ -1,7 +1,7 @@
 {
-  "name": "@tutur3u/supabase",
+  "name": "@tuturuuu/supabase",
   "license": "MIT",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "publishConfig": {
     "access": "public"
   },
@@ -10,28 +10,28 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
-  "packageManager": "pnpm@10.4.1",
+  "packageManager": "pnpm@10.8.1",
   "dependencies": {
-    "@supabase/ssr": "^0.5.2",
-    "@supabase/supabase-js": "^2.48.1",
-    "@tutur3u/types": "workspace:*",
-    "eslint": "^9.20.1",
-    "next": "^15.1.7",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "zod": "^3.24.2"
+    "@supabase/ssr": "^0.6.1",
+    "@supabase/supabase-js": "^2.49.4",
+    "@tuturuuu/types": "workspace:*",
+    "eslint": "^9.25.0",
+    "next": "^15.3.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.2.0",
-    "@eslint/js": "^9.20.0",
-    "@tutur3u/eslint-config": "workspace:*",
-    "@tutur3u/typescript-config": "workspace:*",
-    "@types/node": "^22.13.4",
-    "@types/react": "^19.0.10",
-    "@typescript-eslint/eslint-plugin": "^8.24.1",
-    "@typescript-eslint/parser": "^8.24.1",
-    "typescript": "^5.7.3",
-    "vitest": "^3.0.5"
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.25.0",
+    "@tuturuuu/eslint-config": "workspace:*",
+    "@tuturuuu/typescript-config": "workspace:*",
+    "@types/node": "^22.14.1",
+    "@types/react": "^19.1.2",
+    "@typescript-eslint/eslint-plugin": "^8.30.1",
+    "@typescript-eslint/parser": "^8.30.1",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.1"
   },
   "exports": {
     "./*": "./src/*.ts"

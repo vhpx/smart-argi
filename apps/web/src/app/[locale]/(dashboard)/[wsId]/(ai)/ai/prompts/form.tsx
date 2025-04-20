@@ -1,15 +1,14 @@
 'use client';
 
 import AIModelSelector from './model-selector';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { AIPrompt } from '@tutur3u/types/db';
+import { AIPrompt } from '@tuturuuu/types/db';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@tutur3u/ui/accordion';
-import { Button } from '@tutur3u/ui/button';
+} from '@tuturuuu/ui/accordion';
+import { Button } from '@tuturuuu/ui/button';
 import {
   Form,
   FormControl,
@@ -17,15 +16,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@tutur3u/ui/form';
-import { toast } from '@tutur3u/ui/hooks/use-toast';
-import { Input } from '@tutur3u/ui/input';
-import { Separator } from '@tutur3u/ui/separator';
-import { Textarea } from '@tutur3u/ui/textarea';
+} from '@tuturuuu/ui/form';
+import { useForm } from '@tuturuuu/ui/hooks/use-form';
+import { toast } from '@tuturuuu/ui/hooks/use-toast';
+import { Input } from '@tuturuuu/ui/input';
+import { zodResolver } from '@tuturuuu/ui/resolvers';
+import { Separator } from '@tuturuuu/ui/separator';
+import { Textarea } from '@tuturuuu/ui/textarea';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 interface Props {
@@ -189,7 +189,7 @@ export function AIPromptForm({ wsId, data, onComplete, submitLabel }: Props) {
       <AccordionItem value="output">
         <AccordionTrigger>Output</AccordionTrigger>
         <AccordionContent>
-          <div className="rounded-lg border bg-foreground/5 p-2">
+          <div className="bg-foreground/5 rounded-lg border p-2">
             {output || 'No output generated yet.'}
           </div>
         </AccordionContent>

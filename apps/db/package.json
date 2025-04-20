@@ -1,5 +1,5 @@
 {
-  "name": "@tutur3u/db",
+  "name": "@tuturuuu/db",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -8,19 +8,17 @@
     "sb:status": "pnpm supabase status",
     "sb:start": "pnpm supabase start",
     "sb:stop": "pnpm supabase stop",
-    "sb:sync": "pnpm supabase db pull",
-    "sb:reset": "pnpm supabase db reset",
+    "sb:pull": "pnpm supabase db pull",
+    "sb:push": "pnpm supabase db push",
+    "sb:link": "pnpm supabase link",
+    "sb:reset": "pnpm supabase db reset && pnpm supabase gen types typescript --local --schema public > ../../packages/types/src/supabase.ts && prettier --write ../../packages/types/src/supabase.ts",
     "sb:diff": "pnpm supabase db diff -f new_migration",
     "sb:new": "pnpm supabase migration new new_migration",
     "sb:up": "pnpm supabase migration up",
     "sb:typegen": "pnpm supabase gen types typescript --local --schema public > ../../packages/types/src/supabase.ts && prettier --write ../../packages/types/src/supabase.ts"
   },
   "devDependencies": {
-    "supabase": "^2.12.1"
+    "supabase": "^2.20.12"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "packageManager": "pnpm@10.4.1"
+  "packageManager": "pnpm@10.8.1"
 }

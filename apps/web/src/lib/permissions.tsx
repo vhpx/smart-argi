@@ -1,6 +1,6 @@
 import { PROD_MODE, ROOT_WORKSPACE_ID } from '@/constants/common';
-import type { SupabaseUser } from '@tutur3u/supabase/next/user';
-import { PermissionId } from '@tutur3u/types/db';
+import type { SupabaseUser } from '@tuturuuu/supabase/next/user';
+import { PermissionId } from '@tuturuuu/types/db';
 import {
   Archive,
   Banknote,
@@ -30,7 +30,7 @@ import {
   UserCheck,
   UserCog,
   Users,
-} from 'lucide-react';
+} from '@tuturuuu/ui/icons';
 import { ReactNode } from 'react';
 
 export type RolePermission = {

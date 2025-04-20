@@ -1,9 +1,9 @@
-import SettingItemTab from '../../../../../components/settings/SettingItemTab';
 import UserAvatar from '../../../settings-avatar';
 import DisplayNameInput from '../../../settings-display-name-input';
 import EmailInput from '../../../settings-email-input';
-import { getCurrentUser } from '@/lib/user-helper';
-import { Separator } from '@tutur3u/ui/separator';
+import { SettingItemTab } from '@tuturuuu/ui/custom/settings-item-tab';
+import { Separator } from '@tuturuuu/ui/separator';
+import { getCurrentUser } from '@tuturuuu/utils/user-helper';
 import { getTranslations } from 'next-intl/server';
 import { Suspense } from 'react';
 
@@ -12,7 +12,7 @@ export default async function AccountSettingsPage() {
   const user = await getCurrentUser();
 
   return (
-    <div className="grid gap-1 md:max-w-lg md:min-w-max">
+    <div className="grid gap-1 md:min-w-max md:max-w-lg">
       <SettingItemTab
         title={t('settings-account.avatar')}
         description={t('settings-account.avatar-description')}

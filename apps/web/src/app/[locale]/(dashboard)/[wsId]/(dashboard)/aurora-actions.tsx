@@ -1,9 +1,9 @@
 'use client';
 
-import { Button } from '@tutur3u/ui/button';
-import { Loader2 } from 'lucide-react';
+import { Button } from '@tuturuuu/ui/button';
+import { Loader2 } from '@tuturuuu/ui/icons';
+import { toast } from '@tuturuuu/ui/sonner';
 import { useState } from 'react';
-import { toast } from 'sonner';
 
 export default function AuroraActions() {
   const [isHealthLoading, setIsHealthLoading] = useState(false);

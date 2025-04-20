@@ -2,9 +2,9 @@
 
 import { TimezoneRowActions } from '@/components/row-actions/timezones';
 import { ColumnDef } from '@tanstack/react-table';
-import { Timezone, TimezoneStatus } from '@tutur3u/types/primitives/Timezone';
-import { DataTableColumnHeader } from '@tutur3u/ui/custom/tables/data-table-column-header';
-import { Check, Clock, RefreshCw, RefreshCwOff, X } from 'lucide-react';
+import { Timezone, TimezoneStatus } from '@tuturuuu/types/primitives/Timezone';
+import { DataTableColumnHeader } from '@tuturuuu/ui/custom/tables/data-table-column-header';
+import { Check, Clock, RefreshCw, RefreshCwOff, X } from '@tuturuuu/ui/icons';
 import moment from 'moment';
 
 export const timezoneColumns = (

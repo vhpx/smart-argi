@@ -3,8 +3,8 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
-} from '@tutur3u/ui/dropdown-menu';
-import { Sparkles } from 'lucide-react';
+} from '@tuturuuu/ui/dropdown-menu';
+import { Sparkles } from '@tuturuuu/ui/icons';
 import Link from 'next/link';
 
 export default function RewiseMenuItem() {

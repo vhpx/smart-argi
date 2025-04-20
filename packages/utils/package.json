@@ -1,5 +1,5 @@
 {
-  "name": "@tutur3u/utils",
+  "name": "@tuturuuu/utils",
   "license": "MIT",
   "version": "0.0.1",
   "publishConfig": {
@@ -8,28 +8,32 @@
   "scripts": {
     "lint": "eslint ."
   },
-  "packageManager": "pnpm@10.4.1",
+  "packageManager": "pnpm@10.8.1",
   "dependencies": {
+    "@tuturuuu/supabase": "workspace:*",
     "clsx": "^2.1.1",
-    "eslint": "^9.20.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "tailwind-merge": "^3.0.1",
-    "zod": "^3.24.2"
+    "eslint": "^9.25.0",
+    "next": "^15.3.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.2.0",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.2.0",
-    "@eslint/js": "^9.20.0",
-    "@tutur3u/eslint-config": "workspace:*",
-    "@tutur3u/typescript-config": "workspace:*",
-    "@types/node": "^22.13.4",
-    "@types/react": "^19.0.10",
-    "@typescript-eslint/eslint-plugin": "^8.24.1",
-    "@typescript-eslint/parser": "^8.24.1",
-    "typescript": "^5.7.3"
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.25.0",
+    "@tuturuuu/eslint-config": "workspace:*",
+    "@tuturuuu/types": "workspace:*",
+    "@tuturuuu/typescript-config": "workspace:*",
+    "@types/node": "^22.14.1",
+    "@types/react": "^19.1.2",
+    "@typescript-eslint/eslint-plugin": "^8.30.1",
+    "@typescript-eslint/parser": "^8.30.1",
+    "typescript": "^5.8.3"
   },
   "overrides": {
-    "react-is": "^19.0.0"
+    "react-is": "^19.1.0"
   },
   "exports": {
     "./*": "./src/*.ts"

@@ -1,12 +1,12 @@
 'use client';
 
 import { downloadPrivateObject, uploadObject } from '@/lib/storage-helper';
-import { createClient } from '@tutur3u/supabase/next/client';
-import { Workspace } from '@tutur3u/types/primitives/Workspace';
-import { Button } from '@tutur3u/ui/button';
-import { toast } from '@tutur3u/ui/hooks/use-toast';
-import { Input } from '@tutur3u/ui/input';
-import { Check, Loader2 } from 'lucide-react';
+import { createClient } from '@tuturuuu/supabase/next/client';
+import { Workspace } from '@tuturuuu/types/primitives/Workspace';
+import { Button } from '@tuturuuu/ui/button';
+import { toast } from '@tuturuuu/ui/hooks/use-toast';
+import { Check, Loader2 } from '@tuturuuu/ui/icons';
+import { Input } from '@tuturuuu/ui/input';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';

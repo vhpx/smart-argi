@@ -1,5 +1,6 @@
 'use client';
 
+import { CheckCircle, Clock, XCircle } from '@tuturuuu/ui/icons';
 import {
   Table,
   TableBody,
@@ -7,8 +8,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@tutur3u/ui/table';
-import { CheckCircle, Clock, XCircle } from 'lucide-react';
+} from '@tuturuuu/ui/table';
 import { useState } from 'react';
 
 type CronJob = {

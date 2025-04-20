@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import { type NextRequest, NextResponse } from "next/server";
+=======
+import { createClient } from '@tuturuuu/supabase/next/server';
+import { NextResponse } from 'next/server';
+>>>>>>> main
 
 export async function POST(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;

@@ -38,3 +38,10 @@ yarn-error.log*
 # Typescript
 *.tsbuildinfo
 next-env.d.ts
+
+apps/rewise/
+apps/nova/
+apps/mira/
+apps/external/
+apps/docs/
+apps/calendar/

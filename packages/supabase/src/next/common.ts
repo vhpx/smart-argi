@@ -10,7 +10,10 @@ export function checkEnvVariables({
   useServiceKey = false,
 }: {
   useServiceKey?: boolean;
-}) {
+}): {
+  url: string;
+  key: string;
+} {
   // eslint-disable-next-line no-undef
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = useServiceKey
@@ -20,7 +23,7 @@ export function checkEnvVariables({
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!url) throw Error('Missing Supabase URL');
-  if (!key) throw Error(`Missing Supabase key: ${key}`);
+  if (!key) throw Error(`Missing Supabase key`);
 
   return { url, key };
 }

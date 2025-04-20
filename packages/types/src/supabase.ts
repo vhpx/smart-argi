@@ -440,6 +440,48 @@ export type Database = {
           },
         ];
       };
+      calendar_auth_tokens: {
+        Row: {
+          access_token: string;
+          created_at: string;
+          id: string;
+          refresh_token: string;
+          user_id: string;
+          ws_id: string;
+        };
+        Insert: {
+          access_token: string;
+          created_at?: string;
+          id?: string;
+          refresh_token: string;
+          user_id: string;
+          ws_id: string;
+        };
+        Update: {
+          access_token?: string;
+          created_at?: string;
+          id?: string;
+          refresh_token?: string;
+          user_id?: string;
+          ws_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'calendar_auth_tokens_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'calendar_auth_tokens_ws_id_fkey';
+            columns: ['ws_id'];
+            isOneToOne: false;
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       calendar_event_colors: {
         Row: {
           value: string;
@@ -791,6 +833,53 @@ export type Database = {
             columns: ['wallet_id'];
             isOneToOne: true;
             referencedRelation: 'workspace_wallets';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      cross_app_tokens: {
+        Row: {
+          created_at: string;
+          expires_at: string;
+          id: string;
+          is_revoked: boolean;
+          origin_app: string;
+          session_data: Json | null;
+          target_app: string;
+          token: string;
+          used_at: string | null;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          expires_at: string;
+          id?: string;
+          is_revoked?: boolean;
+          origin_app: string;
+          session_data?: Json | null;
+          target_app: string;
+          token: string;
+          used_at?: string | null;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          expires_at?: string;
+          id?: string;
+          is_revoked?: boolean;
+          origin_app?: string;
+          session_data?: Json | null;
+          target_app?: string;
+          token?: string;
+          used_at?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'cross_app_tokens_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
             referencedColumns: ['id'];
           },
         ];
@@ -2022,6 +2111,463 @@ export type Database = {
             referencedColumns: ['id'];
           },
         ];
+      };
+      nova_challenge_criteria: {
+        Row: {
+          challenge_id: string;
+          created_at: string;
+          description: string;
+          id: string;
+          name: string;
+        };
+        Insert: {
+          challenge_id: string;
+          created_at?: string;
+          description: string;
+          id?: string;
+          name: string;
+        };
+        Update: {
+          challenge_id?: string;
+          created_at?: string;
+          description?: string;
+          id?: string;
+          name?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'nova_challenge_criteria_challenge_id_fkey';
+            columns: ['challenge_id'];
+            isOneToOne: false;
+            referencedRelation: 'nova_challenges';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      nova_challenge_whitelisted_emails: {
+        Row: {
+          challenge_id: string;
+          created_at: string;
+          email: string;
+        };
+        Insert: {
+          challenge_id: string;
+          created_at?: string;
+          email: string;
+        };
+        Update: {
+          challenge_id?: string;
+          created_at?: string;
+          email?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'nova_challenge_whitelisted_emails_challenge_id_fkey';
+            columns: ['challenge_id'];
+            isOneToOne: false;
+            referencedRelation: 'nova_challenges';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      nova_challenges: {
+        Row: {
+          close_at: string | null;
+          created_at: string;
+          description: string;
+          duration: number;
+          enabled: boolean;
+          id: string;
+          max_attempts: number;
+          max_daily_attempts: number;
+          open_at: string | null;
+          password_hash: string | null;
+          password_salt: string | null;
+          previewable_at: string | null;
+          title: string;
+          whitelisted_only: boolean;
+        };
+        Insert: {
+          close_at?: string | null;
+          created_at?: string;
+          description: string;
+          duration: number;
+          enabled?: boolean;
+          id?: string;
+          max_attempts?: number;
+          max_daily_attempts?: number;
+          open_at?: string | null;
+          password_hash?: string | null;
+          password_salt?: string | null;
+          previewable_at?: string | null;
+          title: string;
+          whitelisted_only?: boolean;
+        };
+        Update: {
+          close_at?: string | null;
+          created_at?: string;
+          description?: string;
+          duration?: number;
+          enabled?: boolean;
+          id?: string;
+          max_attempts?: number;
+          max_daily_attempts?: number;
+          open_at?: string | null;
+          password_hash?: string | null;
+          password_salt?: string | null;
+          previewable_at?: string | null;
+          title?: string;
+          whitelisted_only?: boolean;
+        };
+        Relationships: [];
+      };
+      nova_problem_criteria_scores: {
+        Row: {
+          created_at: string;
+          criteria_id: string;
+          problem_id: string;
+          score: number;
+        };
+        Insert: {
+          created_at?: string;
+          criteria_id: string;
+          problem_id: string;
+          score: number;
+        };
+        Update: {
+          created_at?: string;
+          criteria_id?: string;
+          problem_id?: string;
+          score?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'nova_problem_criteria_scores_criteria_id_fkey';
+            columns: ['criteria_id'];
+            isOneToOne: false;
+            referencedRelation: 'nova_challenge_criteria';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'nova_problem_criteria_scores_problem_id_fkey';
+            columns: ['problem_id'];
+            isOneToOne: false;
+            referencedRelation: 'nova_problems';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      nova_problem_test_cases: {
+        Row: {
+          created_at: string;
+          id: string;
+          input: string;
+          problem_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          input: string;
+          problem_id: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          input?: string;
+          problem_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'nova_problem_testcases_problem_id_fkey';
+            columns: ['problem_id'];
+            isOneToOne: false;
+            referencedRelation: 'nova_problems';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      nova_problems: {
+        Row: {
+          challenge_id: string;
+          created_at: string;
+          description: string;
+          example_input: string;
+          example_output: string;
+          id: string;
+          max_prompt_length: number;
+          title: string;
+        };
+        Insert: {
+          challenge_id: string;
+          created_at?: string;
+          description: string;
+          example_input: string;
+          example_output: string;
+          id?: string;
+          max_prompt_length: number;
+          title: string;
+        };
+        Update: {
+          challenge_id?: string;
+          created_at?: string;
+          description?: string;
+          example_input?: string;
+          example_output?: string;
+          id?: string;
+          max_prompt_length?: number;
+          title?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'nova_problems_challenge_id_fkey';
+            columns: ['challenge_id'];
+            isOneToOne: false;
+            referencedRelation: 'nova_challenges';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      nova_roles: {
+        Row: {
+          allow_challenge_management: boolean;
+          allow_role_management: boolean;
+          created_at: string;
+          email: string | null;
+          enabled: boolean;
+          id: string;
+        };
+        Insert: {
+          allow_challenge_management?: boolean;
+          allow_role_management?: boolean;
+          created_at?: string;
+          email?: string | null;
+          enabled: boolean;
+          id?: string;
+        };
+        Update: {
+          allow_challenge_management?: boolean;
+          allow_role_management?: boolean;
+          created_at?: string;
+          email?: string | null;
+          enabled?: boolean;
+          id?: string;
+        };
+        Relationships: [];
+      };
+      nova_sessions: {
+        Row: {
+          challenge_id: string;
+          created_at: string;
+          end_time: string | null;
+          id: string;
+          start_time: string;
+          status: string;
+          total_score: number;
+          user_id: string;
+        };
+        Insert: {
+          challenge_id: string;
+          created_at?: string;
+          end_time?: string | null;
+          id?: string;
+          start_time: string;
+          status: string;
+          total_score: number;
+          user_id: string;
+        };
+        Update: {
+          challenge_id?: string;
+          created_at?: string;
+          end_time?: string | null;
+          id?: string;
+          start_time?: string;
+          status?: string;
+          total_score?: number;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'nova_sessions_challenge_id_fkey';
+            columns: ['challenge_id'];
+            isOneToOne: false;
+            referencedRelation: 'nova_challenges';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'nova_sessions_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      nova_submission_outputs: {
+        Row: {
+          created_at: string;
+          id: number;
+          output: string;
+          submission_id: number;
+        };
+        Insert: {
+          created_at?: string;
+          id?: number;
+          output: string;
+          submission_id: number;
+        };
+        Update: {
+          created_at?: string;
+          id?: number;
+          output?: string;
+          submission_id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'nova_submission_outputs_submission_id_fkey';
+            columns: ['submission_id'];
+            isOneToOne: false;
+            referencedRelation: 'nova_submissions';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      nova_submissions: {
+        Row: {
+          created_at: string;
+          feedback: string;
+          id: number;
+          problem_id: string;
+          prompt: string;
+          score: number;
+          session_id: string | null;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          feedback: string;
+          id?: number;
+          problem_id: string;
+          prompt: string;
+          score: number;
+          session_id?: string | null;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          feedback?: string;
+          id?: number;
+          problem_id?: string;
+          prompt?: string;
+          score?: number;
+          session_id?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'nova_submissions_problem_id_fkey';
+            columns: ['problem_id'];
+            isOneToOne: false;
+            referencedRelation: 'nova_problems';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'nova_submissions_session_id_fkey';
+            columns: ['session_id'];
+            isOneToOne: false;
+            referencedRelation: 'nova_sessions';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'nova_submissions_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      nova_team_emails: {
+        Row: {
+          created_at: string;
+          email: string;
+          team_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          email: string;
+          team_id: string;
+        };
+        Update: {
+          created_at?: string;
+          email?: string;
+          team_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'nova_team_emails_team_id_fkey';
+            columns: ['team_id'];
+            isOneToOne: false;
+            referencedRelation: 'nova_teams';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      nova_team_members: {
+        Row: {
+          created_at: string;
+          team_id: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          team_id: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          team_id?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'nova_team_members_team_id_fkey';
+            columns: ['team_id'];
+            isOneToOne: false;
+            referencedRelation: 'nova_teams';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'nova_team_members_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      nova_teams: {
+        Row: {
+          created_at: string;
+          description: string | null;
+          goals: string | null;
+          id: string;
+          name: string;
+        };
+        Insert: {
+          created_at?: string;
+          description?: string | null;
+          goals?: string | null;
+          id?: string;
+          name: string;
+        };
+        Update: {
+          created_at?: string;
+          description?: string | null;
+          goals?: string | null;
+          id?: string;
+          name?: string;
+        };
+        Relationships: [];
       };
       personal_notes: {
         Row: {
@@ -3489,7 +4035,11 @@ export type Database = {
           created_at: string | null;
           description: string;
           end_at: string;
+          google_event_id: string | null;
           id: string;
+          location: string | null;
+          locked: boolean;
+          priority: string | null;
           start_at: string;
           title: string;
           ws_id: string;
@@ -3499,7 +4049,11 @@ export type Database = {
           created_at?: string | null;
           description?: string;
           end_at: string;
+          google_event_id?: string | null;
           id?: string;
+          location?: string | null;
+          locked?: boolean;
+          priority?: string | null;
           start_at: string;
           title?: string;
           ws_id: string;
@@ -3509,7 +4063,11 @@ export type Database = {
           created_at?: string | null;
           description?: string;
           end_at?: string;
+          google_event_id?: string | null;
           id?: string;
+          location?: string | null;
+          locked?: boolean;
+          priority?: string | null;
           start_at?: string;
           title?: string;
           ws_id?: string;
@@ -3955,6 +4513,47 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: 'workspace_documents_ws_id_fkey';
+            columns: ['ws_id'];
+            isOneToOne: false;
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      workspace_email_credentials: {
+        Row: {
+          access_id: string;
+          access_key: string;
+          created_at: string;
+          id: string;
+          region: string;
+          source_email: string;
+          source_name: string;
+          ws_id: string;
+        };
+        Insert: {
+          access_id: string;
+          access_key: string;
+          created_at?: string;
+          id?: string;
+          region?: string;
+          source_email?: string;
+          source_name?: string;
+          ws_id: string;
+        };
+        Update: {
+          access_id?: string;
+          access_key?: string;
+          created_at?: string;
+          id?: string;
+          region?: string;
+          source_email?: string;
+          source_name?: string;
+          ws_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'workspace_email_credentials_ws_id_fkey';
             columns: ['ws_id'];
             isOneToOne: false;
             referencedRelation: 'workspaces';
@@ -5449,19 +6048,33 @@ export type Database = {
       };
     };
     Functions: {
+      cleanup_expired_cross_app_tokens: {
+        Args: Record<PropertyKey, never>;
+        Returns: undefined;
+      };
       create_ai_chat: {
-        Args: {
-          title: string;
-          message: string;
-          model: string;
-        };
+        Args: { title: string; message: string; model: string };
+        Returns: string;
+      };
+      generate_cross_app_token: {
+        Args:
+          | {
+              p_user_id: string;
+              p_origin_app: string;
+              p_target_app: string;
+              p_expiry_seconds?: number;
+            }
+          | {
+              p_user_id: string;
+              p_origin_app: string;
+              p_target_app: string;
+              p_expiry_seconds?: number;
+              p_session_data?: Json;
+            };
         Returns: string;
       };
       get_daily_income_expense: {
-        Args: {
-          _ws_id: string;
-          past_days?: number;
-        };
+        Args: { _ws_id: string; past_days?: number };
         Returns: {
           day: string;
           total_income: number;
@@ -5469,9 +6082,7 @@ export type Database = {
         }[];
       };
       get_daily_prompt_completion_tokens: {
-        Args: {
-          past_days?: number;
-        };
+        Args: { past_days?: number };
         Returns: {
           day: string;
           total_prompt_tokens: number;
@@ -5479,39 +6090,27 @@ export type Database = {
         }[];
       };
       get_finance_invoices_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_healthcare_checkups_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_healthcare_diagnoses_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_healthcare_vital_groups_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_healthcare_vitals_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_hourly_prompt_completion_tokens: {
-        Args: {
-          past_hours?: number;
-        };
+        Args: { past_hours?: number };
         Returns: {
           hour: string;
           total_prompt_tokens: number;
@@ -5519,15 +6118,11 @@ export type Database = {
         }[];
       };
       get_inventory_batches_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_inventory_product_categories_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_inventory_products: {
@@ -5551,34 +6146,23 @@ export type Database = {
         }[];
       };
       get_inventory_products_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_inventory_suppliers_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_inventory_units_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_inventory_warehouses_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_monthly_income_expense: {
-        Args: {
-          _ws_id: string;
-          past_months?: number;
-        };
+        Args: { _ws_id: string; past_months?: number };
         Returns: {
           month: string;
           total_income: number;
@@ -5586,9 +6170,7 @@ export type Database = {
         }[];
       };
       get_monthly_prompt_completion_tokens: {
-        Args: {
-          past_months?: number;
-        };
+        Args: { past_months?: number };
         Returns: {
           month: string;
           total_prompt_tokens: number;
@@ -5596,16 +6178,11 @@ export type Database = {
         }[];
       };
       get_pending_event_participants: {
-        Args: {
-          _event_id: string;
-        };
+        Args: { _event_id: string };
         Returns: number;
       };
       get_possible_excluded_groups: {
-        Args: {
-          _ws_id: string;
-          included_groups: string[];
-        };
+        Args: { _ws_id: string; included_groups: string[] };
         Returns: {
           id: string;
           name: string;
@@ -5614,10 +6191,7 @@ export type Database = {
         }[];
       };
       get_possible_excluded_tags: {
-        Args: {
-          _ws_id: string;
-          included_tags: string[];
-        };
+        Args: { _ws_id: string; included_tags: string[] };
         Returns: {
           id: string;
           name: string;
@@ -5637,16 +6211,11 @@ export type Database = {
         }[];
       };
       get_user_role: {
-        Args: {
-          user_id: string;
-          ws_id: string;
-        };
+        Args: { user_id: string; ws_id: string };
         Returns: string;
       };
       get_user_tasks: {
-        Args: {
-          _board_id: string;
-        };
+        Args: { _board_id: string };
         Returns: {
           id: string;
           name: string;
@@ -5660,29 +6229,19 @@ export type Database = {
         }[];
       };
       get_workspace_drive_size: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_workspace_products_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_workspace_transaction_categories_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_workspace_transactions_count: {
-        Args: {
-          ws_id: string;
-          start_date?: string;
-          end_date?: string;
-        };
+        Args: { ws_id: string; start_date?: string; end_date?: string };
         Returns: number;
       };
       get_workspace_user_groups: {
@@ -5703,9 +6262,7 @@ export type Database = {
         }[];
       };
       get_workspace_user_groups_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_workspace_users: {
@@ -5739,123 +6296,92 @@ export type Database = {
         }[];
       };
       get_workspace_users_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_workspace_wallets_count: {
-        Args: {
-          ws_id: string;
-        };
+        Args: { ws_id: string };
         Returns: number;
       };
       get_workspace_wallets_expense: {
-        Args: {
-          ws_id: string;
-          start_date?: string;
-          end_date?: string;
-        };
+        Args: { ws_id: string; start_date?: string; end_date?: string };
         Returns: number;
       };
       get_workspace_wallets_income: {
-        Args: {
-          ws_id: string;
-          start_date?: string;
-          end_date?: string;
-        };
+        Args: { ws_id: string; start_date?: string; end_date?: string };
         Returns: number;
       };
       gtrgm_compress: {
-        Args: {
-          '': unknown;
-        };
+        Args: { '': unknown };
         Returns: unknown;
       };
       gtrgm_decompress: {
-        Args: {
-          '': unknown;
-        };
+        Args: { '': unknown };
         Returns: unknown;
       };
       gtrgm_in: {
-        Args: {
-          '': unknown;
-        };
+        Args: { '': unknown };
         Returns: unknown;
       };
       gtrgm_options: {
-        Args: {
-          '': unknown;
-        };
+        Args: { '': unknown };
         Returns: undefined;
       };
       gtrgm_out: {
-        Args: {
-          '': unknown;
-        };
+        Args: { '': unknown };
         Returns: unknown;
       };
       has_other_owner: {
-        Args: {
-          _ws_id: string;
-          _user_id: string;
-        };
+        Args: { _ws_id: string; _user_id: string };
         Returns: boolean;
       };
       insert_ai_chat_message: {
-        Args: {
-          message: string;
-          chat_id: string;
-          source: string;
-        };
+        Args: { message: string; chat_id: string; source: string };
         Returns: undefined;
       };
       is_list_accessible: {
-        Args: {
-          _list_id: string;
-        };
+        Args: { _list_id: string };
         Returns: boolean;
       };
       is_member_invited: {
-        Args: {
-          _user_id: string;
-          _org_id: string;
-        };
+        Args: { _user_id: string; _org_id: string };
+        Returns: boolean;
+      };
+      is_nova_challenge_manager: {
+        Args: Record<PropertyKey, never>;
+        Returns: boolean;
+      };
+      is_nova_user_email_in_team: {
+        Args: { _user_email: string; _team_id: string };
+        Returns: boolean;
+      };
+      is_nova_user_id_in_team: {
+        Args: { _user_id: string; _team_id: string };
         Returns: boolean;
       };
       is_org_member: {
-        Args: {
-          _user_id: string;
-          _org_id: string;
-        };
+        Args: { _user_id: string; _org_id: string };
         Returns: boolean;
       };
       is_project_member: {
-        Args: {
-          _project_id: string;
-        };
+        Args: { _project_id: string };
         Returns: boolean;
       };
       is_task_accessible: {
-        Args: {
-          _task_id: string;
-        };
+        Args: { _task_id: string };
         Returns: boolean;
       };
       is_task_board_member: {
-        Args: {
-          _user_id: string;
-          _board_id: string;
-        };
+        Args: { _user_id: string; _board_id: string };
         Returns: boolean;
       };
       is_user_task_in_board: {
-        Args: {
-          _user_id: string;
-          _task_id: string;
-        };
+        Args: { _user_id: string; _task_id: string };
         Returns: boolean;
+      };
+      revoke_all_cross_app_tokens: {
+        Args: { p_user_id: string };
+        Returns: undefined;
       };
       search_users_by_name: {
         Args: {
@@ -5872,9 +6398,7 @@ export type Database = {
         }[];
       };
       set_limit: {
-        Args: {
-          '': number;
-        };
+        Args: { '': number };
         Returns: number;
       };
       show_limit: {
@@ -5882,24 +6406,35 @@ export type Database = {
         Returns: number;
       };
       show_trgm: {
-        Args: {
-          '': string;
-        };
+        Args: { '': string };
         Returns: string[];
       };
       transactions_have_same_abs_amount: {
-        Args: {
-          transaction_id_1: string;
-          transaction_id_2: string;
-        };
+        Args: { transaction_id_1: string; transaction_id_2: string };
         Returns: boolean;
       };
       transactions_have_same_amount: {
-        Args: {
-          transaction_id_1: string;
-          transaction_id_2: string;
-        };
+        Args: { transaction_id_1: string; transaction_id_2: string };
         Returns: boolean;
+      };
+      update_expired_sessions: {
+        Args: Record<PropertyKey, never>;
+        Returns: undefined;
+      };
+      update_session_total_score: {
+        Args: { challenge_id_param: string; user_id_param: string };
+        Returns: undefined;
+      };
+      validate_cross_app_token: {
+        Args: { p_token: string; p_target_app: string };
+        Returns: string;
+      };
+      validate_cross_app_token_with_session: {
+        Args: { p_token: string; p_target_app: string };
+        Returns: {
+          user_id: string;
+          session_data: Json;
+        }[];
       };
     };
     Enums: {
@@ -5944,27 +6479,29 @@ export type Database = {
   };
 };
 
-type PublicSchema = Database[Extract<keyof Database, 'public'>];
+type DefaultSchema = Database[Extract<keyof Database, 'public'>];
 
 export type Tables<
-  PublicTableNameOrOptions extends
-    | keyof (PublicSchema['Tables'] & PublicSchema['Views'])
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema['Tables'] & DefaultSchema['Views'])
     | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-        Database[PublicTableNameOrOptions['schema']]['Views'])
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof Database;
+  }
+    ? keyof (Database[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
+        Database[DefaultSchemaTableNameOrOptions['schema']]['Views'])
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-      Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
+  ? (Database[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
+      Database[DefaultSchemaTableNameOrOptions['schema']]['Views'])[TableName] extends {
       Row: infer R;
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] &
-        PublicSchema['Views'])
-    ? (PublicSchema['Tables'] &
-        PublicSchema['Views'])[PublicTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema['Tables'] &
+        DefaultSchema['Views'])
+    ? (DefaultSchema['Tables'] &
+        DefaultSchema['Views'])[DefaultSchemaTableNameOrOptions] extends {
         Row: infer R;
       }
       ? R
@@ -5972,20 +6509,22 @@ export type Tables<
     : never;
 
 export type TablesInsert<
-  PublicTableNameOrOptions extends
-    | keyof PublicSchema['Tables']
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema['Tables']
     | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof Database;
+  }
+    ? keyof Database[DefaultSchemaTableNameOrOptions['schema']]['Tables']
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
+  ? Database[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Insert: infer I;
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
+    ? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
         Insert: infer I;
       }
       ? I
@@ -5993,20 +6532,22 @@ export type TablesInsert<
     : never;
 
 export type TablesUpdate<
-  PublicTableNameOrOptions extends
-    | keyof PublicSchema['Tables']
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema['Tables']
     | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof Database;
+  }
+    ? keyof Database[DefaultSchemaTableNameOrOptions['schema']]['Tables']
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
+  ? Database[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Update: infer U;
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
+    ? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
         Update: infer U;
       }
       ? U
@@ -6014,21 +6555,23 @@ export type TablesUpdate<
     : never;
 
 export type Enums<
-  PublicEnumNameOrOptions extends
-    | keyof PublicSchema['Enums']
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema['Enums']
     | { schema: keyof Database },
-  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof Database;
+  }
+    ? keyof Database[DefaultSchemaEnumNameOrOptions['schema']]['Enums']
     : never = never,
-> = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
-  : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
-    ? PublicSchema['Enums'][PublicEnumNameOrOptions]
+> = DefaultSchemaEnumNameOrOptions extends { schema: keyof Database }
+  ? Database[DefaultSchemaEnumNameOrOptions['schema']]['Enums'][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema['Enums']
+    ? DefaultSchema['Enums'][DefaultSchemaEnumNameOrOptions]
     : never;
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-    | keyof PublicSchema['CompositeTypes']
+    | keyof DefaultSchema['CompositeTypes']
     | { schema: keyof Database },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
     schema: keyof Database;
@@ -6037,6 +6580,49 @@ export type CompositeTypes<
     : never = never,
 > = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
   ? Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema['CompositeTypes']
-    ? PublicSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema['CompositeTypes']
+    ? DefaultSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
     : never;
+
+export const Constants = {
+  public: {
+    Enums: {
+      ai_message_type: [
+        'message',
+        'file',
+        'summary',
+        'notes',
+        'multi_choice_quiz',
+        'paragraph_quiz',
+        'flashcards',
+      ],
+      chat_role: ['FUNCTION', 'USER', 'SYSTEM', 'ASSISTANT'],
+      dataset_type: ['excel', 'csv', 'html'],
+      workspace_role_permission: [
+        'view_infrastructure',
+        'manage_workspace_secrets',
+        'manage_external_migrations',
+        'manage_workspace_roles',
+        'manage_workspace_members',
+        'manage_workspace_settings',
+        'manage_workspace_integrations',
+        'manage_workspace_billing',
+        'manage_workspace_security',
+        'manage_workspace_audit_logs',
+        'manage_user_report_templates',
+        'manage_calendar',
+        'manage_projects',
+        'manage_documents',
+        'manage_drive',
+        'manage_users',
+        'export_users_data',
+        'manage_inventory',
+        'manage_finance',
+        'export_finance_data',
+        'ai_chat',
+        'ai_lab',
+        'send_user_group_post_emails',
+      ],
+    },
+  },
+} as const;

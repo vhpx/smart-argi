@@ -1,17 +1,37 @@
 'use client';
 
 import { AuthButton } from './auth-button';
+<<<<<<< HEAD
 import { ThemeToggle } from './theme-toggle';
 import type { SupabaseUser } from '@tutur3u/supabase/next/user';
 import { WorkspaceUser } from '@tutur3u/types/primitives/WorkspaceUser';
 import {
+=======
+import { NavItem, useNavigation } from './shared/navigation-config';
+import type { SupabaseUser } from '@tuturuuu/supabase/next/user';
+import { WorkspaceUser } from '@tuturuuu/types/primitives/WorkspaceUser';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@tuturuuu/ui/accordion';
+import { ThemeToggle } from '@tuturuuu/ui/custom/theme-toggle';
+import { MenuIcon } from '@tuturuuu/ui/icons';
+import {
+>>>>>>> main
   Sheet,
   SheetContent,
   SheetTitle,
   SheetTrigger,
+<<<<<<< HEAD
 } from '@tutur3u/ui/sheet';
 import { cn } from '@tutur3u/utils/format';
 import { MenuIcon } from 'lucide-react';
+=======
+} from '@tuturuuu/ui/sheet';
+import { cn } from '@tuturuuu/utils/format';
+>>>>>>> main
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -29,6 +49,7 @@ interface NavLinkProps {
   className?: string;
 }
 
+<<<<<<< HEAD
 interface NavItem {
   href: string;
   label: string;
@@ -40,6 +61,8 @@ const navItems = (t: any) => {
   return [{ href: '/', label: t('common.home') }] as NavItem[];
 };
 
+=======
+>>>>>>> main
 const NavLink: React.FC<NavLinkProps> = ({ item, onClick, className }) => {
   const pathname = usePathname();
   const isActive = pathname === item.href;
@@ -58,9 +81,10 @@ const NavLink: React.FC<NavLinkProps> = ({ item, onClick, className }) => {
   return (
     <Link {...linkProps}>
       <span className="flex items-center gap-2">
+        {item.icon}
         {item.label}
         {item.badge && (
-          <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary">
+          <span className="bg-primary/10 text-primary rounded-full px-2 py-0.5 text-xs">
             {item.badge}
           </span>
         )}
@@ -79,12 +103,27 @@ const MobileMenu: React.FC<MenuProps> = ({ sbUser, user, t }) => {
   const [isOpened, setIsOpened] = useState(false);
   const closeMenu = () => setIsOpened(false);
 
+<<<<<<< HEAD
   const items = navItems(t);
   const mainLinks = items.slice(0, 1); // Only home
+=======
+  const { categories } = useNavigation(t);
+
+  // Extract categories by their titles
+  const mainLinks = categories.find((cat) => cat.title === 'main')?.items || [];
+  const products =
+    categories.find((cat) => cat.title === 'products')?.items || [];
+  const solutions =
+    categories.find((cat) => cat.title === 'solutions')?.items || [];
+  const resources =
+    categories.find((cat) => cat.title === 'resources')?.items || [];
+  const company =
+    categories.find((cat) => cat.title === 'company')?.items || [];
+>>>>>>> main
 
   return (
     <Sheet open={isOpened} onOpenChange={setIsOpened}>
-      <SheetTrigger className="rounded-lg p-2 transition-all hover:bg-accent active:bg-accent/80">
+      <SheetTrigger className="hover:bg-accent active:bg-accent/80 rounded-lg p-2 transition-all">
         <MenuIcon className="h-5 w-5" />
       </SheetTrigger>
 
@@ -114,11 +153,100 @@ const MobileMenu: React.FC<MenuProps> = ({ sbUser, user, t }) => {
                       key={item.href}
                       item={item}
                       onClick={closeMenu}
-                      className="rounded-lg px-4 py-2.5 transition-all hover:bg-accent active:bg-accent/80"
+                      className="hover:bg-accent active:bg-accent/80 rounded-lg px-4 py-2.5 transition-all"
                     />
                   ))}
                 </div>
               </div>
+<<<<<<< HEAD
+=======
+
+              <Accordion type="multiple" className="space-y-3">
+                {/* Products Section */}
+                <AccordionItem value="products" className="border-none px-4">
+                  <AccordionTrigger className="hover:bg-accent active:bg-accent/80 data-[state=open]:bg-accent/50 rounded-lg px-4 py-3 transition-all">
+                    <span className="text-sm font-semibold">
+                      {t('common.products')}
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-2 pt-3">
+                    <div className="grid gap-2 px-2">
+                      {products.map((item) => (
+                        <MobileNavLink
+                          key={item.href}
+                          item={item}
+                          onClick={closeMenu}
+                          className="hover:bg-accent active:bg-accent/80 rounded-lg px-4 py-2.5 transition-all"
+                        />
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                {/* Solutions Section */}
+                <AccordionItem value="solutions" className="border-none px-4">
+                  <AccordionTrigger className="hover:bg-accent active:bg-accent/80 data-[state=open]:bg-accent/50 rounded-lg px-4 py-3 transition-all">
+                    <span className="text-sm font-semibold">
+                      {t('common.solutions')}
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-2 pt-3">
+                    <div className="grid gap-2 px-2">
+                      {solutions.map((item) => (
+                        <MobileNavLink
+                          key={item.href}
+                          item={item}
+                          onClick={closeMenu}
+                          className="hover:bg-accent active:bg-accent/80 rounded-lg px-4 py-2.5 transition-all"
+                        />
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                {/* Resources Section */}
+                <AccordionItem value="resources" className="border-none px-4">
+                  <AccordionTrigger className="hover:bg-accent active:bg-accent/80 data-[state=open]:bg-accent/50 rounded-lg px-4 py-3 transition-all">
+                    <span className="text-sm font-semibold">
+                      {t('common.resources')}
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-2 pt-3">
+                    <div className="grid gap-2 px-2">
+                      {resources.map((item) => (
+                        <MobileNavLink
+                          key={item.href}
+                          item={item}
+                          onClick={closeMenu}
+                          className="hover:bg-accent active:bg-accent/80 rounded-lg px-4 py-2.5 transition-all"
+                        />
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                {/* Company Section */}
+                <AccordionItem value="company" className="border-none px-4">
+                  <AccordionTrigger className="hover:bg-accent active:bg-accent/80 data-[state=open]:bg-accent/50 rounded-lg px-4 py-3 transition-all">
+                    <span className="text-sm font-semibold">
+                      {t('common.company')}
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-2 pt-3">
+                    <div className="grid gap-2 px-2">
+                      {company.map((item) => (
+                        <MobileNavLink
+                          key={item.href}
+                          item={item}
+                          onClick={closeMenu}
+                          className="hover:bg-accent active:bg-accent/80 rounded-lg px-4 py-2.5 transition-all"
+                        />
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+>>>>>>> main
             </div>
           </div>
         </div>
