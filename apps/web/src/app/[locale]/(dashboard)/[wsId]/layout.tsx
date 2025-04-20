@@ -8,20 +8,13 @@ import {
   SIDEBAR_COLLAPSED_COOKIE_NAME,
   SIDEBAR_SIZE_COOKIE_NAME,
 } from '@/constants/common';
+import { getPermissions, getWorkspace } from '@/lib/workspace-helper';
 import {
-  getPermissions,
-  getWorkspace,
-  verifySecret,
-} from '@/lib/workspace-helper';
-import {
-  Box,
   ChartArea,
   Clock,
   Cog,
   Database,
   HardDrive,
-  Logs,
-  Play,
   ScanSearch,
 } from '@tuturuuu/ui/icons';
 import { getCurrentUser } from '@tuturuuu/utils/user-helper';
@@ -54,97 +47,48 @@ export default async function Layout({ children, params }: LayoutProps) {
       shortcut: 'D',
     },
     null,
-    {
-      title: t('sidebar_tabs.models'),
-      href: `/${wsId}/models`,
-      icon: <Box className="h-4 w-4" />,
-      disabled:
-        !(await verifySecret({
-          forceAdmin: true,
-          wsId,
-          name: 'ENABLE_AI',
-          value: 'true',
-        })) || withoutPermission('ai_lab'),
-      experimental: 'alpha',
-    },
+    // {
+    //   title: t('sidebar_tabs.models'),
+    //   href: `/${wsId}/models`,
+    //   icon: <Box className="h-4 w-4" />,
+    //   disabled: withoutPermission('ai_lab'),
+    // },
     {
       title: t('sidebar_tabs.datasets'),
       href: `/${wsId}/datasets`,
       icon: <Database className="h-4 w-4" />,
-      disabled:
-        !(await verifySecret({
-          forceAdmin: true,
-          wsId,
-          name: 'ENABLE_AI',
-          value: 'true',
-        })) || withoutPermission('ai_lab'),
-      experimental: 'beta',
+      disabled: withoutPermission('ai_lab'),
     },
-    {
-      title: t('sidebar_tabs.pipelines'),
-      href: `/${wsId}/pipelines`,
-      icon: <Play className="h-4 w-4" />,
-      disabled:
-        !(await verifySecret({
-          forceAdmin: true,
-          wsId,
-          name: 'ENABLE_AI',
-          value: 'true',
-        })) || withoutPermission('ai_lab'),
-      experimental: 'alpha',
-    },
+    // {
+    //   title: t('sidebar_tabs.pipelines'),
+    //   href: `/${wsId}/pipelines`,
+    //   icon: <Play className="h-4 w-4" />,
+    //   disabled: withoutPermission('ai_lab'),
+    // },
     {
       title: t('sidebar_tabs.crawlers'),
       href: `/${wsId}/crawlers`,
       icon: <ScanSearch className="h-4 w-4" />,
-      disabled:
-        !(await verifySecret({
-          forceAdmin: true,
-          wsId,
-          name: 'ENABLE_AI',
-          value: 'true',
-        })) || withoutPermission('ai_lab'),
-      experimental: 'alpha',
+      disabled: withoutPermission('ai_lab'),
     },
     {
       title: t('sidebar_tabs.cron'),
       href: `/${wsId}/cron`,
       icon: <Clock className="h-4 w-4" />,
-      disabled:
-        !(await verifySecret({
-          forceAdmin: true,
-          wsId,
-          name: 'ENABLE_AI',
-          value: 'true',
-        })) || withoutPermission('ai_lab'),
-      experimental: 'alpha',
+      disabled: withoutPermission('ai_lab'),
     },
-    {
-      title: t('sidebar_tabs.queues'),
-      href: `/${wsId}/queues`,
-      icon: <Logs className="h-4 w-4" />,
-      disabled:
-        !(await verifySecret({
-          forceAdmin: true,
-          wsId,
-          name: 'ENABLE_AI',
-          value: 'true',
-        })) || withoutPermission('ai_lab'),
-      experimental: 'alpha',
-    },
+    // {
+    //   title: t('sidebar_tabs.queues'),
+    //   href: `/${wsId}/queues`,
+    //   icon: <Logs className="h-4 w-4" />,
+    //   disabled: withoutPermission('ai_lab'),
+    // },
     {
       title: t('sidebar_tabs.drive'),
       href: `/${wsId}/drive`,
       icon: <HardDrive className="h-4 w-4" />,
-      disabled:
-        !(await verifySecret({
-          forceAdmin: true,
-          wsId,
-          name: 'ENABLE_DRIVE',
-          value: 'true',
-        })) || withoutPermission('manage_drive'),
+      disabled: withoutPermission('manage_drive'),
       shortcut: 'R',
-      experimental: 'beta',
     },
     null,
     {

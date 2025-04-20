@@ -1,7 +1,6 @@
 import LocalWorkspaceSelect from './local-workspace-select';
 import NavbarActions from './navbar-actions';
 import NavbarSeparator from './navbar-separator';
-import { MainNavigationMenu } from './navigation-menu';
 import ServerMenu from './server-menu';
 import { LogoTitle } from '@tuturuuu/ui/custom/logo-title';
 import { Navbar as SharedNavbar } from '@tuturuuu/ui/navbar';
@@ -33,7 +32,7 @@ export default async function Navbar({
   return (
     <SharedNavbar
       logo="/media/logos/transparent.png"
-      title={<LogoTitle />}
+      title={<LogoTitle text="Smart Argi" />}
       afterTitle={
         <Suspense
           fallback={
@@ -43,7 +42,7 @@ export default async function Navbar({
           <LocalWorkspaceSelect />
         </Suspense>
       }
-      navigationMenu={<MainNavigationMenu />}
+      // navigationMenu={<MainNavigationMenu />}
       actions={
         <>
           {renderServerMenu()}

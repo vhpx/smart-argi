@@ -22,9 +22,7 @@ import { Mail } from '@tuturuuu/ui/icons';
 import { Input } from '@tuturuuu/ui/input';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@tuturuuu/ui/input-otp';
 import { zodResolver } from '@tuturuuu/ui/resolvers';
-import { Separator } from '@tuturuuu/ui/separator';
 import { useLocale, useTranslations } from 'next-intl';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
@@ -238,80 +236,6 @@ export default function LoginForm() {
     }
   }
 
-  // Google login function
-  const handleGoogleLogin = async () => {
-    setLoading(true);
-    const supabase = createClient();
-
-    // Pass the returnUrl and/or nextUrl to the callback
-    const returnUrl = searchParams.get('returnUrl');
-    const nextUrl = searchParams.get('nextUrl');
-
-    // Build the redirect URL with query parameters
-    let redirectTo = `${window.location.origin}/api/auth/callback`;
-    const params = new URLSearchParams();
-
-    if (returnUrl) params.append('returnUrl', returnUrl);
-    if (nextUrl) params.append('nextUrl', nextUrl);
-
-    const queryString = params.toString();
-    if (queryString) redirectTo += `?${queryString}`;
-
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo,
-        queryParams: {
-          access_type: 'offline',
-          prompt: 'consent',
-        },
-      },
-    });
-
-    if (error) {
-      setLoading(false);
-      toast({
-        title: t('login.failed'),
-        description: error.message,
-      });
-    }
-  };
-
-  // GitHub login function
-  const handleGitHubLogin = async () => {
-    setLoading(true);
-    const supabase = createClient();
-
-    // Pass the returnUrl and/or nextUrl to the callback
-    const returnUrl = searchParams.get('returnUrl');
-    const nextUrl = searchParams.get('nextUrl');
-
-    // Build the redirect URL with query parameters
-    let redirectTo = `${window.location.origin}/api/auth/callback`;
-    const params = new URLSearchParams();
-
-    if (returnUrl) params.append('returnUrl', returnUrl);
-    if (nextUrl) params.append('nextUrl', nextUrl);
-
-    const queryString = params.toString();
-    if (queryString) redirectTo += `?${queryString}`;
-
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'github',
-      options: {
-        redirectTo,
-      },
-    });
-
-    if (error) {
-      setLoading(false);
-      toast({
-        title: t('login.failed'),
-        description: error.message,
-      });
-    }
-  };
-
   if (!readyForAuth)
     return (
       <div className="mt-4 flex h-full w-full items-center justify-center">
@@ -323,53 +247,6 @@ export default function LoginForm() {
     <Card className="mx-auto mt-8 w-full max-w-md shadow-md">
       <CardContent className="pt-6">
         <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-3">
-            <Button
-              onClick={handleGoogleLogin}
-              disabled={loading || !readyForAuth}
-              className="w-full font-semibold"
-              variant="outline"
-              type="button"
-              size="lg"
-            >
-              <Image
-                src="/media/google-logo.png"
-                alt="Google"
-                width={20}
-                height={20}
-              />
-              Google
-            </Button>
-
-            <Button
-              onClick={handleGitHubLogin}
-              disabled={loading || !readyForAuth}
-              className="w-full font-semibold"
-              variant="outline"
-              type="button"
-              size="lg"
-            >
-              <Image
-                src="/media/github-mark.png"
-                alt="GitHub"
-                width={20}
-                height={20}
-              />
-              GitHub
-            </Button>
-          </div>
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background text-muted-foreground px-2">
-                {t('login.or_continue_with')}
-              </span>
-            </div>
-          </div>
-
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
               <FormField
@@ -496,27 +373,6 @@ export default function LoginForm() {
               </Button>
             </form>
           </Form>
-
-          <Separator className="mt-2" />
-          <div className="text-foreground/50 text-balance text-center text-sm font-semibold">
-            {t('auth.notice-p1')}{' '}
-            <Link
-              href="/terms"
-              target="_blank"
-              className="text-foreground/70 decoration-foreground/70 hover:text-foreground hover:decoration-foreground underline underline-offset-2 transition"
-            >
-              {t('auth.tos')}
-            </Link>{' '}
-            {t('common.and')}{' '}
-            <Link
-              href="/privacy"
-              target="_blank"
-              className="text-foreground/70 decoration-foreground/70 hover:text-foreground hover:decoration-foreground underline underline-offset-2 transition"
-            >
-              {t('auth.privacy')}
-            </Link>{' '}
-            {t('auth.notice-p2')}.
-          </div>
         </div>
       </CardContent>
     </Card>
