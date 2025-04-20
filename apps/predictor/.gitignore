@@ -1,0 +1,8 @@
+macro_data/
+macro_data/*
+macro_data /Users/hungpq2412/Downloads/RicePrice_WileyInterdisciplinaryReviews/macro_data.xlsx
+macro_data.xlsx
+.env
+*.log
+**/**/__pycache__/
+*.pyc

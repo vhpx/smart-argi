@@ -1,0 +1,16 @@
+python-dotenv
+pandas
+numpy
+scikit-learn
+optuna
+mlforecast
+coreforecast
+matplotlib
+statsforecast
+ray
+lightgbm
+xgboost
+catboost
+fastapi
+uvicorn
+utilsforecast
