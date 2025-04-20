@@ -1,15 +1,5 @@
+import { Filter } from './filters';
 import { SectionProps } from './index';
-<<<<<<< HEAD
-import { getInitials } from '@/utils/name-helper';
-import { useQuery } from '@tanstack/react-query';
-import { createClient } from '@tutur3u/supabase/next/client';
-import { WorkspaceUser } from '@tutur3u/types/primitives/WorkspaceUser';
-import { Avatar, AvatarFallback, AvatarImage } from '@tutur3u/ui/avatar';
-import { Button } from '@tutur3u/ui/button';
-import SearchBar from '@tutur3u/ui/custom/search-bar';
-import { cn } from '@tutur3u/utils/format';
-import { X } from 'lucide-react';
-=======
 import { useQuery } from '@tanstack/react-query';
 import { createClient } from '@tuturuuu/supabase/next/client';
 import { WorkspaceUser } from '@tuturuuu/types/primitives/WorkspaceUser';
@@ -19,7 +9,6 @@ import SearchBar from '@tuturuuu/ui/custom/search-bar';
 import { User, X } from '@tuturuuu/ui/icons';
 import { cn } from '@tuturuuu/utils/format';
 import { getInitials } from '@tuturuuu/utils/name-helper';
->>>>>>> main
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
@@ -52,22 +41,22 @@ export default function RoleFormMembersSection({
     if (roleMembersQuery.isFetched) onUpdate(roleMembersQuery.data?.count || 0);
   }, [roleMembersQuery.isFetched, roleMembersQuery.data?.count, onUpdate]);
 
-  // const handleNewMembers = async (memberIds: string[]) => {
-  //   const res = await fetch(
-  //     `/api/v1/workspaces/${wsId}/roles/${roleId}/members`,
-  //     {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ memberIds }),
-  //     }
-  //   );
+  const handleNewMembers = async (memberIds: string[]) => {
+    const res = await fetch(
+      `/api/v1/workspaces/${wsId}/roles/${roleId}/members`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ memberIds }),
+      }
+    );
 
-  //   if (res.ok) {
-  //     roleMembersQuery.refetch();
-  //   }
-  // };
+    if (res.ok) {
+      roleMembersQuery.refetch();
+    }
+  };
 
   const handleRemoveMember = async (memberId: string) => {
     const res = await fetch(
@@ -84,13 +73,11 @@ export default function RoleFormMembersSection({
 
   return (
     <>
-      <div className="border-dynamic-blue/20 bg-dynamic-blue/10 text-dynamic-blue mb-2 rounded-md border p-2 text-center font-bold">
+      <div className="mb-2 rounded-md border border-dynamic-blue/20 bg-dynamic-blue/10 p-2 text-center font-bold text-dynamic-blue">
         {form.watch('name') || '-'}
       </div>
       <div className="flex items-center gap-2">
         <SearchBar t={t} className={cn('w-full')} onSearch={setQuery} />
-<<<<<<< HEAD
-=======
         <Filter
           title={t('ws-members.invite_member')}
           icon={<User className="mr-2 h-4 w-4" />}
@@ -101,9 +88,9 @@ export default function RoleFormMembersSection({
               <Avatar className="relative h-8 w-8 cursor-pointer overflow-visible font-semibold">
                 <AvatarImage
                   src={user?.avatar_url ?? undefined}
-                  className="border-foreground/50 overflow-clip rounded-full border"
+                  className="overflow-clip rounded-full border border-foreground/50"
                 />
-                <AvatarFallback className="border-foreground/50 border font-semibold">
+                <AvatarFallback className="border border-foreground/50 font-semibold">
                   {user?.display_name ? (
                     getInitials(user.display_name)
                   ) : (
@@ -124,7 +111,6 @@ export default function RoleFormMembersSection({
           align="end"
           hideSelected
         />
->>>>>>> main
       </div>
       {roleUsers.length > 0 ? (
         <div className="mt-4 grid grid-cols-1 gap-2">
@@ -137,9 +123,9 @@ export default function RoleFormMembersSection({
                 <Avatar className="relative h-12 w-12 overflow-visible font-semibold">
                   <AvatarImage
                     src={user?.avatar_url ?? undefined}
-                    className="border-foreground/50 overflow-clip rounded-full border"
+                    className="overflow-clip rounded-full border border-foreground/50"
                   />
-                  <AvatarFallback className="border-foreground/50 border font-semibold">
+                  <AvatarFallback className="border border-foreground/50 font-semibold">
                     {user?.display_name
                       ? getInitials(user?.display_name)
                       : null}
@@ -167,7 +153,7 @@ export default function RoleFormMembersSection({
           ))}
         </div>
       ) : (
-        <div className="text-foreground/50 mt-4 rounded border border-dashed p-4 text-center font-semibold md:p-8">
+        <div className="mt-4 rounded border border-dashed p-4 text-center font-semibold text-foreground/50 md:p-8">
           This role has no members yet.
         </div>
       )}

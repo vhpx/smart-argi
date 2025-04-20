@@ -3,7 +3,7 @@ import type {
   AuroraForecast,
   AuroraMLMetrics,
   AuroraStatisticalMetrics,
-} from "@tutur3u/types/db";
+} from "@tuturuuu/types/db";
 
 const AURORA_API_KEY = process.env.AURORA_API_KEY;
 

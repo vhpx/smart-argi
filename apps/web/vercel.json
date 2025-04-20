@@ -1,8 +1,4 @@
 {
-<<<<<<< HEAD
-  "$schema": "https://openapi.vercel.sh/vercel.json"
-}
-=======
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "github": {
     "enabled": false
@@ -13,4 +9,3 @@
     }
   }
 }
->>>>>>> main

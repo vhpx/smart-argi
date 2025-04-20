@@ -1,29 +1,17 @@
 'use client';
 
-<<<<<<< HEAD
-import type { AuroraForecast } from '@tutur3u/types/db';
-import { Card, CardContent, CardHeader, CardTitle } from '@tutur3u/ui/card';
-=======
 import type { AuroraForecast } from '@tuturuuu/types/db';
 import { Card, CardContent, CardHeader, CardTitle } from '@tuturuuu/ui/card';
 import { ArrowDownIcon, ArrowUpIcon } from '@tuturuuu/ui/icons';
->>>>>>> main
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-<<<<<<< HEAD
-} from '@tutur3u/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@tutur3u/ui/tabs';
-import { cn } from '@tutur3u/utils/format';
-import { ArrowDownIcon, ArrowUpIcon } from 'lucide-react';
-=======
 } from '@tuturuuu/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@tuturuuu/ui/tabs';
 import { cn } from '@tuturuuu/utils/format';
->>>>>>> main
 import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useState } from 'react';
@@ -200,11 +188,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
               </Select>
 
               {insights && (
-<<<<<<< HEAD
                 <div className="text-sm text-muted-foreground">
-=======
-                <div className="text-muted-foreground text-sm">
->>>>>>> main
                   {t('aurora.last_updated')}:{' '}
                   {formatDate(
                     locale,
@@ -231,11 +215,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                   <CardContent>
                     <div className="space-y-1">
                       <div className="flex items-center justify-between">
-<<<<<<< HEAD
                         <span className="text-sm text-muted-foreground">
-=======
-                        <span className="text-muted-foreground text-sm">
->>>>>>> main
                           {t('aurora.high')}
                         </span>
                         <span className="text-success font-medium">
@@ -243,23 +223,15 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
-<<<<<<< HEAD
                         <span className="text-sm text-muted-foreground">
-=======
-                        <span className="text-muted-foreground text-sm">
->>>>>>> main
                           {t('aurora.low')}
                         </span>
-                        <span className="text-destructive font-medium">
+                        <span className="font-medium text-destructive">
                           {formatCurrency(insights.low)}
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
-<<<<<<< HEAD
                         <span className="text-sm text-muted-foreground">
-=======
-                        <span className="text-muted-foreground text-sm">
->>>>>>> main
                           {t('aurora.average')}
                         </span>
                         <span className="font-medium">
@@ -281,7 +253,7 @@ const Dashboard = ({ data }: { data: AuroraForecast }) => {
                       {insights.trend > 0 ? (
                         <ArrowUpIcon className="text-success h-4 w-4" />
                       ) : (
-                        <ArrowDownIcon className="text-destructive h-4 w-4" />
+                        <ArrowDownIcon className="h-4 w-4 text-destructive" />
                       )}
                       <span
                         className={
@@ -534,7 +506,7 @@ const MetricCard = ({
     <Card className="transition-all duration-200 hover:shadow-md">
       <CardContent className="pt-6">
         <div className="flex items-center justify-between">
-          <h3 className="text-muted-foreground text-sm font-medium">{title}</h3>
+          <h3 className="text-sm font-medium text-muted-foreground">{title}</h3>
           {calculatedTrend && (
             <div
               className={cn(
@@ -564,7 +536,7 @@ const MetricCard = ({
             {formattedValue}
           </div>
           <div className="mt-2">
-            <div className="bg-muted/20 h-2 overflow-hidden rounded-full">
+            <div className="h-2 overflow-hidden rounded-full bg-muted/20">
               <div
                 className="h-full rounded-full transition-all duration-300"
                 style={{

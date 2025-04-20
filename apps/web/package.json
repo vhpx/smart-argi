@@ -47,15 +47,6 @@
     "@radix-ui/react-slot": "^1.2.0",
     "@react-email/components": "^0.0.35",
     "@react-email/tailwind": "^1.0.4",
-<<<<<<< HEAD
-    "@tanstack/react-query": "^5.66.5",
-    "@tanstack/react-table": "^8.21.2",
-    "@tutur3u/ai": "workspace:*",
-    "@tutur3u/supabase": "workspace:*",
-    "@tutur3u/types": "workspace:*",
-    "@tutur3u/ui": "workspace:*",
-    "@tutur3u/utils": "workspace:*",
-=======
     "@tanstack/react-query": "^5.74.4",
     "@tanstack/react-table": "^8.21.3",
     "@tippyjs/react": "^4.2.6",
@@ -111,7 +102,6 @@
     "@tuturuuu/types": "workspace:*",
     "@tuturuuu/ui": "workspace:*",
     "@tuturuuu/utils": "workspace:*",
->>>>>>> main
     "@types/canvas-confetti": "^1.9.0",
     "@types/papaparse": "^5.3.15",
     "@upstash/qstash": "^2.7.23",

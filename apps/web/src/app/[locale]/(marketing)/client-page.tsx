@@ -10,7 +10,7 @@ import type {
   AuroraForecast,
   AuroraMLMetrics,
   AuroraStatisticalMetrics,
-} from '@tutur3u/types/db';
+} from '@tuturuuu/types/db';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 

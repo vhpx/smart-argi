@@ -3,15 +3,9 @@
 import type {
   AuroraMLMetrics,
   AuroraStatisticalMetrics,
-<<<<<<< HEAD
-} from '@tutur3u/types/db';
-import { Card, CardContent, CardHeader, CardTitle } from '@tutur3u/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@tutur3u/ui/tabs';
-=======
 } from '@tuturuuu/types/db';
 import { Card, CardContent, CardHeader, CardTitle } from '@tuturuuu/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@tuturuuu/ui/tabs';
->>>>>>> main
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import {
@@ -315,7 +309,7 @@ const ModelScoreCard = ({
     <Card className="transition-all duration-200 hover:shadow-md">
       <CardContent className="pt-6">
         <div className="flex items-center justify-between">
-          <h3 className="text-muted-foreground text-sm font-medium">{title}</h3>
+          <h3 className="text-sm font-medium text-muted-foreground">{title}</h3>
           {trend && (
             <div
               className="flex items-center gap-1 text-sm font-medium"
@@ -353,18 +347,14 @@ const ModelScoreCard = ({
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-<<<<<<< HEAD
                   <span className="text-sm text-muted-foreground">
-=======
-                  <span className="text-muted-foreground text-sm">
->>>>>>> main
                     {t('aurora.consistency')}
                   </span>
                   <span className="font-medium">
                     {formatPercentage(model.consistencyScore)}
                   </span>
                 </div>
-                <div className="bg-muted/20 h-2 overflow-hidden rounded-full">
+                <div className="h-2 overflow-hidden rounded-full bg-muted/20">
                   <div
                     className="h-full rounded-full transition-all duration-300"
                     style={{
@@ -377,18 +367,14 @@ const ModelScoreCard = ({
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-<<<<<<< HEAD
                   <span className="text-sm text-muted-foreground">
-=======
-                  <span className="text-muted-foreground text-sm">
->>>>>>> main
                     {t('aurora.overall')}
                   </span>
                   <span className="font-medium">
                     {formatPercentage(model.overallScore)}
                   </span>
                 </div>
-                <div className="bg-muted/20 h-2 overflow-hidden rounded-full">
+                <div className="h-2 overflow-hidden rounded-full bg-muted/20">
                   <div
                     className="h-full rounded-full transition-all duration-300"
                     style={{
@@ -406,7 +392,7 @@ const ModelScoreCard = ({
               {formatPercentage(score || 0)}
             </div>
             <div className="mt-2">
-              <div className="bg-muted/20 h-2 overflow-hidden rounded-full">
+              <div className="h-2 overflow-hidden rounded-full bg-muted/20">
                 <div
                   className="h-full rounded-full transition-all duration-300"
                   style={{
@@ -565,22 +551,14 @@ const MetricsChart = ({
                   <div className="mt-4 space-y-3">
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-<<<<<<< HEAD
                         <span className="text-sm text-muted-foreground">
-=======
-                        <span className="text-muted-foreground text-sm">
->>>>>>> main
                           {t('aurora.consistency')}
                         </span>
                         <span className="font-medium">
                           {formatPercentage(score.consistencyScore)}
                         </span>
                       </div>
-<<<<<<< HEAD
                       <div className="h-2 overflow-hidden rounded-full bg-muted/20">
-=======
-                      <div className="bg-muted/20 h-2 overflow-hidden rounded-full">
->>>>>>> main
                         <div
                           className="h-full rounded-full transition-all duration-300"
                           style={{
@@ -593,22 +571,14 @@ const MetricsChart = ({
 
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-<<<<<<< HEAD
                         <span className="text-sm text-muted-foreground">
-=======
-                        <span className="text-muted-foreground text-sm">
->>>>>>> main
                           {t('aurora.overall')}
                         </span>
                         <span className="font-medium">
                           {formatPercentage(score.overallScore)}
                         </span>
                       </div>
-<<<<<<< HEAD
                       <div className="h-2 overflow-hidden rounded-full bg-muted/20">
-=======
-                      <div className="bg-muted/20 h-2 overflow-hidden rounded-full">
->>>>>>> main
                         <div
                           className="h-full rounded-full transition-all duration-300"
                           style={{

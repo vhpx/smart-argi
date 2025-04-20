@@ -1,10 +1,7 @@
 import LoginForm from './form';
+import { Separator } from '@tuturuuu/ui/separator';
 import { getTranslations } from 'next-intl/server';
-<<<<<<< HEAD
 import Link from 'next/link';
-=======
-import Image from 'next/image';
->>>>>>> main
 import { Suspense } from 'react';
 
 export default async function Login() {
@@ -27,7 +24,6 @@ export default async function Login() {
         <Suspense fallback={<div>{t('common.loading')}...</div>}>
           <LoginForm />
         </Suspense>
-<<<<<<< HEAD
 
         <Separator className="mt-2" />
         <div className="text-center text-sm font-semibold text-balance text-foreground/50">
@@ -49,8 +45,6 @@ export default async function Login() {
           </Link>{' '}
           {t('auth.notice-p2')}.
         </div>
-=======
->>>>>>> main
       </div>
     </div>
   );
