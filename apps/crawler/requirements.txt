@@ -1,0 +1,8 @@
+fastapi[all]
+uvicorn[standard]
+markitdown
+modal
+python-multipart
+yfinance
+requests
+chardet>=4.0.0

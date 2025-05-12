@@ -1,0 +1,9 @@
+.venv
+.env
+__pycache__
+*.docx
+*.pdf
+*.pkl
+yh_all_symbols.json
+yh_get_all_sym.log
+cache
