@@ -1,5 +1,7 @@
 # Rice Price Forecast API Documentation
 
+> **Note:** This API is part of the RMIT Smart Agri cloud platform for managing datasets, with frequent data synchronization via cron jobs. Permissions are managed by workspace, and users can invite others to share workspace tools and data. See the main [README](../../README.md) for more details.
+
 This API provides endpoints for forecasting Vietnamese rice prices using both statistical and machine learning models. The API is deployed on Modal and provides predictions and performance metrics for various forecasting models.
 
 ## Base URL
