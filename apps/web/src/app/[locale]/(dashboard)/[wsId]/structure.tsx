@@ -26,7 +26,6 @@ import { WorkspaceSelect } from '@tuturuuu/ui/custom/workspace-select';
 import { cn } from '@tuturuuu/utils/format';
 import { debounce } from 'lodash';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ReactNode, Suspense, useCallback, useEffect, useState } from 'react';
@@ -133,22 +132,13 @@ export function Structure({
     <>
       {isCollapsed || (
         <Link href="/" className="flex flex-none items-center gap-2">
-          <div className="flex-none">
-            <Image
-              src="/media/logos/transparent.png"
-              className="h-8 w-8"
-              width={32}
-              height={32}
-              alt="logo"
-            />
-          </div>
           <LogoTitle />
         </Link>
       )}
 
       <Suspense
         fallback={
-          <div className="h-10 w-32 animate-pulse rounded-lg bg-foreground/5" />
+          <div className="bg-foreground/5 h-10 w-32 animate-pulse rounded-lg" />
         }
       >
         <WorkspaceSelect
@@ -226,19 +216,8 @@ export function Structure({
 
   const mobileHeader = (
     <>
-      <div className="flex flex-none items-center gap-2">
-        <Link href="/" className="flex flex-none items-center gap-2">
-          <Image
-            src="/media/logos/transparent.png"
-            className="h-8 w-8"
-            width={32}
-            height={32}
-            alt="logo"
-          />
-        </Link>
-      </div>
-      <div className="mx-2 h-4 w-[1px] flex-none rotate-[30deg] bg-foreground/20" />
-      <div className="flex items-center gap-2 text-lg font-semibold break-all">
+      <div className="bg-foreground/20 mx-2 h-4 w-[1px] flex-none rotate-[30deg]" />
+      <div className="flex items-center gap-2 break-all text-lg font-semibold">
         {currentLink?.icon && (
           <div className="flex-none">{currentLink.icon}</div>
         )}

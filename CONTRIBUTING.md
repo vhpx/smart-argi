@@ -1,4 +1,4 @@
-# Contributing to RMIT Smart Agri
+# Contributing to Smart Agri
 
 We welcome contributions from the community to help strengthen our project and better serve our users. Please follow these guidelines if you wish to contribute:
 
@@ -47,11 +47,11 @@ Contributors are expected to comply with our conduct principles:
 - Be considerate, constructive, and helpful
 - Be professional, ethical, and take responsibility
 
-Thank you again for your interest in contributing to RMIT Smart Agri! Together we can build an exceptional experience for our users.
+Thank you again for your interest in contributing to Smart Agri! Together we can build an exceptional experience for our users.
 
 ## Local Setup
 
-To setup RMIT Smart Agri locally, you'll need:
+To setup Smart Agri locally, you'll need:
 
 - pnpm installed (our package manager of choice)
 - A database (we recommend PostgreSQL)

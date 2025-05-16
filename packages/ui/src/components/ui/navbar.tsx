@@ -1,5 +1,4 @@
 import { cn } from '@tuturuuu/utils/format';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ReactNode, Suspense } from 'react';
 
@@ -95,17 +94,6 @@ export function Navbar({
               href={homeUrl}
               className={cn('flex flex-none items-center gap-2', logoClassName)}
             >
-              {typeof logo === 'string' ? (
-                <Image
-                  src={logo}
-                  className="h-8 w-8"
-                  width={32}
-                  height={32}
-                  alt="logo"
-                />
-              ) : (
-                logo
-              )}
               {title}
             </Link>
 

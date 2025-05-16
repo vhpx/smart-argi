@@ -22,7 +22,7 @@ export default async function Navbar({
   const renderNavbarActions = () => (
     <Suspense
       fallback={
-        <div className="h-10 w-[88px] animate-pulse rounded-lg bg-foreground/5" />
+        <div className="bg-foreground/5 h-10 w-[88px] animate-pulse rounded-lg" />
       }
     >
       <NavbarActions hideMetadata={hideMetadata} />
@@ -31,12 +31,11 @@ export default async function Navbar({
 
   return (
     <SharedNavbar
-      logo="/media/logos/transparent.png"
       title={<LogoTitle text="Smart Argi" />}
       afterTitle={
         <Suspense
           fallback={
-            <div className="h-10 w-32 animate-pulse rounded-lg bg-foreground/5" />
+            <div className="bg-foreground/5 h-10 w-32 animate-pulse rounded-lg" />
           }
         >
           <LocalWorkspaceSelect />

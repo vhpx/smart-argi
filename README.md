@@ -1,4 +1,4 @@
-# RMIT Smart Agri Monorepo
+# Smart Agri Monorepo
 
 [![Vercel Platform Production Deployment](https://github.com/tutur3u/platform/actions/workflows/vercel-production-platform.yaml/badge.svg)](https://github.com/tutur3u/platform/actions/workflows/vercel-production-platform.yaml)
 [![CodeQL](https://github.com/tutur3u/platform/actions/workflows/codeql.yml/badge.svg)](https://github.com/tutur3u/platform/actions/workflows/codeql.yml)
@@ -6,13 +6,13 @@
 
 ## Overview
 
-RMIT Smart Agri is a cloud-based platform for managing datasets, tools, and workflows in smart agriculture. The platform supports frequent data synchronization via automated cron jobs, ensuring your datasets are always up to date. Permissions and access are separated by workspaces, allowing you to securely manage data and tools for different teams or projects. You can invite more members to your workspace to collaborate and share access to all workspace features, including datasets, AI tools, and management utilities.
+Smart Agri is a cloud-based platform for managing datasets, tools, and workflows in smart agriculture. The platform supports frequent data synchronization via automated cron jobs, ensuring your datasets are always up to date. Permissions and access are separated by workspaces, allowing you to securely manage data and tools for different teams or projects. You can invite more members to your workspace to collaborate and share access to all workspace features, including datasets, AI tools, and management utilities.
 
 The `@ai` module provides a wide range of smart-agriculture-related functionalities, including AI-powered forecasting, and deep integration with all platform features to help automate and optimize agricultural processes.
 
 ## Project Structure
 
-- `apps/web`: Web application for RMIT Smart Agri platform
+- `apps/web`: Web application for Smart Agri platform
 
 ## Prerequisites
 

@@ -1,6 +1,6 @@
 # @tuturuuu/crawler
 
-> **Note:** This package is part of the RMIT Smart Agri cloud platform for managing datasets, with frequent data synchronization via cron jobs. Permissions are managed by workspace, and users can invite others to share workspace tools and data. See the main [README](../../README.md) for more details.
+> **Note:** This package is part of the Smart Agri cloud platform for managing datasets, with frequent data synchronization via cron jobs. Permissions are managed by workspace, and users can invite others to share workspace tools and data. See the main [README](../../README.md) for more details.
 
 Web crawling and scraping utilities for Tuturuuu Platform.
 

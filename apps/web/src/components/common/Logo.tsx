@@ -13,7 +13,7 @@ export default function Logo({
   alwaysShowLabel = false,
   onClick,
 }: LogoProps) {
-  const label = 'RMIT Smart Agri';
+  const label = 'Smart Agri';
 
   return (
     <Link
@@ -21,18 +21,6 @@ export default function Logo({
       onClick={onClick}
       className="flex items-center gap-2"
     >
-      {/* {showLogo && (
-        <div className="flex-none">
-          <Image
-            src="/media/logos/transparent.png"
-            alt="logo"
-            width={320}
-            height={320}
-            className="h-8 w-8"
-          />
-        </div>
-      )} */}
-
       {showLabel && (
         <div
           className={`text-xl font-semibold text-black transition duration-200 dark:text-white ${

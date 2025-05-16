@@ -10,28 +10,17 @@ export default async function Login() {
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center p-8 py-16 lg:py-32">
       <div className="grid max-w-md gap-2">
-        {/* <div className="flex items-center justify-center">
-          <h1 className="relative flex w-fit items-center gap-2">
-            <Image
-              src="/media/logos/transparent.png"
-              width={128}
-              height={128}
-              alt="Smart Agri Logo"
-            />
-          </h1>
-        </div> */}
-
         <Suspense fallback={<div>{t('common.loading')}...</div>}>
           <LoginForm />
         </Suspense>
 
         <Separator className="mt-2" />
-        <div className="text-center text-sm font-semibold text-balance text-foreground/50">
+        <div className="text-foreground/50 text-balance text-center text-sm font-semibold">
           {t('auth.notice-p1')}{' '}
           <Link
             href="https://smartargi.ai/terms"
             target="_blank"
-            className="text-foreground/70 underline decoration-foreground/70 underline-offset-2 transition hover:text-foreground hover:decoration-foreground"
+            className="text-foreground/70 decoration-foreground/70 hover:text-foreground hover:decoration-foreground underline underline-offset-2 transition"
           >
             {t('auth.tos')}
           </Link>{' '}
@@ -39,7 +28,7 @@ export default async function Login() {
           <Link
             href="https://smartargi.ai/privacy"
             target="_blank"
-            className="text-foreground/70 underline decoration-foreground/70 underline-offset-2 transition hover:text-foreground hover:decoration-foreground"
+            className="text-foreground/70 decoration-foreground/70 hover:text-foreground hover:decoration-foreground underline underline-offset-2 transition"
           >
             {t('auth.privacy')}
           </Link>{' '}

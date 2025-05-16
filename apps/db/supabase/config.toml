@@ -121,7 +121,7 @@ email_sent = 1000000
 
 # Auth templates
 [auth.email.template.confirmation]
-subject = "Confirm your RMIT Smart Agri account"
+subject = "Confirm your Smart Agri account"
 content_path = "./supabase/templates/confirmation.html"
 
 [auth.email.template.email_change]
@@ -129,15 +129,15 @@ subject = "Email Change Confirmation"
 content_path = "./supabase/templates/email_change.html"
 
 [auth.email.template.invite]
-subject = "Invitation to RMIT Smart Agri"
+subject = "Invitation to Smart Agri"
 content_path = "./supabase/templates/invite.html"
 
 [auth.email.template.magic_link]
-subject = "RMIT Smart Agri Verification Code"
+subject = "Smart Agri Verification Code"
 content_path = "./supabase/templates/magic_link.html"
 
 [auth.email.template.recovery]
-subject = "RMIT Smart Agri Password Recovery"
+subject = "Smart Agri Password Recovery"
 content_path = "./supabase/templates/recovery.html"
 
 [auth.sms]

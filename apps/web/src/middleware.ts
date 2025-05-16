@@ -1,16 +1,15 @@
-import { LOCALE_COOKIE_NAME, PUBLIC_PATHS } from './constants/common';
-import { Locale, defaultLocale, supportedLocales } from './i18n/routing';
-import { match } from '@formatjs/intl-localematcher';
-import { createCentralizedAuthMiddleware } from '@tuturuuu/auth/middleware';
-import Negotiator from 'negotiator';
-import createIntlMiddleware from 'next-intl/middleware';
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
+import { match } from "@formatjs/intl-localematcher";
+import { createCentralizedAuthMiddleware } from "@tuturuuu/auth/middleware";
+import Negotiator from "negotiator";
+import createIntlMiddleware from "next-intl/middleware";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { LOCALE_COOKIE_NAME, PUBLIC_PATHS } from "./constants/common";
+import { defaultLocale, Locale, supportedLocales } from "./i18n/routing";
 
-const WEB_APP_URL =
-  process.env.NODE_ENV === 'production'
-    ? 'https://tuturuuu.com'
-    : 'http://localhost:7803';
+const WEB_APP_URL = process.env.NODE_ENV === "production"
+  ? "https://smartargi.ai"
+  : "http://localhost:7803";
 
 const authMiddleware = createCentralizedAuthMiddleware({
   webAppUrl: WEB_APP_URL,
@@ -23,12 +22,12 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
   const authRes = await authMiddleware(req);
 
   // If the auth middleware returned a redirect response, return it
-  if (authRes.headers.has('Location')) {
+  if (authRes.headers.has("Location")) {
     return authRes;
   }
 
   // Skip locale handling for API routes
-  if (req.nextUrl.pathname.startsWith('/api')) {
+  if (req.nextUrl.pathname.startsWith("/api")) {
     return authRes;
   }
 
@@ -57,7 +56,7 @@ export const config = {
      * - webp
      */
 
-    '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|site.webmanifest|monitoring|.*\\.(?:svg|png|jpg|jpeg|pdf|gif|webp)$).*)',
+    "/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|site.webmanifest|monitoring|.*\\.(?:svg|png|jpg|jpeg|pdf|gif|webp)$).*)",
   ],
 };
 
@@ -68,15 +67,15 @@ const getSupportedLocale = (locale: string): Locale | null => {
 };
 
 const getExistingLocale = (
-  req: NextRequest
+  req: NextRequest,
 ): {
   locale: Locale | null;
   cookie: string | null;
   pathname: string | null;
 } => {
   // Get raw locale from pathname and cookie
-  const rawLocaleFromPathname = req.nextUrl.pathname.split('/')[1] || '';
-  const rawRocaleFromCookie = req.cookies.get(LOCALE_COOKIE_NAME)?.value || '';
+  const rawLocaleFromPathname = req.nextUrl.pathname.split("/")[1] || "";
+  const rawRocaleFromCookie = req.cookies.get(LOCALE_COOKIE_NAME)?.value || "";
 
   // Get supported locale from pathname and cookie
   const localeFromPathname = getSupportedLocale(rawLocaleFromPathname);
@@ -92,13 +91,13 @@ const getExistingLocale = (
 };
 
 const getDefaultLocale = (
-  req: NextRequest
+  req: NextRequest,
 ): {
   locale: Locale;
 } => {
   // Get browser languages
   const headers = {
-    'accept-language': req.headers.get('accept-language') ?? 'en-US,en;q=0.5',
+    "accept-language": req.headers.get("accept-language") ?? "en-US,en;q=0.5",
   };
 
   const languages = new Negotiator({ headers }).languages();
@@ -112,7 +111,7 @@ const getDefaultLocale = (
 };
 
 const getLocale = (
-  req: NextRequest
+  req: NextRequest,
 ): {
   locale: string;
   cookie: string | null;

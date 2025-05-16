@@ -1,7 +1,7 @@
 import { DEV_MODE } from "./common";
 
 export const siteConfig = {
-  name: "RMIT Smart Agri",
+  name: "Smart Agri",
   url: DEV_MODE ? "http://localhost:7803" : "https://smartargi.ai",
   ogImage: DEV_MODE
     ? "http://localhost:7803/media/logos/og-image.png"
