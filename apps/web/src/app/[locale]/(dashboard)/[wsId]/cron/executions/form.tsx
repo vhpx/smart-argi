@@ -105,8 +105,8 @@ export default function ModelForm({ wsId, data, onFinish }: Props) {
                       <FormMessage />
                       <FormDescription>
                         The identification number of this user in your
-                        workspace. This is automatically managed by RMIT
-                        University, and cannot be changed.
+                        workspace. This is automatically managed by the system,
+                        and cannot be changed.
                       </FormDescription>
                     </FormItem>
                   )}
