@@ -60,7 +60,6 @@ export interface NavbarProps {
 }
 
 export function Navbar({
-  logo,
   title,
   afterTitle,
   navigationMenu,
