@@ -51,6 +51,7 @@
     "dayjs": "^1.11.13",
     "embla-carousel-react": "^8.6.0",
     "eslint": "^9.25.0",
+    "gsap": "^3.13.0",
     "input-otp": "^1.4.2",
     "lodash": "^4.17.21",
     "lucide-react": "^0.484.0",
